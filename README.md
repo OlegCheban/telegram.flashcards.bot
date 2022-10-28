@@ -4,7 +4,7 @@ Bot helps to learn vocabulary words fast and effectively. It uses a spaced repet
 Deployed bot (https://t.me/proFlashcardsBot) has around 100000 flashcards.
 
 
-####Fast launch with Docker 
+#### Fast launch with Docker 
 - Set environment variables FLASHCARDS_BOT_NAME and FLASHCARDS_BOT_TOKEN in docker-compose.yml file.
 - Use command
 ```
@@ -12,7 +12,7 @@ mvn clean install
 docker compose up -d
 ```
 
-####Launch in local environment  
+#### Launch in local environment  
 ```
 mvn clean install
 mvn liquibase:update
@@ -24,7 +24,7 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes;./target/depen
 java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/dependency/* ru.flashcards.telegram.BotApplication
 ```
 
-####Help
+#### Help
 ```
 /f to find a new flashcard
 examples:
@@ -49,7 +49,7 @@ Bot sends notifications:
 - random flashcards notifications;
 ```
 
-####User stories
+#### User stories
 
 - I want to be able to swipe flashcards which get in next training.
 - I want to be able to pass exercise to check a correct pronounciation.
