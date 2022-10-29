@@ -16,7 +16,7 @@ import static java.lang.Math.toIntExact;
 
 public class AddToLearnCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private FlashcardDataHandler flashcardDataHandler;
+    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
 
     public AddToLearnCallbackHandler(CallbackData callbackData) {
         this.callbackData = callbackData;
