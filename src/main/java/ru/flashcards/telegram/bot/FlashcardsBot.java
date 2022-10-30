@@ -17,18 +17,13 @@ import java.util.List;
 /**
  * @author Oleg Cheban
  */
-public class Bot extends TelegramLongPollingCommandBot {
-    private final String BOT_NAME;
-    private final String BOT_TOKEN;
+public class FlashcardsBot extends TelegramLongPollingCommandBot {
     private MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
     private ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = new ExerciseMessageHandlerFactory();
     private CallbackHandlerFactory callbackHandlerFactory = new CallbackHandlerFactory();
     private ExerciseDataHandler exerciseDataHandler = new ExerciseDataHandler();
 
-    public Bot(String botName, String botToken) {
-        BOT_NAME = botName;
-        BOT_TOKEN = botToken;
-
+    public FlashcardsBot() {
         register(new StartCommand("start", ""));
         register(new StartLearningCommand("l", "", exerciseDataHandler));
         register(new EnableExcerciseCommand("exe", "", exerciseDataHandler));
@@ -81,12 +76,12 @@ public class Bot extends TelegramLongPollingCommandBot {
 
     @Override
     public String getBotUsername() {
-        return BOT_NAME;
+        return System.getenv().get("FLASHCARDS_BOT_NAME");
     }
 
     @Override
     public String getBotToken() {
-        return BOT_TOKEN;
+        return System.getenv().get("FLASHCARDS_BOT_TOKEN");
     }
 }
 
