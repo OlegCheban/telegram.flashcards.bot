@@ -39,13 +39,13 @@ public class ReturnToLearnCallbackHandler implements InputMessageCallbackHandler
         exerciseDataHandler.deleteExerciseStat(userFlashcardId);
         exerciseDataHandler.returnToLearn(userFlashcardId);
 
-        EditMessageText translationMessage = new EditMessageText();
-        translationMessage.setChatId(String.valueOf(chatId));
-        translationMessage.setMessageId(toIntExact(messageId));
-        translationMessage.enableMarkdown(true);
-        translationMessage.setText("*Flashcard returned to learn*\n*"+flashcard.getWord()+"* \\[" + flashcard.getTranscription() + "]\n\n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
+        EditMessageText resultMessage = new EditMessageText();
+        resultMessage.setChatId(String.valueOf(chatId));
+        resultMessage.setMessageId(toIntExact(messageId));
+        resultMessage.enableMarkdown(true);
+        resultMessage.setText("*Flashcard returned to learn*\n*"+flashcard.getWord()+"* \\[" + flashcard.getTranscription() + "]\n\n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
 
-        list.add(translationMessage);
+        list.add(resultMessage);
         return list;
     }
 }

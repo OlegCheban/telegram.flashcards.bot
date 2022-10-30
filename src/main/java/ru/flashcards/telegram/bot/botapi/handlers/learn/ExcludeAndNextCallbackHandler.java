@@ -18,6 +18,7 @@ import static java.lang.Math.toIntExact;
 public class ExcludeAndNextCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
     private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
+    private SuggetFlashcard suggetFlashcard = new SuggetFlashcard();
 
     public ExcludeAndNextCallbackHandler(CallbackData callbackData) {
         this.callbackData = callbackData;
@@ -41,7 +42,6 @@ public class ExcludeAndNextCallbackHandler implements InputMessageCallbackHandle
         translationMessage.setText("Flashcard *" + flashcard.getWord() + "* excluded");
 
         list.add(translationMessage);
-        SuggetFlashcard suggetFlashcard = new SuggetFlashcard();
         suggetFlashcard.byTop3000Category(chatId);
         return list;
     }

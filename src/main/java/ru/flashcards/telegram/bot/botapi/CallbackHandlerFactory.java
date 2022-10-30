@@ -42,7 +42,7 @@ public class CallbackHandlerFactory {
             case EXAMPLES:
                 return new FlashcardUsageExamplesCallbackHandler(callback);
             case QUITE:
-                return new QuiteAddToLearnCallbackHandler(callback);
+                return new QuiteCallbackHandler(callback);
             case DISABLE_EXCERCISE:
                 return new DisableExcerciseMessageHandler(callback);
             case ENABLE_EXCERCISE:

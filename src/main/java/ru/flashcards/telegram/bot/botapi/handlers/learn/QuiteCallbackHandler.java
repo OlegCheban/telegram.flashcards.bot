@@ -12,10 +12,10 @@ import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
-public class QuiteAddToLearnCallbackHandler implements InputMessageCallbackHandler {
+public class QuiteCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
 
-    public QuiteAddToLearnCallbackHandler(CallbackData callbackData) {
+    public QuiteCallbackHandler(CallbackData callbackData) {
         this.callbackData = callbackData;
     }
 
