@@ -56,6 +56,8 @@ Bot sends notifications:
 - I want to be able to pick flashcards for nearest training.
 - I want to be able to get flashcards by percentile in swiper.
 - I want to be able to set flashcards quantity for training.
+
+
  
   
    
