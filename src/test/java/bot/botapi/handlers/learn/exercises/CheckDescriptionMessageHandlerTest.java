@@ -1,4 +1,4 @@
-package bot.botapi.handlers.learn;
+package bot.botapi.handlers.learn.exercises;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +18,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.CHECK_TRANSLATION;
+import static ru.flashcards.telegram.bot.botapi.Literals.CHECK_DESCRIPTION;
 
 @ExtendWith(MockitoExtension.class)
-public class CheckTranslationMessageHandlerTest {
+public class CheckDescriptionMessageHandlerTest {
     @Mock
     private Message message;
 
@@ -34,21 +34,27 @@ public class CheckTranslationMessageHandlerTest {
     @Test
     void test() {
         when(message.getChatId()).thenReturn(0L);
-        when(message.getText()).thenReturn("checkTranslationValue");
+        when(message.getText()).thenReturn("checkDescriptionValue");
 
         ExerciseFlashcard exerciseFlashcard =
                 new ExerciseFlashcard(
                         0L,
                         null,
-                        CHECK_TRANSLATION,
-                        null,
+                        CHECK_DESCRIPTION,
+                        "checkDescriptionValue",
                         null,
                         0L,
-                        "checkTranslationValue",
+                        null,
                         null);
 
         //when(exerciseDataHandler.isLearnFlashcardState(message.getChatId())).thenReturn(true);
         when(exerciseDataHandler.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
+
+//        ExerciseMessageHandlerFactory factory = new ExerciseMessageHandlerFactory();
+//        Field field = factory.getClass().getDeclaredField("exerciseDataHandler");
+//        field.setAccessible(true);
+//        field.set(exerciseMessageHandlerFactory, exerciseDataHandler);
+//        ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = Mockito.spy(factory);
 
         InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);
         List<BotApiMethod<?>> list = inputMessageHandler.handle(message);

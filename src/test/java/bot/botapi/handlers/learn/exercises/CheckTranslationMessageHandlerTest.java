@@ -1,4 +1,4 @@
-package bot.botapi.handlers.learn;
+package bot.botapi.handlers.learn.exercises;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,15 +11,17 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.ExerciseMessageHandlerFactory;
 import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
+import ru.flashcards.telegram.bot.utils.RandomMessageText;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.STOP_LEARNING;
+import static ru.flashcards.telegram.bot.botapi.Literals.CHECK_TRANSLATION;
 
 @ExtendWith(MockitoExtension.class)
-public class StopLearningMessageHandlerTest {
+public class CheckTranslationMessageHandlerTest {
     @Mock
     private Message message;
 
@@ -32,12 +34,25 @@ public class StopLearningMessageHandlerTest {
     @Test
     void test() {
         when(message.getChatId()).thenReturn(0L);
-        when(message.getText()).thenReturn(STOP_LEARNING);
+        when(message.getText()).thenReturn("checkTranslationValue");
+
+        ExerciseFlashcard exerciseFlashcard =
+                new ExerciseFlashcard(
+                        0L,
+                        null,
+                        CHECK_TRANSLATION,
+                        null,
+                        null,
+                        0L,
+                        "checkTranslationValue",
+                        null);
+
         //when(exerciseDataHandler.isLearnFlashcardState(message.getChatId())).thenReturn(true);
+        when(exerciseDataHandler.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
 
         InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);
         List<BotApiMethod<?>> list = inputMessageHandler.handle(message);
 
-        assertEquals("Keep learning!", ((SendMessage) list.get(0)).getText());
+        assertTrue(RandomMessageText.positiveMessages.contains(((SendMessage) list.get(0)).getText()));
     }
 }

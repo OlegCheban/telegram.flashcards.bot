@@ -33,13 +33,13 @@ public class AddToLearnCallbackHandler implements InputMessageCallbackHandler {
 
         flashcardDataHandler.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(), flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
 
-        EditMessageText translationMessage = new EditMessageText();
-        translationMessage.setChatId(String.valueOf(chatId));
-        translationMessage.setMessageId(toIntExact(messageId));
-        translationMessage.enableMarkdown(true);
-        translationMessage.setText("Flashcard *" + flashcard.getWord() + "* added for learning");
+        EditMessageText resultMessage = new EditMessageText();
+        resultMessage.setChatId(String.valueOf(chatId));
+        resultMessage.setMessageId(toIntExact(messageId));
+        resultMessage.enableMarkdown(true);
+        resultMessage.setText("Flashcard *" + flashcard.getWord() + "* added for learning");
 
-        list.add(translationMessage);
+        list.add(resultMessage);
         return list;
     }
 }
