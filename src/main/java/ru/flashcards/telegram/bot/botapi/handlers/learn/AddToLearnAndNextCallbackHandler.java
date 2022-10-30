@@ -17,6 +17,7 @@ import static java.lang.Math.toIntExact;
 public class AddToLearnAndNextCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
     private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
+    private SuggetFlashcard suggetFlashcard = new SuggetFlashcard();
 
     public AddToLearnAndNextCallbackHandler(CallbackData callbackData) {
         this.callbackData = callbackData;
@@ -24,7 +25,6 @@ public class AddToLearnAndNextCallbackHandler implements InputMessageCallbackHan
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
-        SuggetFlashcard suggetFlashcard = new SuggetFlashcard();
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();

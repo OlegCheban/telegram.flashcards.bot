@@ -47,8 +47,6 @@ public class CheckSpellingMessageHandlerTest {
                         null,
                         null);
 
-
-        //when(exerciseDataHandler.isLearnFlashcardState(message.getChatId())).thenReturn(true);
         when(exerciseDataHandler.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
 
         InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);

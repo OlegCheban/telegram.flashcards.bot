@@ -47,7 +47,6 @@ public class CheckTranslationMessageHandlerTest {
                         "checkTranslationValue",
                         null);
 
-        //when(exerciseDataHandler.isLearnFlashcardState(message.getChatId())).thenReturn(true);
         when(exerciseDataHandler.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
 
         InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);

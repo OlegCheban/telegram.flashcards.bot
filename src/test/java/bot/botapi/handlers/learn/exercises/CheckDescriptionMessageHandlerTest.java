@@ -47,14 +47,7 @@ public class CheckDescriptionMessageHandlerTest {
                         null,
                         null);
 
-        //when(exerciseDataHandler.isLearnFlashcardState(message.getChatId())).thenReturn(true);
         when(exerciseDataHandler.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
-
-//        ExerciseMessageHandlerFactory factory = new ExerciseMessageHandlerFactory();
-//        Field field = factory.getClass().getDeclaredField("exerciseDataHandler");
-//        field.setAccessible(true);
-//        field.set(exerciseMessageHandlerFactory, exerciseDataHandler);
-//        ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = Mockito.spy(factory);
 
         InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);
         List<BotApiMethod<?>> list = inputMessageHandler.handle(message);

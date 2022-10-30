@@ -33,7 +33,6 @@ public class StopLearningMessageHandlerTest {
     void test() {
         when(message.getChatId()).thenReturn(0L);
         when(message.getText()).thenReturn(STOP_LEARNING);
-        //when(exerciseDataHandler.isLearnFlashcardState(message.getChatId())).thenReturn(true);
 
         InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);
         List<BotApiMethod<?>> list = inputMessageHandler.handle(message);
