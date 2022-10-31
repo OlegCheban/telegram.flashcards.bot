@@ -10,7 +10,7 @@ public final class Literals {
     public static final String RETURN_TO_LEARN = "RETURN_TO_LEARN";
     public static final String EXCLUDE = "EXCLUDE";
     public static final String EXCLUDE_AND_NEXT = "EXCLUDE_AND_NEXT";
-    public static final String STOP_LEARNING = "STOP LEARNING";
+    public static final String STOP_LEARNING = "Stop Learning";
     public static final Integer RANDOM_NOTIFICATION_INTERVAL = 60;
     public static final String QUITE = "QUITE";
 
@@ -18,6 +18,8 @@ public final class Literals {
     public static final String SWIPER_PREV = "PREV";
     public static final String SWIPER_NEXT = "NEXT";
 
+
+    public static final String MEMORISED = "Memorised";
     public static final String CHECK_DESCRIPTION = "CHECK_DESCRIPTION";
     public static final String CHECK_TRANSLATION = "CHECK_TRANSLATION";
     public static final String CHECK_SPELLING = "CHECK_SPELLING";

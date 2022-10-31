@@ -149,7 +149,12 @@ public class ScheduledTasks {
 
         sendToLearnFlashcards.forEach((row) -> {
             List<String> wrongAnswers = null;
-            if (row.getExerciseCode().equals(CHECK_DESCRIPTION)){
+            if (row.getExerciseCode().equals(MEMORISED)) {
+                SendService.sendMessage(row.getChatId(),
+                        "*" + row.getWord() + "* \\[" + row.getTranscription() + "]\n" + row.getDescription() + "\n\n*Translation:* " + row.getTranslation(),
+                        String.valueOf(memorisedKeyboardJson()));
+
+            } else if (row.getExerciseCode().equals(CHECK_DESCRIPTION)){
                 wrongAnswers = exerciseDataHandler.getRandomDescriptions();
 
                 SendService.sendMessage(row.getChatId(),
@@ -200,6 +205,16 @@ public class ScheduledTasks {
         return String.valueOf(result);
     }
 
+    private JSONObject memorisedKeyboardJson(){
+        JSONArray inlineKeyboardArrays = new JSONArray();
+        inlineKeyboardArrays.put(createButton(MEMORISED));
+        inlineKeyboardArrays.put(createButton(STOP_LEARNING));
+        JSONObject mainObj = new JSONObject();
+        mainObj.put("keyboard", inlineKeyboardArrays);
+        mainObj.put("resize_keyboard", true);
+        return mainObj;
+    }
+
     private JSONObject answersInlineKeyboardJson(List<String> wrongAnswersList, String correctAnswer){
         int randomNum = ThreadLocalRandom.current().nextInt(0, 3);
         final int lastButton = 3;
@@ -220,7 +235,6 @@ public class ScheduledTasks {
         JSONObject mainObj = new JSONObject();
         mainObj.put("keyboard", inlineKeyboardArrays);
         mainObj.put("resize_keyboard", true);
-        //mainObj.put("one_time_keyboard", true);
 
         return mainObj;
     }

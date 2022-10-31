@@ -51,7 +51,6 @@ Bot sends notifications:
 
 #### User stories
 
-- I want to be able to swipe flashcards which get in next training.
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to pick flashcards for nearest training.
 - I want to be able to get flashcards by percentile in swiper.

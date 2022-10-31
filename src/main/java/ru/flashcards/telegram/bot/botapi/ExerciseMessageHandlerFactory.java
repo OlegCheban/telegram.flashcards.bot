@@ -2,10 +2,7 @@ package ru.flashcards.telegram.bot.botapi;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.StopLearningMessageHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.CheckDescriptionMessageHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.CheckSpellingMessageHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.CheckTranslationMessageHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.CompleteTheGapsMessageHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.*;
 import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import java.util.Collections;
@@ -20,6 +17,8 @@ public class ExerciseMessageHandlerFactory {
             ExerciseFlashcard currentExercise = exerciseDataHandler.getCurrentExercise(message.getChatId());
 
             switch (currentExercise.getExerciseCode()){
+                case MEMORISED:
+                    return new MemorisedMessageHandler(currentExercise, exerciseDataHandler);
                 case CHECK_DESCRIPTION:
                     return new CheckDescriptionMessageHandler(currentExercise, exerciseDataHandler);
                 case CHECK_TRANSLATION:

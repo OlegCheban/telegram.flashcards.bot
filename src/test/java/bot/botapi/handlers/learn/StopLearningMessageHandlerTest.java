@@ -1,4 +1,4 @@
-package bot.botapi.handlers.learn.exercises;
+package bot.botapi.handlers.learn;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
