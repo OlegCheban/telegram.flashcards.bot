@@ -30,25 +30,28 @@ public class Swiper {
     public InlineKeyboardMarkup getSwiperMarkup() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+        List<InlineKeyboardButton> swiperRowInline = new ArrayList<>();
+        List<InlineKeyboardButton> optionsRowInline = new ArrayList<>();
 
         try {
             if (prevId != 0) {
-                rowInline.add(prevButton());
+                swiperRowInline.add(prevButton());
             }
             if (nextId != 0) {
-                rowInline.add(nextButton());
+                swiperRowInline.add(nextButton());
             }
             if (learnPrc == 100){
-                List<InlineKeyboardButton> returnToLearnRowInline = new ArrayList<>();
-                returnToLearnRowInline.add(returnToLearnButton());
-                rowsInline.add(returnToLearnRowInline);
+                optionsRowInline.add(returnToLearnButton());
+            }
+            if (learnPrc == 0){
+                optionsRowInline.add(nearestTrainingButton());
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        rowsInline.add(rowInline);
+        rowsInline.add(optionsRowInline);
+        rowsInline.add(swiperRowInline);
         markupInline.setKeyboard(rowsInline);
         return  markupInline;
     }
@@ -88,6 +91,21 @@ public class Swiper {
         nextButton.setText("return to learn");
 
         CallbackData callbackData = new CallbackData(RETURN_TO_LEARN);
+        callbackData.setEntityId(currentId);
+
+        try {
+            nextButton.setCallbackData(objectMapper.writeValueAsString(callbackData));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return nextButton;
+    }
+
+    private InlineKeyboardButton nearestTrainingButton(){
+        InlineKeyboardButton nextButton = new InlineKeyboardButton();
+        nextButton.setText("for nearest training");
+
+        CallbackData callbackData = new CallbackData(NEAREST_TRAINING);
         callbackData.setEntityId(currentId);
 
         try {
