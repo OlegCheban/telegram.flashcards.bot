@@ -9,8 +9,9 @@ public class SwiperFlashcard {
     private String translation;
     private String transcription;
     private int learnPrc;
+    private int nearestTraining;
 
-    public SwiperFlashcard(Long prevId, Long nextId, Long currentId, String word, String description, String translation, String transcription, int learnPrc) {
+    public SwiperFlashcard(Long prevId, Long nextId, Long currentId, String word, String description, String translation, String transcription, int learnPrc, int nearestTraining) {
         this.prevId = prevId;
         this.nextId = nextId;
         this.currentId = currentId;
@@ -19,6 +20,7 @@ public class SwiperFlashcard {
         this.translation = translation;
         this.transcription = transcription;
         this.learnPrc = learnPrc;
+        this.nearestTraining = nearestTraining;
     }
 
     public Long getPrevId() {
@@ -83,5 +85,13 @@ public class SwiperFlashcard {
 
     public void setLearnPrc(int learnPrc) {
         this.learnPrc = learnPrc;
+    }
+
+    public int getNearestTraining() {
+        return nearestTraining;
+    }
+
+    public void setNearestTraining(int nearestTraining) {
+        this.nearestTraining = nearestTraining;
     }
 }

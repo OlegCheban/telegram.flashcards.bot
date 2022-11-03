@@ -13,7 +13,7 @@ public final class Literals {
     public static final String STOP_LEARNING = "Stop Learning";
     public static final Integer RANDOM_NOTIFICATION_INTERVAL = 60;
     public static final String QUITE = "QUITE";
-    public static final String NEAREST_TRAINING = "NEAREST_TRAINING";
+    public static final String BOOST_PRIORITY = "BOOST_PRIORITY";
 
 
     public static final String SWIPER_PREV = "PREV";

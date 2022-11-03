@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.flashcards.telegram.bot.botapi.handlers.examples.FlashcardUsageExamplesCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translate.TranslateFlashcardCallbackHandler;
 
@@ -32,6 +34,8 @@ public class CallbackHandlerFactory {
                 return new ProceedToRepetitionCallbackHandler(callback);
             case RETURN_TO_LEARN:
                 return new ReturnToLearnCallbackHandler(callback);
+            case BOOST_PRIORITY:
+                return new BoostPriorityCallbackHandler(callback);
             case EXCLUDE:
                 return new ExcludeCallbackHandler(callback);
             case EXCLUDE_AND_NEXT:

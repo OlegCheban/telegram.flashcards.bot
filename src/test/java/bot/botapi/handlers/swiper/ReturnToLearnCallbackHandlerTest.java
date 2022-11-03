@@ -1,4 +1,4 @@
-package bot.botapi.handlers.learn;
+package bot.botapi.handlers.swiper;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,15 +6,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.ReturnToLearnCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnCallbackHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.SpacedRepetitionNotificationDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
+import ru.flashcards.telegram.bot.db.dmlOps.SwiperDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ReturnToLearnCallbackHandlerTest {
     @Mock
-    private FlashcardDataHandler flashcardDataHandler;
+    private SwiperDataHandler swiperDataHandler;
     @Mock
     private SpacedRepetitionNotificationDataHandler spacedRepetitionNotificationDataHandler;
     @Mock
@@ -39,18 +39,18 @@ public class ReturnToLearnCallbackHandlerTest {
 
     @Test
     void test() throws NoSuchFieldException, IllegalAccessException {
-        UserFlashcard flashcard = new UserFlashcard( "description", "transcription", "translation", "word");
+        SwiperFlashcard swiperFlashcard = new SwiperFlashcard(0L,0L,0L, "word", "description", "translation", "transcription", 0, 0);
 
         when(message.getChatId()).thenReturn(0L);
         when(message.getMessageId()).thenReturn(0);
         when(callbackQuery.getMessage()).thenReturn(message);
-        when(flashcardDataHandler.findUserFlashcardById(0L)).thenReturn(flashcard);
+        when(swiperDataHandler.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
 
         ReturnToLearnCallbackHandler handler = new ReturnToLearnCallbackHandler(callbackData);
 
-        Field flashcardDataHandlerField = handler.getClass().getDeclaredField("flashcardDataHandler");
+        Field flashcardDataHandlerField = handler.getClass().getDeclaredField("swiperDataHandler");
         flashcardDataHandlerField.setAccessible(true);
-        flashcardDataHandlerField.set(handler, flashcardDataHandler);
+        flashcardDataHandlerField.set(handler, swiperDataHandler);
 
         Field spacedRepetitionNotificationDataHandlerField = handler.getClass().getDeclaredField("spacedRepetitionNotificationDataHandler");
         spacedRepetitionNotificationDataHandlerField.setAccessible(true);
@@ -62,6 +62,6 @@ public class ReturnToLearnCallbackHandlerTest {
 
         List<BotApiMethod<?>> list = Mockito.spy(handler).handle(callbackQuery);
 
-        assertEquals("*Flashcard returned to learn*\n*word* \\[transcription]\n\ndescription\n\ntranslation", ((EditMessageText) list.get(0)).getText());
+        assertEquals("*word* returned to learn", ((SendMessage) list.get(1)).getText());
     }
 }

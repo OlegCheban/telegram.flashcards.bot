@@ -41,13 +41,13 @@ public class SwiperCommand extends BotCommand {
         if (firstFlashcard != null){
             SwiperFlashcard swiperFlashcard = swiperDataHandler.getSwiperFlashcard(message.getChatId(), firstFlashcard, characterConditionParam);
             if (swiperFlashcard != null){
-                Swiper swiper = new Swiper(characterConditionParam, swiperFlashcard.getPrevId(), swiperFlashcard.getNextId(), swiperFlashcard.getCurrentId(), swiperFlashcard.getLearnPrc());
+                Swiper swiper = new Swiper(characterConditionParam, swiperFlashcard);
 
                 SendMessage replyMessage = new SendMessage();
                 replyMessage.setChatId(String.valueOf(message.getChatId()));
                 replyMessage.setText("*" + swiperFlashcard.getWord() + "* \\[" + swiperFlashcard.getTranscription() + "] ("+swiperFlashcard.getLearnPrc()+"% learned)\n" + swiperFlashcard.getDescription() + "\n\n" + "*Translation:* " + swiperFlashcard.getTranslation());
                 replyMessage.enableMarkdown(true);
-                replyMessage.setReplyMarkup(swiper.getSwiperMarkup());
+                replyMessage.setReplyMarkup(swiper.getSwiperKeyboardMarkup());
                 try {
                     absSender.execute(replyMessage);
                 } catch (TelegramApiException e) {

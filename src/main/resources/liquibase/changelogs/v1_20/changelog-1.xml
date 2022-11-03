@@ -21,4 +21,9 @@
         <rollback></rollback>
     </changeSet>
 
+    <changeSet author="oleg.cheban" id="v1_20-3">
+        <sqlFile encoding="UTF-8" path="./sql/view/swiper_flashcards.sql" relativeToChangelogFile="true" splitStatements="false"/>
+        <rollback></rollback>
+    </changeSet>
+
 </databaseChangeLog>

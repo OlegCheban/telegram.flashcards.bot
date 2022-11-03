@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
+import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,38 +14,32 @@ import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 public class Swiper {
     private String charCond = "";
-    private Long currentId;
-    private Long prevId;
-    private Long nextId;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private int learnPrc;
+    private SwiperFlashcard swiperFlashcard;
 
-    public Swiper(String charCond, Long prevId, Long nextId, Long currentId, int learnPrc) {
+    public Swiper(String charCond, SwiperFlashcard flashcard) {
         this.charCond = charCond;
-        this.prevId = prevId;
-        this.nextId = nextId;
-        this.learnPrc = learnPrc;
-        this.currentId = currentId;
+        this.swiperFlashcard = flashcard;
     }
 
-    public InlineKeyboardMarkup getSwiperMarkup() {
+    public InlineKeyboardMarkup getSwiperKeyboardMarkup() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         List<InlineKeyboardButton> swiperRowInline = new ArrayList<>();
         List<InlineKeyboardButton> optionsRowInline = new ArrayList<>();
 
         try {
-            if (prevId != 0) {
+            if (swiperFlashcard.getPrevId() != 0) {
                 swiperRowInline.add(prevButton());
             }
-            if (nextId != 0) {
+            if (swiperFlashcard.getNextId() != 0) {
                 swiperRowInline.add(nextButton());
             }
-            if (learnPrc == 100){
+            if (swiperFlashcard.getLearnPrc() == 100){
                 optionsRowInline.add(returnToLearnButton());
             }
-            if (learnPrc == 0){
-                optionsRowInline.add(nearestTrainingButton());
+            if (swiperFlashcard.getLearnPrc() == 0 && swiperFlashcard.getNearestTraining() == 0){
+                optionsRowInline.add(boostPriorityButton());
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -60,7 +55,7 @@ public class Swiper {
         InlineKeyboardButton prevButton = new InlineKeyboardButton();
         prevButton.setText("prev");
         CallbackData prev = new CallbackData(SWIPER_PREV);
-        prev.setEntityId(prevId);
+        prev.setEntityId(swiperFlashcard.getPrevId());
 
         if (charCond != null){
             SwiperParams swiperParams = new SwiperParams(charCond);
@@ -75,7 +70,7 @@ public class Swiper {
         InlineKeyboardButton nextButton = new InlineKeyboardButton();
         nextButton.setText("next");
         CallbackData next = new CallbackData(SWIPER_NEXT);
-        next.setEntityId(nextId);
+        next.setEntityId(swiperFlashcard.getNextId());
 
         if (charCond != null){
             SwiperParams swiperParams = new SwiperParams(charCond);
@@ -86,33 +81,33 @@ public class Swiper {
         return nextButton;
     }
 
-    private InlineKeyboardButton returnToLearnButton(){
-        InlineKeyboardButton nextButton = new InlineKeyboardButton();
-        nextButton.setText("return to learn");
+    private InlineKeyboardButton returnToLearnButton() throws JsonProcessingException {
+        InlineKeyboardButton returnToLearnButton = new InlineKeyboardButton();
+        returnToLearnButton.setText("reset progress");
+        CallbackData returnToLearnCallbackData = new CallbackData(RETURN_TO_LEARN);
+        returnToLearnCallbackData.setEntityId(swiperFlashcard.getCurrentId());
 
-        CallbackData callbackData = new CallbackData(RETURN_TO_LEARN);
-        callbackData.setEntityId(currentId);
-
-        try {
-            nextButton.setCallbackData(objectMapper.writeValueAsString(callbackData));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        if (charCond != null){
+            SwiperParams swiperParams = new SwiperParams(charCond);
+            returnToLearnCallbackData.setSwiper(swiperParams);
         }
-        return nextButton;
+        returnToLearnButton.setCallbackData(objectMapper.writeValueAsString(returnToLearnCallbackData));
+        return returnToLearnButton;
     }
 
-    private InlineKeyboardButton nearestTrainingButton(){
-        InlineKeyboardButton nextButton = new InlineKeyboardButton();
-        nextButton.setText("for nearest training");
+    private InlineKeyboardButton boostPriorityButton() throws JsonProcessingException {
+        InlineKeyboardButton boostPriorityButton = new InlineKeyboardButton();
+        boostPriorityButton.setText("boost priority");
 
-        CallbackData callbackData = new CallbackData(NEAREST_TRAINING);
-        callbackData.setEntityId(currentId);
+        CallbackData boostPriorityCallbackData = new CallbackData(BOOST_PRIORITY);
+        boostPriorityCallbackData.setEntityId(swiperFlashcard.getCurrentId());
 
-        try {
-            nextButton.setCallbackData(objectMapper.writeValueAsString(callbackData));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        if (charCond != null){
+            SwiperParams swiperParams = new SwiperParams(charCond);
+            boostPriorityCallbackData.setSwiper(swiperParams);
         }
-        return nextButton;
+
+        boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(boostPriorityCallbackData));
+        return boostPriorityButton;
     }
 }

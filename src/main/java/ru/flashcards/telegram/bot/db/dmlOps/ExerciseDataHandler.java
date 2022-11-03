@@ -321,4 +321,17 @@ public class ExerciseDataHandler {
             }
         }.run();
     }
+
+    /**
+     * Add flashcard for nearest learning
+     */
+    public int boostUserFlashcardPriority(Long userFlashcardId) {
+        return new Update("update main.user_flashcard set nearest_training = 1 where id = ?"){
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, userFlashcardId);
+                return preparedStatement;
+            }
+        }.run();
+    }
 }

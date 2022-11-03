@@ -38,7 +38,8 @@ public class SwiperDataHandler {
                         "                         description, " +
                         "                         translation, " +
                         "                         transcription, " +
-                        "                         prc " +
+                        "                         prc, " +
+                        "                         nearest_training " +
                         "                      from main.swiper_flashcards " +
                         "                      where chat_id = ? and (? is null or lower(word) like lower(?) || '%') " +
                         "                      order by id " +
@@ -54,7 +55,8 @@ public class SwiperDataHandler {
                         rs.getString("description"),
                         rs.getString("translation"),
                         rs.getString("transcription"),
-                        rs.getInt("prc")
+                        rs.getInt("prc"),
+                        rs.getInt("nearest_training")
                 );
             }
 

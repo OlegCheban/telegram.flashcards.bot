@@ -24,12 +24,11 @@ from (
               u.id user_id,
               u.learn_flashcard_lock,
               row_number() over(PARTITION by a.user_id
-       order by a.id) rn
+       order by a.nearest_training desc, a.id) rn
        from main.user_flashcard a
             join main.flashcard f on f.word = a.word
             join main.user u on a.user_id = u.id and u.learn_flashcard_state
        where a.learned_date is null
-       order by a.nearest_training desc
      ) x
 where x.rn <= 7)
 select distinct on (b.chat_id)

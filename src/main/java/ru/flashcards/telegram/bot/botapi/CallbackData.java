@@ -1,14 +1,19 @@
 package ru.flashcards.telegram.bot.botapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.flashcards.telegram.bot.botapi.swiper.SwiperParams;
 
 public class CallbackData {
+    @JsonProperty("c")
     private String command;
+    @JsonProperty("id")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long entityId;
+    @JsonProperty("code")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String entityCode;
+    @JsonProperty("sw")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private SwiperParams swiper;
 

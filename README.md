@@ -52,9 +52,9 @@ Bot sends notifications:
 #### User stories
 
 - I want to be able to pass exercise to check a correct pronounciation.
-- I want to be able to pick flashcards for nearest training.
 - I want to be able to get flashcards by percentile in swiper.
 - I want to be able to set flashcards quantity for training.
+- I want to be able to edit translation for my flashcards.
 
 
  
