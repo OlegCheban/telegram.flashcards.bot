@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.SpacedRepetitionNotificationDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.SwiperDataHandler;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ReturnToLearnCallbackHandlerTest {
+public class ReturnToLearnSwiperCallbackHandlerTest {
     @Mock
     private SwiperDataHandler swiperDataHandler;
     @Mock
@@ -46,7 +46,7 @@ public class ReturnToLearnCallbackHandlerTest {
         when(callbackQuery.getMessage()).thenReturn(message);
         when(swiperDataHandler.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
 
-        ReturnToLearnCallbackHandler handler = new ReturnToLearnCallbackHandler(callbackData);
+        ReturnToLearnSwiperCallbackHandler handler = new ReturnToLearnSwiperCallbackHandler(callbackData);
 
         Field flashcardDataHandlerField = handler.getClass().getDeclaredField("swiperDataHandler");
         flashcardDataHandlerField.setAccessible(true);

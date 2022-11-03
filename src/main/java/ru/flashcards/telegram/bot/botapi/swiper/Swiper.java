@@ -84,7 +84,7 @@ public class Swiper {
     private InlineKeyboardButton returnToLearnButton() throws JsonProcessingException {
         InlineKeyboardButton returnToLearnButton = new InlineKeyboardButton();
         returnToLearnButton.setText("reset progress");
-        CallbackData returnToLearnCallbackData = new CallbackData(RETURN_TO_LEARN);
+        CallbackData returnToLearnCallbackData = new CallbackData(SWIPER_RETURN_TO_LEARN);
         returnToLearnCallbackData.setEntityId(swiperFlashcard.getCurrentId());
 
         if (charCond != null){

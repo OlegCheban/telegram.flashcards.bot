@@ -14,7 +14,7 @@ public class Help {
                         "With swiper you can see your flashcards\n" +
                         "/s - displays all flashcards\n" +
                         "/s <value> - displays flashcards which start from an input value\n" +
-                        "Additional swiper functionality:\n" +
+                        "Additional functionality:\n" +
                         "   - ability to reset statistics for flashcards which have already learned (100% progress). Use \"reset progress\" button.\n" +
                         "   - ability to pick flashcards for nearest training. Use \"boost priority\" button.\n\n" +
 

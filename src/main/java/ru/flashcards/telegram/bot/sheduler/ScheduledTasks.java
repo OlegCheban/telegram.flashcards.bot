@@ -82,7 +82,8 @@ public class ScheduledTasks {
         if (!spacedRepetitionNotificationDataHandler.isPushQueueUpToCurrentDate()){
             spacedRepetitionNotificationDataHandler.refreshIntervalNotification();
         }
-        List<UserFlashcardSpacedRepetitionNotification> userFlashcardSpacedRepetitionNotifications = spacedRepetitionNotificationDataHandler.getUserFlashcardsSpacedRepetitionNotification();
+        List<UserFlashcardSpacedRepetitionNotification> userFlashcardSpacedRepetitionNotifications =
+                spacedRepetitionNotificationDataHandler.getUserFlashcardsSpacedRepetitionNotification();
 
         userFlashcardSpacedRepetitionNotifications.forEach((queue) -> {
             List<JSONObject> listButtons = new ArrayList<>();

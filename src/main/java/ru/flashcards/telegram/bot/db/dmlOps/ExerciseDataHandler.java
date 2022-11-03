@@ -134,7 +134,7 @@ public class ExerciseDataHandler {
                         "              id user_flashcard_id,\n" +
                         "              word,\n" +
                         "              row_number() over(partition by user_id\n" +
-                        "       order by id) rn\n" +
+                        "       order by nearest_training desc, id) rn\n" +
                         "       from main.user_flashcard\n" +
                         "       where user_id = (select id from main.user where chat_id = ?) and\n" +
                         "             learned_date is null\n" +

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.flashcards.telegram.bot.botapi.handlers.examples.FlashcardUsageExamplesCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translate.TranslateFlashcardCallbackHandler;
 
@@ -32,6 +32,8 @@ public class CallbackHandlerFactory {
                 return new AddToLearnAndNextCallbackHandler(callback);
             case PROCEED_LEARNING:
                 return new ProceedToRepetitionCallbackHandler(callback);
+            case SWIPER_RETURN_TO_LEARN:
+                return new ReturnToLearnSwiperCallbackHandler(callback);
             case RETURN_TO_LEARN:
                 return new ReturnToLearnCallbackHandler(callback);
             case BOOST_PRIORITY:

@@ -7,6 +7,7 @@ public final class Literals {
     public static final String ADD_TO_LEARN = "ADD_TO_LEARN";
     public static final String ADD_TO_LEARN_AND_NEXT = "ADD_TO_LEARN_AND_NEXT";
     public static final String PROCEED_LEARNING = "PROCEED_REPETITION";
+    public static final String SWIPER_RETURN_TO_LEARN = "SWIPER_RETURN_TO_LEARN";
     public static final String RETURN_TO_LEARN = "RETURN_TO_LEARN";
     public static final String EXCLUDE = "EXCLUDE";
     public static final String EXCLUDE_AND_NEXT = "EXCLUDE_AND_NEXT";

@@ -36,7 +36,7 @@ Help
 With swiper you can see your flashcards
 /s - displays all flashcards
 /s <value> - displays flashcards which start from an input value
-Additional swiper functionality:
+Additional functionality:
    - ability to reset statistics for flashcards which have already learned (100% progress). Use "reset progress" button;
    - ability to pick flashcards for nearest training. Use "boost priority" button.
 
