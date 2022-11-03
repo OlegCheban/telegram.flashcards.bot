@@ -26,27 +26,33 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 
 #### Help
 ```
-/f to find a new flashcard
-examples:
-/f - suggests flashcards from top3000 category
-/f <word> - finds by a given value
+Help
 
-/s to open swiper
-examples:
+1. Basic find commands for finding flashcards
+/f - finds a new flashcard (by default bot suggests flashcards from top 3000 category)
+/f <value> - finds flashcards which start from an input value
+
+2. Swiper
+With swiper you can see your flashcards
 /s - displays all flashcards
-/s <letters> - displays flashcards starting with the specified letters
+/s <value> - displays flashcards which start from an input value
+Additional swiper functionality:
+   - ability to reset statistics for flashcards which have already learned (100% progress). Use "reset progress" button;
+   - ability to pick flashcards for nearest training. Use "boost priority" button.
 
+3. Exercises
+Bot has several kinds of drills which help you learn flashcards
 /l to start learning
 /exe to enable exercises 
 /exd to disable exercises 
 
-/i <min> to change notifications interval (default 60 min) 
-/edit word#new translation 
-/h to display help
+4. Others commands
+/i <min> - changes notifications interval (default 60 min) 
+/h displays help
 
-Bot sends notifications:
-- for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can submit flashcard to learn again;
-- random flashcards notifications;
+5. Bot sends notifications:
+   - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can submit flashcard to learn again;
+   - random flashcards notifications.
 ```
 
 #### User stories

@@ -29,7 +29,7 @@ public class Help {
                         "/h displays help\n\n"+
 
                         "5. Bot sends notifications:\n" +
-                        "   - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can submit flashcard to learn again;\n\n" +
+                        "   - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can submit flashcard to learn again;\n" +
                         "   - random flashcards notifications;\n"
         );
     }
