@@ -57,6 +57,7 @@ Bot has several kinds of drills which help you learn flashcards
 
 #### User stories
 
+- I want to be able to get a feature like watering sessions in the Memrise.  
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to get flashcards by percentile in swiper.
 - I want to be able to set flashcards quantity for training.
