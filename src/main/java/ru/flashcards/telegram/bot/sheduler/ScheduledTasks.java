@@ -7,9 +7,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.RandomNotificationDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.SpacedRepetitionNotificationDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcardPushMono;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcardSpacedRepetitionNotification;
@@ -33,14 +31,10 @@ public class ScheduledTasks {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(3);
     private final String pushpinEmoji = "\uD83D\uDCCC";
     private final String alarmEmoji = "\u23F0";
-    private SpacedRepetitionNotificationDataHandler spacedRepetitionNotificationDataHandler;
-    private RandomNotificationDataHandler randomNotificationDataHandler;
-    private ExerciseDataHandler exerciseDataHandler;
+    private DataLayerObject dataLayerObject;
 
     public ScheduledTasks() {
-        randomNotificationDataHandler = new RandomNotificationDataHandler();
-        spacedRepetitionNotificationDataHandler = new SpacedRepetitionNotificationDataHandler();
-        exerciseDataHandler = new ExerciseDataHandler();
+        dataLayerObject = new DataLayerObject();
     }
 
     public void run () {
@@ -79,11 +73,11 @@ public class ScheduledTasks {
     }
 
     private void runSpacedRepetitionNotification(){
-        if (!spacedRepetitionNotificationDataHandler.isPushQueueUpToCurrentDate()){
-            spacedRepetitionNotificationDataHandler.refreshIntervalNotification();
+        if (!dataLayerObject.isPushQueueUpToCurrentDate()){
+            dataLayerObject.refreshIntervalNotification();
         }
         List<UserFlashcardSpacedRepetitionNotification> userFlashcardSpacedRepetitionNotifications =
-                spacedRepetitionNotificationDataHandler.getUserFlashcardsSpacedRepetitionNotification();
+                dataLayerObject.getUserFlashcardsSpacedRepetitionNotification();
 
         userFlashcardSpacedRepetitionNotifications.forEach((queue) -> {
             List<JSONObject> listButtons = new ArrayList<>();
@@ -97,13 +91,13 @@ public class ScheduledTasks {
                                 "\n*" + queue.getWord()+ "* \\[" + queue.getTranscription() + "] ("+queue.getPrc()+"% learned)" +
                                 "\n\n Do you remember this word?",
                         String.valueOf(createButtonMenu(listButtons)));
-                spacedRepetitionNotificationDataHandler.addFlashcardPushHistory(queue.getUserFlashcardId());
+                dataLayerObject.addFlashcardPushHistory(queue.getUserFlashcardId());
             }
         });
     }
 
     private void runRandomNotification(){
-        List<UserFlashcardPushMono> userFlashcardPushMonos = randomNotificationDataHandler.getUserFlashcardsRandomNotification();
+        List<UserFlashcardPushMono> userFlashcardPushMonos = dataLayerObject.getUserFlashcardsRandomNotification();
 
         userFlashcardPushMonos.forEach((queue) -> {
             List<JSONObject> listButtons = new ArrayList<>();
@@ -114,7 +108,7 @@ public class ScheduledTasks {
                 SendService.sendMessage(queue.getUserId(), "*"+queue.getWord()+"* \\[" + queue.getTranscription() + "] " + pushpinEmoji + "\n\n"+queue.getDescription(),
                         String.valueOf(createButtonMenu(listButtons)));
 
-                randomNotificationDataHandler.updatePushTimestampById(queue.getUserFlashcardId());
+                dataLayerObject.updatePushTimestampById(queue.getUserFlashcardId());
             }
         });
     }
@@ -146,7 +140,7 @@ public class ScheduledTasks {
     }
 
     private void runExercises(){
-        List<ExerciseFlashcard> sendToLearnFlashcards = exerciseDataHandler.getExercise();
+        List<ExerciseFlashcard> sendToLearnFlashcards = dataLayerObject.getExercise();
 
         sendToLearnFlashcards.forEach((row) -> {
             List<String> wrongAnswers = null;
@@ -156,14 +150,14 @@ public class ScheduledTasks {
                         String.valueOf(memorisedKeyboardJson()));
 
             } else if (row.getExerciseCode().equals(CHECK_DESCRIPTION)){
-                wrongAnswers = exerciseDataHandler.getRandomDescriptions();
+                wrongAnswers = dataLayerObject.getRandomDescriptions();
 
                 SendService.sendMessage(row.getChatId(),
                         "Choose correct description for flashcard *" + row.getWord() + "* \\[" + row.getTranscription() + "]\n\n",
                         String.valueOf(answersInlineKeyboardJson(wrongAnswers, row.getDescription())));
 
             } else if (row.getExerciseCode().equals(CHECK_TRANSLATION)){
-                wrongAnswers = exerciseDataHandler.getRandomTranslations();
+                wrongAnswers = dataLayerObject.getRandomTranslations();
 
                 SendService.sendMessage(row.getChatId(),
                         "Choose correct translation for flashcard *" + row.getWord() + "* \\[" + row.getTranscription() + "]\n\n",
@@ -184,14 +178,14 @@ public class ScheduledTasks {
                 SendService.sendMessage(row.getChatId(), messageText, String.valueOf(replyMarkupObj));
 
             } else if (row.getExerciseCode().equals(COMPLETE_THE_GAPS)){
-                wrongAnswers = exerciseDataHandler.getRandomWords();
+                wrongAnswers = dataLayerObject.getRandomWords();
 
                 SendService.sendMessage(row.getChatId(),
                         "Complete the gaps in sentence below. \n\n" + row.getExample().replaceAll("\\*([a-zA-Z]+)\\*", "\\\\_\\\\_\\\\_\\\\_"),
                         String.valueOf(answersInlineKeyboardJson(wrongAnswers, row.getWord())));
             }
 
-            exerciseDataHandler.setLock(row.getChatId(), true);
+            dataLayerObject.setLock(row.getChatId(), true);
         });
     }
 

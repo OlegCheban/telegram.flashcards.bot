@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
 import java.util.ArrayList;
@@ -22,11 +22,12 @@ import static ru.flashcards.telegram.bot.botapi.Literals.EXAMPLES;
 public class TranslateFlashcardCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private FlashcardDataHandler FlashcardDataHandler = new FlashcardDataHandler();
+    private DataLayerObject dataLayer;
     private final String pushpinEmoji = "\uD83D\uDCCC";
 
-    public TranslateFlashcardCallbackHandler(CallbackData callbackData) {
+    public TranslateFlashcardCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class TranslateFlashcardCallbackHandler implements InputMessageCallbackHa
         long messageId = message.getMessageId();
         long chatId = message.getChatId();
         Long userFlashcardId = callbackData.getEntityId();
-        UserFlashcard flashcard = FlashcardDataHandler.findUserFlashcardById(userFlashcardId);
+        UserFlashcard flashcard = dataLayer.findUserFlashcardById(userFlashcardId);
 
         EditMessageText translationMessage = new EditMessageText();
         translationMessage.setChatId(String.valueOf(chatId));

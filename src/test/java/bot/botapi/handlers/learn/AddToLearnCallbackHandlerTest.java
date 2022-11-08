@@ -1,50 +1,42 @@
 package bot.botapi.handlers.learn;
 
+import bot.FlashcardsBotTestAbstract;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.AddToLearnCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.Flashcard;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static ru.flashcards.telegram.bot.botapi.Literals.ADD_TO_LEARN;
 
-@ExtendWith(MockitoExtension.class)
-public class AddToLearnCallbackHandlerTest {
-    @Mock
-    private FlashcardDataHandler flashcardDataHandler;
-    @Mock
-    private Message message;
+public class AddToLearnCallbackHandlerTest extends FlashcardsBotTestAbstract {
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
-    private CallbackData callbackData;
+    private Flashcard flashcard;
+
 
     @Test
-    void test() throws NoSuchFieldException, IllegalAccessException {
-        Flashcard flashcard = new Flashcard(0L, "description", "transcription", "translation", "word");
+    @Override
+    protected void test() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CallbackData callbackData = new CallbackData(ADD_TO_LEARN);
+        callbackData.setEntityId(0L);
 
-        when(message.getChatId()).thenReturn(0L);
+        when(flashcard.getWord()).thenReturn("word");
         when(message.getMessageId()).thenReturn(0);
+        when(callbackQuery.getData()).thenReturn(objectMapper.writeValueAsString(callbackData));
         when(callbackQuery.getMessage()).thenReturn(message);
-        when(flashcardDataHandler.findFlashcardById(0L)).thenReturn(flashcard);
+        when(dataLayer.findFlashcardById(0L)).thenReturn(flashcard);
 
-        AddToLearnCallbackHandler handler = new AddToLearnCallbackHandler(callbackData);
-        Field field = handler.getClass().getDeclaredField("flashcardDataHandler");
-        field.setAccessible(true);
-        field.set(handler, flashcardDataHandler);
-        List<BotApiMethod<?>> list = Mockito.spy(handler).handle(callbackQuery);
+        List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleCallbackQueryInputMethod().invoke(testBot, callbackQuery);
 
         assertEquals("Flashcard *word* added for learning", ((EditMessageText) list.get(0)).getText());
     }

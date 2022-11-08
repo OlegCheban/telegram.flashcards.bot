@@ -6,23 +6,24 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
+
 
 public class StartLearningCommand extends BotCommand {
-    private ExerciseDataHandler exerciseDataHandler;
+    private DataLayerObject dataLayer;
 
-    public StartLearningCommand(String commandIdentifier, String description, ExerciseDataHandler handler) {
+    public StartLearningCommand(String commandIdentifier, String description, DataLayerObject dataLayer) {
         super(commandIdentifier, description);
-        this.exerciseDataHandler = handler;
+        this.dataLayer = dataLayer;
     }
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        if (exerciseDataHandler.existsExercise(user.getId())){
+        if (dataLayer.existsExercise(user.getId())){
             //enable learn mode
-            exerciseDataHandler.setLearnFlashcardState(user.getId(), true);
+            dataLayer.setLearnFlashcardState(user.getId(), true);
             //get new exercise
-            exerciseDataHandler.setLock(user.getId(), false);
+            dataLayer.setLock(user.getId(), false);
         } else {
             SendMessage sendMessage = new SendMessage();
 

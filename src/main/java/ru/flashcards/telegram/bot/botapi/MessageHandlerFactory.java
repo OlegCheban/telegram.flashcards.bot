@@ -2,19 +2,18 @@ package ru.flashcards.telegram.bot.botapi;
 
 import ru.flashcards.telegram.bot.botapi.handlers.create.CreateDefinitionMessageHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.create.CreateFlashcardsMessageHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.Collections;
 
 public class MessageHandlerFactory {
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
 
-    public InputMessageHandler getHandler(String messageText){
+    public InputMessageHandler getHandler(String messageText, DataLayerObject dataLayer){
         if (messageText.contains("//")){
-            return new CreateFlashcardsMessageHandler(flashcardDataHandler);
+            return new CreateFlashcardsMessageHandler(dataLayer);
         }
         if (messageText.contains("##")){
-            return new CreateDefinitionMessageHandler(flashcardDataHandler);
+            return new CreateDefinitionMessageHandler(dataLayer);
         }
 
         return message -> Collections.emptyList();

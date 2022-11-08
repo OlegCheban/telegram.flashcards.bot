@@ -5,11 +5,15 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.service.SendService;
 
 public class FindFlashcardCommand extends BotCommand {
-    public FindFlashcardCommand(String commandIdentifier, String description) {
+    private DataLayerObject dataLayer;
+
+    public FindFlashcardCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
+        dataLayer = dataLayerObject;
     }
 
     @Override
@@ -21,11 +25,11 @@ public class FindFlashcardCommand extends BotCommand {
             SendService.sendMessage(message.getChatId(), "Unrecognize parameter");
             return;
         }
-        SuggetFlashcard suggetFlashcard = new SuggetFlashcard();
+        SuggestFlashcard suggestFlashcard = new SuggestFlashcard(dataLayer);
         if (arguments.length == 1) {
-            suggetFlashcard.byParam(chatId, arguments[0]);
+            suggestFlashcard.byParam(chatId, arguments[0]);
         } else {
-            suggetFlashcard.byTop3000Category(chatId);
+            suggestFlashcard.byTop3000Category(chatId);
         }
     }
 

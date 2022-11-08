@@ -6,17 +6,18 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardUsageExamplesCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
+    private DataLayerObject dataLayer;
 
-    public FlashcardUsageExamplesCallbackHandler(CallbackData callbackData) {
+    public FlashcardUsageExamplesCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class FlashcardUsageExamplesCallbackHandler implements InputMessageCallba
         Message message = callbackQuery.getMessage();
         Long userFlashcardId = callbackData.getEntityId();
 
-        flashcardDataHandler.getExamplesByUserFlashcardId(userFlashcardId).forEach(example -> {
+        dataLayer.getExamplesByUserFlashcardId(userFlashcardId).forEach(example -> {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setChatId(String.valueOf(message.getChatId()));
             sendMessage.setText(example);

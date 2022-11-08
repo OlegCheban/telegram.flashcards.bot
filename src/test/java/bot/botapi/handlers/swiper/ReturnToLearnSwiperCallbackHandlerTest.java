@@ -1,67 +1,45 @@
 package bot.botapi.handlers.swiper;
 
+import bot.FlashcardsBotTestAbstract;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.SpacedRepetitionNotificationDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.SwiperDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static ru.flashcards.telegram.bot.botapi.Literals.SWIPER_RETURN_TO_LEARN;
 
-@ExtendWith(MockitoExtension.class)
-public class ReturnToLearnSwiperCallbackHandlerTest {
-    @Mock
-    private SwiperDataHandler swiperDataHandler;
-    @Mock
-    private SpacedRepetitionNotificationDataHandler spacedRepetitionNotificationDataHandler;
-    @Mock
-    private ExerciseDataHandler exerciseDataHandler;
+public class ReturnToLearnSwiperCallbackHandlerTest extends FlashcardsBotTestAbstract {
     @Mock
     private Message message;
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
-    private CallbackData callbackData;
+    private SwiperFlashcard swiperFlashcard;
 
     @Test
-    void test() throws NoSuchFieldException, IllegalAccessException {
-        SwiperFlashcard swiperFlashcard = new SwiperFlashcard(0L,0L,0L, "word", "description", "translation", "transcription", 0, 0);
+    @Override
+    protected void test() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CallbackData callbackData = new CallbackData(SWIPER_RETURN_TO_LEARN);
+        callbackData.setEntityId(0L);
 
-        when(message.getChatId()).thenReturn(0L);
+        when(swiperFlashcard.getWord()).thenReturn("word");
         when(message.getMessageId()).thenReturn(0);
+        when(callbackQuery.getData()).thenReturn(objectMapper.writeValueAsString(callbackData));
         when(callbackQuery.getMessage()).thenReturn(message);
-        when(swiperDataHandler.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
+        when(dataLayer.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
 
-        ReturnToLearnSwiperCallbackHandler handler = new ReturnToLearnSwiperCallbackHandler(callbackData);
-
-        Field flashcardDataHandlerField = handler.getClass().getDeclaredField("swiperDataHandler");
-        flashcardDataHandlerField.setAccessible(true);
-        flashcardDataHandlerField.set(handler, swiperDataHandler);
-
-        Field spacedRepetitionNotificationDataHandlerField = handler.getClass().getDeclaredField("spacedRepetitionNotificationDataHandler");
-        spacedRepetitionNotificationDataHandlerField.setAccessible(true);
-        spacedRepetitionNotificationDataHandlerField.set(handler, spacedRepetitionNotificationDataHandler);
-
-        Field exerciseDataHandlerField = handler.getClass().getDeclaredField("exerciseDataHandler");
-        exerciseDataHandlerField.setAccessible(true);
-        exerciseDataHandlerField.set(handler, exerciseDataHandler);
-
-        List<BotApiMethod<?>> list = Mockito.spy(handler).handle(callbackQuery);
-
+        List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleCallbackQueryInputMethod().invoke(testBot, callbackQuery);
         assertEquals("*word* returned to learn", ((SendMessage) list.get(1)).getText());
+
     }
 }

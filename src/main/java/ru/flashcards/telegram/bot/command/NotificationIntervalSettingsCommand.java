@@ -5,16 +5,16 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import ru.flashcards.telegram.bot.db.dmlOps.RandomNotificationDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.service.SendService;
 import ru.flashcards.telegram.bot.utils.Number;
 
 public class NotificationIntervalSettingsCommand extends BotCommand {
-    private RandomNotificationDataHandler randomNotificationDataHandler;
+    private DataLayerObject dataLayer;
 
-    public NotificationIntervalSettingsCommand(String commandIdentifier, String description) {
+    public NotificationIntervalSettingsCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
-        this.randomNotificationDataHandler = new RandomNotificationDataHandler();
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class NotificationIntervalSettingsCommand extends BotCommand {
 
         if (Number.isInteger(arguments[0], 10)) {
             SendService.sendMessage(message.getChatId(), "Done");
-            randomNotificationDataHandler.setNotificationInterval(Integer.valueOf(arguments[0]), chatId);
+            dataLayer.setNotificationInterval(Integer.valueOf(arguments[0]), chatId);
         } else {
             SendService.sendMessage(message.getChatId(), "Wrong parameter, should be a number");
         }

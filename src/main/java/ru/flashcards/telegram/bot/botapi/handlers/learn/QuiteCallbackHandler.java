@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ import static java.lang.Math.toIntExact;
 
 public class QuiteCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
+    private DataLayerObject dataLayer;
 
-    public QuiteCallbackHandler(CallbackData callbackData) {
+    public QuiteCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override

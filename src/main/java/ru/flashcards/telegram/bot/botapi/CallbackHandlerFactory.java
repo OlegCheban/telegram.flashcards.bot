@@ -8,13 +8,14 @@ import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHa
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translate.TranslateFlashcardCallbackHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.Collections;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 public class CallbackHandlerFactory {
-    public InputMessageCallbackHandler getHandler(String callbackDataJson){
+    public InputMessageCallbackHandler getHandler(String callbackDataJson, DataLayerObject dataLayer){
         ObjectMapper objectMapper = new ObjectMapper();
         CallbackData callback = null;
         try {
@@ -25,34 +26,34 @@ public class CallbackHandlerFactory {
 
         switch (callback.getCommand()){
             case TRANSLATE:
-                return new TranslateFlashcardCallbackHandler(callback);
+                return new TranslateFlashcardCallbackHandler(callback, dataLayer);
             case ADD_TO_LEARN:
-                return new AddToLearnCallbackHandler(callback);
+                return new AddToLearnCallbackHandler(callback, dataLayer);
             case ADD_TO_LEARN_AND_NEXT:
-                return new AddToLearnAndNextCallbackHandler(callback);
+                return new AddToLearnAndNextCallbackHandler(callback, dataLayer);
             case PROCEED_LEARNING:
-                return new ProceedToRepetitionCallbackHandler(callback);
+                return new ProceedToRepetitionCallbackHandler(callback, dataLayer);
             case SWIPER_RETURN_TO_LEARN:
-                return new ReturnToLearnSwiperCallbackHandler(callback);
+                return new ReturnToLearnSwiperCallbackHandler(callback, dataLayer);
             case RETURN_TO_LEARN:
-                return new ReturnToLearnCallbackHandler(callback);
+                return new ReturnToLearnCallbackHandler(callback, dataLayer);
             case BOOST_PRIORITY:
-                return new BoostPriorityCallbackHandler(callback);
+                return new BoostPriorityCallbackHandler(callback, dataLayer);
             case EXCLUDE:
-                return new ExcludeCallbackHandler(callback);
+                return new ExcludeCallbackHandler(callback, dataLayer);
             case EXCLUDE_AND_NEXT:
-                return new ExcludeAndNextCallbackHandler(callback);
+                return new ExcludeAndNextCallbackHandler(callback, dataLayer);
             case SWIPER_PREV:
             case SWIPER_NEXT:
-                return new SwiperRefreshFlashcardCallbackHandler(callback);
+                return new SwiperRefreshFlashcardCallbackHandler(callback, dataLayer);
             case EXAMPLES:
-                return new FlashcardUsageExamplesCallbackHandler(callback);
+                return new FlashcardUsageExamplesCallbackHandler(callback, dataLayer);
             case QUITE:
-                return new QuiteCallbackHandler(callback);
+                return new QuiteCallbackHandler(callback, dataLayer);
             case DISABLE_EXCERCISE:
-                return new DisableExcerciseMessageHandler(callback);
+                return new DisableExcerciseMessageHandler(callback, dataLayer);
             case ENABLE_EXCERCISE:
-                return new EnableExcerciseMessageHandler(callback);
+                return new EnableExcerciseMessageHandler(callback, dataLayer);
         }
 
         return m -> Collections.emptyList();

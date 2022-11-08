@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
 
@@ -14,13 +14,13 @@ import java.util.List;
 
 abstract class CheckExerciseMessageHandler implements InputMessageHandler {
     private ExerciseFlashcard currentExercise;
-    private ExerciseDataHandler exerciseDataHandler;
+    private DataLayerObject dataLayer;
     private List<BotApiMethod<?>> list = new ArrayList<>();
     private Long chatId;
 
-    public CheckExerciseMessageHandler(ExerciseFlashcard currentFlashcardExercise, ExerciseDataHandler flashcardExerciseDataHandler){
+    public CheckExerciseMessageHandler(ExerciseFlashcard currentFlashcardExercise, DataLayerObject dataLayerObject){
         currentExercise = currentFlashcardExercise;
-        exerciseDataHandler = flashcardExerciseDataHandler;
+        dataLayer = dataLayerObject;
     }
 
     abstract String getCurrentExerciseFlashcardAttributeCheckValue();
@@ -30,8 +30,8 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
         chatId = message.getChatId();
         checkExercise(message.getText().trim());
 
-        if (exerciseDataHandler.getCurrentExercise(chatId) != null){
-            exerciseDataHandler.setLock(chatId, false);
+        if (dataLayer.getCurrentExercise(chatId) != null){
+            dataLayer.setLock(chatId, false);
         } else {
            stopLearning();
         }
@@ -42,7 +42,7 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
     private void checkExercise(String checkValue){
         Boolean isCorrentAnswer = checkValue.equalsIgnoreCase(getCurrentExerciseFlashcardAttributeCheckValue().trim());
 
-        exerciseDataHandler.insertExerciseResult(
+        dataLayer.insertExerciseResult(
                 currentExercise.getUserFlashcardId(),
                 currentExercise.getExerciseCode(),
                 isCorrentAnswer
@@ -56,7 +56,7 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
     private void stopLearning(){
         StringBuffer msg = new StringBuffer ();
         msg.append("Well done! Learned flashcards:\n");
-        exerciseDataHandler.getCurrentBatchFlashcardsByUser(chatId).forEach(v -> {
+        dataLayer.getCurrentBatchFlashcardsByUser(chatId).forEach(v -> {
             msg.append(v);
             msg.append("\n");
         });
@@ -68,9 +68,9 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
         sendMessage.setChatId(String.valueOf(chatId));
 
         //update learned flashcards
-        exerciseDataHandler.refreshLearnedFlashcards();
+        dataLayer.refreshLearnedFlashcards();
         //disable learning mode
-        exerciseDataHandler.setLearnFlashcardState(chatId, false);
+        dataLayer.setLearnFlashcardState(chatId, false);
         //remove keyboard
         ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
         replyKeyboardRemove.setRemoveKeyboard(true);

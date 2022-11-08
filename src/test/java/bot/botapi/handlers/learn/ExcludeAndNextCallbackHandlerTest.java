@@ -1,59 +1,44 @@
 package bot.botapi.handlers.learn;
 
+import bot.FlashcardsBotTestAbstract;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.ExcludeAndNextCallbackHandler;
-import ru.flashcards.telegram.bot.command.addToLearn.SuggetFlashcard;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.Flashcard;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static ru.flashcards.telegram.bot.botapi.Literals.EXCLUDE_AND_NEXT;
 
-@ExtendWith(MockitoExtension.class)
-public class ExcludeAndNextCallbackHandlerTest {
-    @Mock
-    private FlashcardDataHandler flashcardDataHandler;
+public class ExcludeAndNextCallbackHandlerTest extends FlashcardsBotTestAbstract {
     @Mock
     private Message message;
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
-    private CallbackData callbackData;
-    @Mock
-    private SuggetFlashcard suggetFlashcard;
+    private Flashcard flashcard;
 
     @Test
-    void test() throws NoSuchFieldException, IllegalAccessException {
-        Flashcard flashcard = new Flashcard(0L, "description", "transcription", "translation", "word");
+    @Override
+    protected void test() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CallbackData callbackData = new CallbackData(EXCLUDE_AND_NEXT);
+        callbackData.setEntityId(0L);
 
-        when(message.getChatId()).thenReturn(0L);
+        when(flashcard.getWord()).thenReturn("word");
         when(message.getMessageId()).thenReturn(0);
+        when(callbackQuery.getData()).thenReturn(objectMapper.writeValueAsString(callbackData));
         when(callbackQuery.getMessage()).thenReturn(message);
-        when(flashcardDataHandler.findFlashcardById(0L)).thenReturn(flashcard);
+        when(dataLayer.findFlashcardById(0L)).thenReturn(flashcard);
 
-        ExcludeAndNextCallbackHandler handler = new ExcludeAndNextCallbackHandler(callbackData);
-
-        Field flashcardDataHandlerField = handler.getClass().getDeclaredField("flashcardDataHandler");
-        flashcardDataHandlerField.setAccessible(true);
-        flashcardDataHandlerField.set(handler, flashcardDataHandler);
-
-        Field suggetFlashcardField = handler.getClass().getDeclaredField("suggetFlashcard");
-        suggetFlashcardField.setAccessible(true);
-        suggetFlashcardField.set(handler, suggetFlashcard);
-
-        List<BotApiMethod<?>> list = Mockito.spy(handler).handle(callbackQuery);
+        List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleCallbackQueryInputMethod().invoke(testBot, callbackQuery);
 
         assertEquals("Flashcard *word* excluded", ((EditMessageText) list.get(0)).getText());
     }

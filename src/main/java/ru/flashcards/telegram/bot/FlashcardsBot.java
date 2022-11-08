@@ -10,7 +10,7 @@ import ru.flashcards.telegram.bot.botapi.*;
 import ru.flashcards.telegram.bot.command.*;
 import ru.flashcards.telegram.bot.command.addToLearn.FindFlashcardCommand;
 import ru.flashcards.telegram.bot.command.modifyFlashcard.ChangeTranslationCommand;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.List;
 
@@ -21,47 +21,48 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
     private MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
     private ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = new ExerciseMessageHandlerFactory();
     private CallbackHandlerFactory callbackHandlerFactory = new CallbackHandlerFactory();
-    private ExerciseDataHandler exerciseDataHandler = new ExerciseDataHandler();
+    private DataLayerObject dataLayer;
 
-    public FlashcardsBot() {
-        register(new StartCommand("start", ""));
-        register(new StartLearningCommand("l", "", exerciseDataHandler));
-        register(new EnableExcerciseCommand("exe", "", exerciseDataHandler));
-        register(new DisableExcerciseCommand("exd", "", exerciseDataHandler));
-        register(new SwiperCommand("s", ""));
-        register(new FindFlashcardCommand("f", ""));
-        register(new NotificationIntervalSettingsCommand("i", ""));
-        register(new ChangeTranslationCommand("edit", ""));
+    public FlashcardsBot(DataLayerObject dataLayerObject) {
+        dataLayer = dataLayerObject;
+        register(new StartCommand("start", "", dataLayer));
+        register(new StartLearningCommand("l", "", dataLayer));
+        register(new EnableExcerciseCommand("exe", "", dataLayer));
+        register(new DisableExcerciseCommand("exd", "", dataLayer));
+        register(new SwiperCommand("s", "", dataLayer));
+        register(new FindFlashcardCommand("f", "", dataLayer));
+        register(new NotificationIntervalSettingsCommand("i", "", dataLayer));
+        register(new ChangeTranslationCommand("edit", "", dataLayer));
         register(new HelpCommand("h", ""));
     }
 
     @Override
     public void processNonCommandUpdate(Update update) {
         if (update.hasMessage()){
-            processMessageInput(update.getMessage());
+            execute(handleMessageInput(update.getMessage()));
         } else if (update.hasCallbackQuery()) {
-            processCallbackQueryInput(update.getCallbackQuery());
+            execute(handleCallbackQueryInput(update.getCallbackQuery()));
         }
     }
 
-    private void processMessageInput(Message message){
-        if (exerciseDataHandler.isLearnFlashcardState(message.getChatId())){
+    private List<BotApiMethod<?>> handleMessageInput(Message message){
+        if (dataLayer.isLearnFlashcardState(message.getChatId())){
             //learning mode
-            InputMessageHandler exerciseMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);
+            InputMessageHandler exerciseMessageHandler = exerciseMessageHandlerFactory.getHandler(message, dataLayer);
             List<BotApiMethod<?>> exerciseHandleMessageQuery = exerciseMessageHandler.handle(message);
-            execute(exerciseHandleMessageQuery);
+            return exerciseHandleMessageQuery;
         } else {
             //other messages
-            InputMessageHandler inputMessageHandler = messageHandlerFactory.getHandler(message.getText());
+            InputMessageHandler inputMessageHandler = messageHandlerFactory.getHandler(message.getText(), dataLayer);
             List<BotApiMethod<?>> handleMessageQuery = inputMessageHandler.handle(message);
-            execute(handleMessageQuery);
+            return handleMessageQuery;
         }
     }
 
-    private void processCallbackQueryInput(CallbackQuery callbackQuery){
-        InputMessageCallbackHandler inputMessageCallbackHandler = callbackHandlerFactory.getHandler(callbackQuery.getData());
+    private List<BotApiMethod<?>> handleCallbackQueryInput(CallbackQuery callbackQuery){
+        InputMessageCallbackHandler inputMessageCallbackHandler = callbackHandlerFactory.getHandler(callbackQuery.getData(), dataLayer);
         List<BotApiMethod<?>> handleCallbackQuery = inputMessageCallbackHandler.handle(callbackQuery);
-        execute(handleCallbackQuery);
+        return handleCallbackQuery;
     }
 
     private void execute(List<BotApiMethod<?>> list){

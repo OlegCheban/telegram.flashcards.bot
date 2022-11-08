@@ -8,18 +8,18 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.flashcards.telegram.bot.botapi.swiper.Swiper;
-import ru.flashcards.telegram.bot.db.dmlOps.SwiperDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
 
 public class SwiperCommand extends BotCommand {
     private final String badParameters = "Bad parameters";
     private final String flashcardsNotFound = "Flashcards not found";
-    private SwiperDataHandler swiperDataHandler;
+    private DataLayerObject dataLayer;
 
-    public SwiperCommand(String commandIdentifier, String description) {
+    public SwiperCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
-        this.swiperDataHandler = new SwiperDataHandler();
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -36,10 +36,10 @@ public class SwiperCommand extends BotCommand {
             characterConditionParam = arguments[0];
         }
 
-        Long firstFlashcard = swiperDataHandler.getFirstSwiperFlashcard(message.getChatId(), characterConditionParam);
+        Long firstFlashcard = dataLayer.getFirstSwiperFlashcard(message.getChatId(), characterConditionParam);
 
         if (firstFlashcard != null){
-            SwiperFlashcard swiperFlashcard = swiperDataHandler.getSwiperFlashcard(message.getChatId(), firstFlashcard, characterConditionParam);
+            SwiperFlashcard swiperFlashcard = dataLayer.getSwiperFlashcard(message.getChatId(), firstFlashcard, characterConditionParam);
             if (swiperFlashcard != null){
                 Swiper swiper = new Swiper(characterConditionParam, swiperFlashcard);
 

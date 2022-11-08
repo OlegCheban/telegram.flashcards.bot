@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.Flashcard;
 
 import java.util.ArrayList;
@@ -16,10 +16,11 @@ import static java.lang.Math.toIntExact;
 
 public class AddToLearnCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
+    private DataLayerObject dataLayer;
 
-    public AddToLearnCallbackHandler(CallbackData callbackData) {
+    public AddToLearnCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -29,9 +30,9 @@ public class AddToLearnCallbackHandler implements InputMessageCallbackHandler {
         long messageId = message.getMessageId();
         long chatId = message.getChatId();
         Long flashcardId = callbackData.getEntityId();
-        Flashcard flashcard = flashcardDataHandler.findFlashcardById(flashcardId);
+        Flashcard flashcard = dataLayer.findFlashcardById(flashcardId);
 
-        flashcardDataHandler.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(), flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
+        dataLayer.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(), flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
 
         EditMessageText resultMessage = new EditMessageText();
         resultMessage.setChatId(String.valueOf(chatId));

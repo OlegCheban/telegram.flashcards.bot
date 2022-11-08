@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
 import java.util.ArrayList;
@@ -16,10 +16,11 @@ import static java.lang.Math.toIntExact;
 
 public class ProceedToRepetitionCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
+    private DataLayerObject dataLayer;
 
-    public ProceedToRepetitionCallbackHandler(CallbackData callbackData) {
+    public ProceedToRepetitionCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class ProceedToRepetitionCallbackHandler implements InputMessageCallbackH
         long chatId = message.getChatId();
         Long userFlashcardId = callbackData.getEntityId();
 
-        UserFlashcard flashcard = flashcardDataHandler.findUserFlashcardById(userFlashcardId);
+        UserFlashcard flashcard = dataLayer.findUserFlashcardById(userFlashcardId);
 
         EditMessageText translationMessage = new EditMessageText();
         translationMessage.setChatId(String.valueOf(chatId));

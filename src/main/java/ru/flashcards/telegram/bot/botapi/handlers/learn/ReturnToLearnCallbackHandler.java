@@ -6,9 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.SpacedRepetitionNotificationDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
 import java.util.ArrayList;
@@ -18,12 +16,11 @@ import static java.lang.Math.toIntExact;
 
 public class ReturnToLearnCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
-    private SpacedRepetitionNotificationDataHandler spacedRepetitionNotificationDataHandler = new SpacedRepetitionNotificationDataHandler();
-    private ExerciseDataHandler exerciseDataHandler = new ExerciseDataHandler();
+    private DataLayerObject dataLayer;
 
-    public ReturnToLearnCallbackHandler(CallbackData callbackData) {
+    public ReturnToLearnCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -34,10 +31,10 @@ public class ReturnToLearnCallbackHandler implements InputMessageCallbackHandler
         long chatId = message.getChatId();
         Long userFlashcardId = callbackData.getEntityId();
 
-        UserFlashcard flashcard = flashcardDataHandler.findUserFlashcardById(userFlashcardId);
-        spacedRepetitionNotificationDataHandler.deleteSpacedRepetitionHistory(userFlashcardId);
-        exerciseDataHandler.deleteExerciseStat(userFlashcardId);
-        exerciseDataHandler.returnToLearn(userFlashcardId);
+        UserFlashcard flashcard = dataLayer.findUserFlashcardById(userFlashcardId);
+        dataLayer.deleteSpacedRepetitionHistory(userFlashcardId);
+        dataLayer.deleteExerciseStat(userFlashcardId);
+        dataLayer.returnToLearn(userFlashcardId);
 
         EditMessageText resultMessage = new EditMessageText();
         resultMessage.setChatId(String.valueOf(chatId));

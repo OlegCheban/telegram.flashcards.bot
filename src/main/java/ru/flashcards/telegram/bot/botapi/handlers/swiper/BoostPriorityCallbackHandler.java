@@ -8,8 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.swiper.Swiper;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.SwiperDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 
 import java.util.ArrayList;
@@ -19,11 +18,11 @@ import static java.lang.Math.toIntExact;
 
 public class BoostPriorityCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private SwiperDataHandler swiperDataHandler = new SwiperDataHandler();
-    private ExerciseDataHandler exerciseDataHandler = new ExerciseDataHandler();
+    private DataLayerObject dataLayer;
 
-    public BoostPriorityCallbackHandler(CallbackData callbackData) {
+    public BoostPriorityCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -35,12 +34,12 @@ public class BoostPriorityCallbackHandler implements InputMessageCallbackHandler
         long chatId = message.getChatId();
         Long userFlashcardId = callbackData.getEntityId();
 
-        exerciseDataHandler.boostUserFlashcardPriority(userFlashcardId);
+        dataLayer.boostUserFlashcardPriority(userFlashcardId);
 
         if (callbackData.getSwiper() != null){
             characterCondition = callbackData.getSwiper().getCharCond();
         }
-        SwiperFlashcard swiperFlashcard = swiperDataHandler.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition);
+        SwiperFlashcard swiperFlashcard = dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition);
 
         EditMessageText formerMessage = new EditMessageText();
         formerMessage.setChatId(String.valueOf(chatId));

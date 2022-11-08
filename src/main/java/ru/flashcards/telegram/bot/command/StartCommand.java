@@ -4,20 +4,20 @@ import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import ru.flashcards.telegram.bot.db.dmlOps.UserDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.utils.Help;
 
 public class StartCommand extends BotCommand {
-    private UserDataHandler userDataHandler;
+    private DataLayerObject dataLayer;
 
-    public StartCommand(String commandIdentifier, String description) {
+    public StartCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
-        userDataHandler = new UserDataHandler();
+        dataLayer = dataLayerObject;
     }
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        userDataHandler.registerUser(chat.getId(), getUserName(user));
+        dataLayer.registerUser(chat.getId(), getUserName(user));
         Help.sendBotManual(user.getId());
     }
 

@@ -6,8 +6,8 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.command.addToLearn.SuggetFlashcard;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.command.addToLearn.SuggestFlashcard;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.Flashcard;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,13 @@ import static java.lang.Math.toIntExact;
 
 public class AddToLearnAndNextCallbackHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
-    private SuggetFlashcard suggetFlashcard = new SuggetFlashcard();
+    private SuggestFlashcard suggestFlashcard;
+    private DataLayerObject dataLayer;
 
-    public AddToLearnAndNextCallbackHandler(CallbackData callbackData) {
+    public AddToLearnAndNextCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
+        this.suggestFlashcard = new SuggestFlashcard(dataLayerObject);
     }
 
     @Override
@@ -30,9 +32,9 @@ public class AddToLearnAndNextCallbackHandler implements InputMessageCallbackHan
         long messageId = message.getMessageId();
         long chatId = message.getChatId();
         Long flashcardId = callbackData.getEntityId();
-        Flashcard flashcard = flashcardDataHandler.findFlashcardById(flashcardId);
+        Flashcard flashcard = dataLayer.findFlashcardById(flashcardId);
 
-        flashcardDataHandler.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(), flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
+        dataLayer.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(), flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
 
         EditMessageText resultMessage = new EditMessageText();
         resultMessage.setChatId(String.valueOf(chatId));
@@ -41,7 +43,7 @@ public class AddToLearnAndNextCallbackHandler implements InputMessageCallbackHan
         resultMessage.setText("Flashcard *" + flashcard.getWord() + "* added for learning");
 
         list.add(resultMessage);
-        suggetFlashcard.byTop3000Category(chatId);
+        suggestFlashcard.byTop3000Category(chatId);
         return list;
     }
 }

@@ -1,20 +1,20 @@
-package ru.flashcards.telegram.bot.botapi.handlers.learn;
+package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StopLearningMessageHandler implements InputMessageHandler {
-    private ExerciseDataHandler exerciseDataHandler;
+    private DataLayerObject dataLayer;
 
-    public StopLearningMessageHandler(ExerciseDataHandler exerciseDataHandler) {
-        this.exerciseDataHandler = exerciseDataHandler;
+    public StopLearningMessageHandler(DataLayerObject dataLayerObject) {
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class StopLearningMessageHandler implements InputMessageHandler {
         replyKeyboardRemove.setRemoveKeyboard(true);
 
         StringBuffer msg = new StringBuffer ();
-        List<String> learned = exerciseDataHandler.getLearnedFlashcards(message.getChatId());
+        List<String> learned = dataLayer.getLearnedFlashcards(message.getChatId());
         if (!learned.isEmpty()){
             msg.append("Well done! Learned flashcards:\n");
             learned.forEach(v -> {
@@ -37,9 +37,9 @@ public class StopLearningMessageHandler implements InputMessageHandler {
         msg.append("Keep learning!");
 
         //фиксация выученных карточек
-        exerciseDataHandler.refreshLearnedFlashcards();
+        dataLayer.refreshLearnedFlashcards();
         //отключить режим обучения
-        exerciseDataHandler.setLearnFlashcardState(message.getChatId(), false);
+        dataLayer.setLearnFlashcardState(message.getChatId(), false);
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(message.getChatId()));

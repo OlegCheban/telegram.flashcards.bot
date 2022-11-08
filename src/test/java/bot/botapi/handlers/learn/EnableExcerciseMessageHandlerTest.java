@@ -1,46 +1,39 @@
 package bot.botapi.handlers.learn;
 
+import bot.FlashcardsBotTestAbstract;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.EnableExcerciseMessageHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static ru.flashcards.telegram.bot.botapi.Literals.ENABLE_EXCERCISE;
 
-@ExtendWith(MockitoExtension.class)
-public class EnableExcerciseMessageHandlerTest {
-    @Mock
-    private ExerciseDataHandler exerciseDataHandler;
+public class EnableExcerciseMessageHandlerTest extends FlashcardsBotTestAbstract {
     @Mock
     private Message message;
     @Mock
     private CallbackQuery callbackQuery;
-    @Mock
-    private CallbackData callbackData;
 
     @Test
-    void test() throws NoSuchFieldException, IllegalAccessException {
-        when(message.getChatId()).thenReturn(0L);
+    @Override
+    protected void test() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CallbackData callbackData = new CallbackData(ENABLE_EXCERCISE);
+        callbackData.setEntityId(0L);
+
         when(message.getMessageId()).thenReturn(0);
+        when(callbackQuery.getData()).thenReturn(objectMapper.writeValueAsString(callbackData));
         when(callbackQuery.getMessage()).thenReturn(message);
 
-        EnableExcerciseMessageHandler handler = new EnableExcerciseMessageHandler(callbackData);
-        Field field = handler.getClass().getDeclaredField("exerciseDataHandler");
-        field.setAccessible(true);
-        field.set(handler, exerciseDataHandler);
-        List<BotApiMethod<?>> list = Mockito.spy(handler).handle(callbackQuery);
+        List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleCallbackQueryInputMethod().invoke(testBot, callbackQuery);
 
         assertEquals("Done", ((EditMessageText) list.get(0)).getText());
     }

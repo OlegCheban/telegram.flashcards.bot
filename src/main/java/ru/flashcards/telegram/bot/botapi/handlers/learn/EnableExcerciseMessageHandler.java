@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,11 @@ import static java.lang.Math.toIntExact;
 
 public class EnableExcerciseMessageHandler implements InputMessageCallbackHandler {
     private CallbackData callbackData;
-    private ExerciseDataHandler exerciseDataHandler = new ExerciseDataHandler();
+    private DataLayerObject dataLayer;
 
-    public EnableExcerciseMessageHandler(CallbackData callbackData) {
+    public EnableExcerciseMessageHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
         this.callbackData = callbackData;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class EnableExcerciseMessageHandler implements InputMessageCallbackHandle
         long messageId = message.getMessageId();
         long chatId = message.getChatId();
 
-        exerciseDataHandler.enableExcercise(chatId, callbackData.getEntityCode());
+        dataLayer.enableExcercise(chatId, callbackData.getEntityCode());
 
         EditMessageText editMessage = new EditMessageText();
         editMessage.setChatId(String.valueOf(chatId));

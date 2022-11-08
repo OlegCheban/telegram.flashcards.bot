@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SendToLearnFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
 
@@ -15,17 +15,21 @@ import java.util.stream.Collectors;
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 import static ru.flashcards.telegram.bot.botapi.Literals.EXCLUDE;
 
-public class SuggetFlashcard {
+public class SuggestFlashcard {
     private static ObjectMapper objectMapper = new ObjectMapper();
-    private FlashcardDataHandler flashcardDataHandler = new FlashcardDataHandler();
+    private DataLayerObject dataLayer;
+
+    public SuggestFlashcard(DataLayerObject dataLayer) {
+        this.dataLayer = dataLayer;
+    }
 
     public void byParam(Long chatId, String param){
-        List<SendToLearnFlashcard> sendToLearnFlashcards = flashcardDataHandler.getFlashcardsByWordToSuggestLearning(chatId, param);
+        List<SendToLearnFlashcard> sendToLearnFlashcards = dataLayer.getFlashcardsByWordToSuggestLearning(chatId, param);
         sendToLearnFlashcards.forEach((queue) -> {
             try {
                 SendService.sendMessage(queue.getUserId(),
                         "*" + queue.getWord() + "* \\[" + queue.getTranscription() + "]\n" + queue.getDescription() + "\n\n*Translation:* " + queue.getTranslation() + "\n" +
-                                flashcardDataHandler.getExamplesByFlashcardId(queue.getFlashcardId()).stream().map(Objects::toString).collect(Collectors.joining("\n", "*Examples:*\n", "")),
+                                dataLayer.getExamplesByFlashcardId(queue.getFlashcardId()).stream().map(Objects::toString).collect(Collectors.joining("\n", "*Examples:*\n", "")),
                         String.valueOf(prepareLearnButtonsInlineKeyboardJson(queue.getFlashcardId(), ADD_TO_LEARN, EXCLUDE))
                 );
 
@@ -40,12 +44,12 @@ public class SuggetFlashcard {
     }
 
     public void byTop3000Category(Long chatId){
-        List<SendToLearnFlashcard> sendToLearnFlashcards = flashcardDataHandler.getFlashcardsByCategoryToSuggestLearning(chatId, 713L);
+        List<SendToLearnFlashcard> sendToLearnFlashcards = dataLayer.getFlashcardsByCategoryToSuggestLearning(chatId, 713L);
         sendToLearnFlashcards.forEach((queue) -> {
             try {
                 SendService.sendMessage(queue.getUserId(),
                         "*" + queue.getWord() + "* \\[" + queue.getTranscription() + "]\n" + queue.getDescription() + "\n\n*Translation:* " + queue.getTranslation() + "\n" +
-                                flashcardDataHandler.getExamplesByFlashcardId(queue.getFlashcardId()).stream().map(Objects::toString).collect(Collectors.joining("\n","*Examples:*\n", "")),
+                                dataLayer.getExamplesByFlashcardId(queue.getFlashcardId()).stream().map(Objects::toString).collect(Collectors.joining("\n","*Examples:*\n", "")),
                         String.valueOf(prepareLearnButtonsInlineKeyboardJson(queue.getFlashcardId(), ADD_TO_LEARN_AND_NEXT, EXCLUDE_AND_NEXT))
                 );
 

@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind;
 
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ import java.util.List;
 import static ru.flashcards.telegram.bot.botapi.Literals.DISABLE_EXCERCISE;
 
 public class DisableExcerciseCommand extends BotCommand {
-    private ExerciseDataHandler exerciseDataHandler;
+    private DataLayerObject dataLayer;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public DisableExcerciseCommand(String commandIdentifier, String description, ExerciseDataHandler exerciseDataHandler) {
+    public DisableExcerciseCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
-        this.exerciseDataHandler = exerciseDataHandler;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class DisableExcerciseCommand extends BotCommand {
         SendMessage replyMessage = new SendMessage();
         replyMessage.setChatId(String.valueOf(message.getChatId()));
 
-        List<ExerciseKind> exerciseKinds  = exerciseDataHandler.getExerciseKindToDisable(chatId);
+        List<ExerciseKind> exerciseKinds  = dataLayer.getExerciseKindToDisable(chatId);
         if (!exerciseKinds.isEmpty()) {
             InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
             List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();

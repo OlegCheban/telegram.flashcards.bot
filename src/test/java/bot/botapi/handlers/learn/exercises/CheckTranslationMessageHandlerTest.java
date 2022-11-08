@@ -1,16 +1,10 @@
 package bot.botapi.handlers.learn.exercises;
 
+import bot.FlashcardsBotTestAbstract;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.ExerciseMessageHandlerFactory;
-import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.ExerciseDataHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
 
@@ -20,37 +14,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static ru.flashcards.telegram.bot.botapi.Literals.CHECK_TRANSLATION;
 
-@ExtendWith(MockitoExtension.class)
-public class CheckTranslationMessageHandlerTest {
+public class CheckTranslationMessageHandlerTest extends FlashcardsBotTestAbstract {
     @Mock
-    private Message message;
-
-    @Mock
-    private ExerciseDataHandler exerciseDataHandler;
-
-    @Spy
-    private ExerciseMessageHandlerFactory exerciseMessageHandlerFactory;
+    private ExerciseFlashcard exerciseFlashcard;
 
     @Test
-    void test() {
+    @Override
+    protected void test() throws Exception {
+        when(exerciseFlashcard.getExerciseCode()).thenReturn(CHECK_TRANSLATION);
+        when(exerciseFlashcard.getTranslation()).thenReturn("translationValue");
         when(message.getChatId()).thenReturn(0L);
-        when(message.getText()).thenReturn("checkTranslationValue");
-
-        ExerciseFlashcard exerciseFlashcard =
-                new ExerciseFlashcard(
-                        0L,
-                        null,
-                        CHECK_TRANSLATION,
-                        null,
-                        null,
-                        0L,
-                        "checkTranslationValue",
-                        null);
-
-        when(exerciseDataHandler.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
-
-        InputMessageHandler inputMessageHandler = exerciseMessageHandlerFactory.getHandler(message, exerciseDataHandler);
-        List<BotApiMethod<?>> list = inputMessageHandler.handle(message);
+        when(message.getText()).thenReturn("translationValue");
+        when(dataLayer.isLearnFlashcardState(message.getChatId())).thenReturn(true);
+        when(dataLayer.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
+        List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleMessageInputMethod().invoke(testBot, message);
 
         assertTrue(RandomMessageText.positiveMessages.contains(((SendMessage) list.get(0)).getText()));
     }

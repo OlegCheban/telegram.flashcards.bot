@@ -5,16 +5,16 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import ru.flashcards.telegram.bot.db.dmlOps.FlashcardDataHandler;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.service.SendService;
 
 public class ChangeTranslationCommand extends BotCommand {
     private final String badParameters = "Bad parameters";
-    private FlashcardDataHandler flashcardDataHandler;
+    private DataLayerObject dataLayer;
 
-    public ChangeTranslationCommand(String commandIdentifier, String description) {
+    public ChangeTranslationCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
-        this.flashcardDataHandler = new FlashcardDataHandler();
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ChangeTranslationCommand extends BotCommand {
             text = arguments[0];
         }
 
-        flashcardDataHandler.editTranslation(message.getChatId(), text.split("#")[0], text.split("#")[1]);
+        dataLayer.editTranslation(message.getChatId(), text.split("#")[0], text.split("#")[1]);
         SendService.sendMessage(message.getChatId(), "Done");
     }
 
