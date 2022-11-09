@@ -62,7 +62,7 @@ Bot has several kinds of drills which help you learn flashcards
 - I want to be able to get flashcards by percentile in swiper.
 - I want to be able to set flashcards quantity for training.
 - I want to be able to edit translation for my flashcards.
-
+- I want to be able to get similar flashcards when one of mine have not been found by misspell reason.  
 
  
   
