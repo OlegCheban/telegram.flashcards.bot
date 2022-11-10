@@ -26,7 +26,7 @@ public class StopLearningMessageHandler implements InputMessageHandler {
         StringBuffer msg = new StringBuffer ();
         List<String> learned = dataLayer.getLearnedFlashcards(message.getChatId());
         if (!learned.isEmpty()){
-            msg.append("Well done! Learned flashcards:\n");
+            msg.append("Well done! You have just learned flashcards:\n");
             learned.forEach(v -> {
                 msg.append(v);
                 msg.append("\n");

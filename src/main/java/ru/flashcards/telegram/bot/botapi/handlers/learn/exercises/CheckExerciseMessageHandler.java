@@ -55,7 +55,7 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
 
     private void stopLearning(){
         StringBuffer msg = new StringBuffer ();
-        msg.append("Well done! Learned flashcards:\n");
+        msg.append("Well done! You have just learned flashcards:\n");
         dataLayer.getCurrentBatchFlashcardsByUser(chatId).forEach(v -> {
             msg.append(v);
             msg.append("\n");

@@ -166,18 +166,20 @@ public class DataLayerObject {
      */
     public List<String> getCurrentBatchFlashcardsByUser(Long chatId) {
         return new SelectWithParams<String>(
-                "select word\n" +
+                "select x.word\n" +
                         "from (\n" +
-                        "       select user_id,\n" +
-                        "              id user_flashcard_id,\n" +
-                        "              word,\n" +
-                        "              row_number() over(partition by user_id\n" +
-                        "       order by nearest_training desc, id) rn\n" +
-                        "       from main.user_flashcard\n" +
-                        "       where user_id = (select id from main.user where chat_id = ?) and\n" +
-                        "             learned_date is null\n" +
+                        "       select uf.user_id,\n" +
+                        "              uf.id user_flashcard_id,\n" +
+                        "              uf.word,\n" +
+                        "              u.cards_per_training,\n" +
+                        "              row_number() over(partition by uf.user_id\n" +
+                        "       order by uf.nearest_training desc, uf.id) rn\n" +
+                        "       from main.user_flashcard uf\n" +
+                        "          join main.user u on uf.user_id = u.id\n" +
+                        "       where u.chat_id = ? and\n" +
+                        "             uf.learned_date is null\n" +
                         "     ) x\n" +
-                        "where rn <= 7"
+                        "where x.rn <= x.cards_per_training"
         ){
             @Override
             protected String rowMapper(ResultSet rs) throws SQLException {
@@ -646,6 +648,17 @@ public class DataLayerObject {
             @Override
             protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setInt(1, minQty);
+                preparedStatement.setLong(2, chatId);
+                return preparedStatement;
+            }
+        }.run();
+    }
+
+    public int setTrainingFlashcardsQuantity (Integer qty, Long chatId) {
+        return new Update("update main.user set cards_per_training = ? where chat_id = ?"){
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setInt(1, qty);
                 preparedStatement.setLong(2, chatId);
                 return preparedStatement;
             }

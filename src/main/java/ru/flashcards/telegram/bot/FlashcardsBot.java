@@ -27,11 +27,12 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
         dataLayer = dataLayerObject;
         register(new StartCommand("start", "", dataLayer));
         register(new StartLearningCommand("l", "", dataLayer));
-        register(new EnableExcerciseCommand("exe", "", dataLayer));
-        register(new DisableExcerciseCommand("exd", "", dataLayer));
+        register(new EnableExcerciseCommand("ee", "", dataLayer));
+        register(new DisableExcerciseCommand("de", "", dataLayer));
         register(new SwiperCommand("s", "", dataLayer));
         register(new FindFlashcardCommand("f", "", dataLayer));
-        register(new NotificationIntervalSettingsCommand("i", "", dataLayer));
+        register(new NotificationIntervalSettingsCommand("ni", "", dataLayer));
+        register(new TrainingFlashcardsQuantitySettingsCommand("fq", "", dataLayer));
         register(new ChangeTranslationCommand("edit", "", dataLayer));
         register(new HelpCommand("h", ""));
     }

@@ -21,11 +21,12 @@ public class Help {
                         "3. Exercises\n" +
                         "Bot has several kinds of drills which help you learn flashcards\n" +
                         "/l to start learning\n" +
-                        "/exe to enable exercises \n" +
-                        "/exd to disable exercises \n\n" +
+                        "/ee to enable exercises \n" +
+                        "/de to disable exercises \n\n" +
 
                         "4. Others commands\n" +
-                        "/i <min> - changes notifications interval (default 60 min) \n" +
+                        "/ni <min> - changes notifications interval (default 60 min) \n" +
+                        "/fq <min> - changes flashcards quantity for training (default 5 flashcards) \n" +
                         "/h displays help\n\n"+
 
                         "5. Bot sends notifications:\n" +

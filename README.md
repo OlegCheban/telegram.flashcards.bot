@@ -47,7 +47,8 @@ Bot has several kinds of drills which help you learn flashcards
 /exd to disable exercises 
 
 4. Others commands
-/i <min> - changes notifications interval (default 60 min) 
+/ni <min> - changes notifications interval (default 60 min) 
+/fq <min> - changes flashcards quantity for training (default 5 flashcards)
 /h displays help
 
 5. Bot sends notifications:
@@ -60,7 +61,6 @@ Bot has several kinds of drills which help you learn flashcards
 - I want to be able to get a feature like watering sessions in the Memrise.  
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to get flashcards by percentile in swiper.
-- I want to be able to set flashcards quantity for training.
 - I want to be able to edit translation for my flashcards.
 - I want to be able to get similar flashcards when one of mine have not been found by misspell reason.  
 
