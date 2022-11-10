@@ -12,7 +12,7 @@
             </not>
         </preConditions>
         <addColumn schemaName="main" tableName="user">
-            <column name="cards_per_training" type="integer" defaultValueComputed="2"></column>
+            <column name="cards_per_training" type="integer" defaultValueComputed="5"/>
         </addColumn>
     </changeSet>
 

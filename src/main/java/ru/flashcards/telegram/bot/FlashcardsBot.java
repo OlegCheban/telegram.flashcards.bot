@@ -18,9 +18,9 @@ import java.util.List;
  * @author Oleg Cheban
  */
 public class FlashcardsBot extends TelegramLongPollingCommandBot {
-    private MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
     private ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = new ExerciseMessageHandlerFactory();
     private CallbackHandlerFactory callbackHandlerFactory = new CallbackHandlerFactory();
+    private MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
     private DataLayerObject dataLayer;
 
     public FlashcardsBot(DataLayerObject dataLayerObject) {
