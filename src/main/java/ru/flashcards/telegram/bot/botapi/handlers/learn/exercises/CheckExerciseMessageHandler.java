@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
+import ru.flashcards.telegram.bot.botapi.exercise.Exercise;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
@@ -28,10 +29,12 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
     @Override
     public List<BotApiMethod<?>> handle(Message message){
         chatId = message.getChatId();
-        checkExercise(message.getText().trim());
+        Boolean result = checkExercise(message.getText().trim());
+        sendResultMessage(result, chatId);
 
         if (dataLayer.getCurrentExercise(chatId) != null){
-            dataLayer.setLock(chatId, false);
+            Exercise exercise = new Exercise(dataLayer);
+            list.add(exercise.newExercise(chatId));
         } else {
            stopLearning();
         }
@@ -39,8 +42,11 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
         return list;
     }
 
-    private void checkExercise(String checkValue){
-        Boolean isCorrentAnswer = checkValue.equalsIgnoreCase(getCurrentExerciseFlashcardAttributeCheckValue().trim());
+    private boolean checkExercise(String checkValue){
+        Boolean isCorrentAnswer =
+                checkValue.equalsIgnoreCase(
+                    getCurrentExerciseFlashcardAttributeCheckValue().trim()
+                );
 
         dataLayer.insertExerciseResult(
                 currentExercise.getUserFlashcardId(),
@@ -48,9 +54,7 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
                 isCorrentAnswer
         );
 
-        SendMessage sendMessage = sendAnswer(isCorrentAnswer);
-        sendMessage.setChatId(String.valueOf(chatId));
-        list.add(sendMessage);
+        return isCorrentAnswer;
     }
 
     private void stopLearning(){
@@ -69,8 +73,6 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
 
         //update learned flashcards
         dataLayer.refreshLearnedFlashcards();
-        //disable learning mode
-        dataLayer.setLearnFlashcardState(chatId, false);
         //remove keyboard
         ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
         replyKeyboardRemove.setRemoveKeyboard(true);
@@ -79,14 +81,15 @@ abstract class CheckExerciseMessageHandler implements InputMessageHandler {
         list.add(sendMessage);
     }
 
-    private SendMessage sendAnswer(Boolean result){
+    private void sendResultMessage(Boolean result, Long chatId){
         SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
         sendMessage.setText(result ?
                 RandomMessageText.getPositiveMessage() :
                 RandomMessageText.getNegativeMessage()
         );
 
-        return  sendMessage;
+        list.add(sendMessage);
     }
 
     protected ExerciseFlashcard getCurrentExercise(){

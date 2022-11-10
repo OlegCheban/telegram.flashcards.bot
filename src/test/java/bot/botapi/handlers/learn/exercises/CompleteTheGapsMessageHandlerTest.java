@@ -23,10 +23,12 @@ public class CompleteTheGapsMessageHandlerTest extends FlashcardsBotTestAbstract
     protected void test() throws Exception{
         when(exerciseFlashcard.getExerciseCode()).thenReturn(COMPLETE_THE_GAPS);
         when(exerciseFlashcard.getWord()).thenReturn("wordValue");
+        when(exerciseFlashcard.getExample()).thenReturn("example");
         when(message.getChatId()).thenReturn(0L);
         when(message.getText()).thenReturn("wordValue");
         when(dataLayer.isLearnFlashcardState(message.getChatId())).thenReturn(true);
         when(dataLayer.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
+        when(dataLayer.getExercise(message.getChatId())).thenReturn(exerciseFlashcard);
         List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleMessageInputMethod().invoke(testBot, message);
 
         assertTrue(RandomMessageText.positiveMessages.contains(((SendMessage) list.get(0)).getText()));

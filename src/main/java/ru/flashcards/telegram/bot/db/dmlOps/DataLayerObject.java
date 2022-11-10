@@ -52,10 +52,10 @@ public class DataLayerObject {
     /**
      * Список упражнений
      */
-    public List<ExerciseFlashcard> getExercise() {
-        return new Select<ExerciseFlashcard>(
+    public ExerciseFlashcard getExercise(Long chatId) {
+        return new SelectWithParams<ExerciseFlashcard>(
                 "select chat_id, word, code, description, transcription, user_flashcard_id, translation, example " +
-                        "from main.next_exercise_queue where not learn_flashcard_lock") {
+                        "from main.next_exercise_queue where chat_id = ?") {
             @Override
             protected ExerciseFlashcard rowMapper(ResultSet rs) throws SQLException {
                 return new ExerciseFlashcard(
@@ -69,7 +69,13 @@ public class DataLayerObject {
                         rs.getString("example")
                 );
             }
-        }.getCollection();
+
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, chatId);
+                return preparedStatement;
+            }
+        }.getObject();
     }
 
     /**
@@ -106,20 +112,6 @@ public class DataLayerObject {
                 return rs.getString("word");
             }
         }.getCollection();
-    }
-
-    /**
-     * Блокировка отправки упражнений
-     */
-    public int setLock(Long chatId, Boolean value) {
-        return new Update("update main.user set learn_flashcard_lock = ? where chat_id = ?"){
-            @Override
-            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setBoolean(1, value);
-                preparedStatement.setLong(2, chatId);
-                return preparedStatement;
-            }
-        }.run();
     }
 
     public int insertExerciseResult (Long userFlashcardId, String exerciseKind, Boolean result) {

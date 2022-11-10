@@ -25,6 +25,7 @@ public class MemorisedMessageHandlerTest extends FlashcardsBotTestAbstract {
         when(message.getText()).thenReturn("Memorised");
         when(dataLayer.isLearnFlashcardState(message.getChatId())).thenReturn(true);
         when(dataLayer.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
+        when(dataLayer.getExercise(message.getChatId())).thenReturn(exerciseFlashcard);
         List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleMessageInputMethod().invoke(testBot, message);
 
         assertTrue(RandomMessageText.positiveMessages.contains(((SendMessage) list.get(0)).getText()));
