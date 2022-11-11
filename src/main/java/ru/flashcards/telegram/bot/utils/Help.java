@@ -16,7 +16,8 @@ public class Help {
                         "/s <value> - displays flashcards which start from an input value\n" +
                         "Additional functionality:\n" +
                         "   - ability to reset statistics for flashcards which have already learned (100% progress). Use \"reset progress\" button.\n" +
-                        "   - ability to pick flashcards for nearest training. Use \"boost priority\" button.\n\n" +
+                        "   - ability to pick flashcards for nearest training. Use \"boost priority\" button.\n" +
+                        "   - ability to see examples of usage. Use \"example of usage\" button.\n\n" +
 
                         "3. Exercises\n" +
                         "Bot has several kinds of drills which help you learn flashcards\n" +

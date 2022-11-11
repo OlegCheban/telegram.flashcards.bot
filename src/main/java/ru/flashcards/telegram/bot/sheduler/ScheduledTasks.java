@@ -87,7 +87,7 @@ public class ScheduledTasks {
 
         userFlashcardPushMonos.forEach((queue) -> {
             List<JSONObject> listButtons = new ArrayList<>();
-            listButtons.add(prepareButton(queue.getUserFlashcardId(), "show translation", TRANSLATE));
+            listButtons.add(prepareButton(queue.getUserFlashcardId(), "translate", TRANSLATE));
             listButtons.add(prepareButton(queue.getUserFlashcardId(), "example of usage", EXAMPLES));
 
             if (queue.getLastPushTimestamp() == null || queue.getLastPushTimestamp().plusMinutes(queue.getNotificationInterval()).isBefore(LocalDateTime.now())) {

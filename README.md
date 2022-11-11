@@ -39,6 +39,7 @@ With swiper you can see your flashcards
 Additional functionality:
    - ability to reset statistics for flashcards which have already learned (100% progress). Use "reset progress" button;
    - ability to pick flashcards for nearest training. Use "boost priority" button.
+   - ability to see examples of usage. Use "example of usage" button.
 
 3. Exercises
 Bot has several kinds of drills which help you learn flashcards

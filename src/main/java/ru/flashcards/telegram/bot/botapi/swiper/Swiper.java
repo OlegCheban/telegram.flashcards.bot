@@ -41,6 +41,8 @@ public class Swiper {
             if (swiperFlashcard.getLearnPrc() == 0 && swiperFlashcard.getNearestTraining() == 0){
                 optionsRowInline.add(boostPriorityButton());
             }
+                optionsRowInline.add(exampleOfUsageButton());
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -106,6 +108,17 @@ public class Swiper {
             SwiperParams swiperParams = new SwiperParams(charCond);
             boostPriorityCallbackData.setSwiper(swiperParams);
         }
+
+        boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(boostPriorityCallbackData));
+        return boostPriorityButton;
+    }
+
+    private InlineKeyboardButton exampleOfUsageButton() throws JsonProcessingException {
+        InlineKeyboardButton boostPriorityButton = new InlineKeyboardButton();
+        boostPriorityButton.setText("example of usage");
+
+        CallbackData boostPriorityCallbackData = new CallbackData(EXAMPLES);
+        boostPriorityCallbackData.setEntityId(swiperFlashcard.getCurrentId());
 
         boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(boostPriorityCallbackData));
         return boostPriorityButton;

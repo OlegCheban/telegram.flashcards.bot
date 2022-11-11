@@ -23,6 +23,7 @@ public class StartLearningCommand extends BotCommand {
             if (dataLayer.existsExercise(user.getId())){
                 //enable learn mode
                 dataLayer.setLearnFlashcardState(user.getId(), true);
+                //send an exercise
                 Exercise exercise = new Exercise(dataLayer);
                 absSender.execute(exercise.newExercise(chat.getId()));
             } else {
