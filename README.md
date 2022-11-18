@@ -44,8 +44,8 @@ Additional functionality:
 3. Exercises
 Bot has several kinds of drills which help you learn flashcards
 /l to start learning
-/exe to enable exercises 
-/exd to disable exercises 
+/ee to enable exercises 
+/de to disable exercises 
 
 4. Others commands
 /ni <min> - changes notifications interval (default 60 min) 
