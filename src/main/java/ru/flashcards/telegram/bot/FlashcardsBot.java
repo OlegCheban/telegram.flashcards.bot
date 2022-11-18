@@ -21,12 +21,14 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
     private ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = new ExerciseMessageHandlerFactory();
     private CallbackHandlerFactory callbackHandlerFactory = new CallbackHandlerFactory();
     private MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
+    private WateringSessionHandlerFactory wateringSessionHandlerFactory = new WateringSessionHandlerFactory();
     private DataLayerObject dataLayer;
 
     public FlashcardsBot(DataLayerObject dataLayerObject) {
         dataLayer = dataLayerObject;
         register(new StartCommand("start", "", dataLayer));
         register(new StartLearningCommand("l", "", dataLayer));
+        register(new StartWateringSessionCommand("ws", "", dataLayer));
         register(new EnableExcerciseCommand("ee", "", dataLayer));
         register(new DisableExcerciseCommand("de", "", dataLayer));
         register(new SwiperCommand("s", "", dataLayer));
@@ -47,17 +49,23 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
     }
 
     private List<BotApiMethod<?>> handleMessageInput(Message message){
+        List<BotApiMethod<?>> queryResult = null;
+
         if (dataLayer.isLearnFlashcardState(message.getChatId())){
             //learning mode
             InputMessageHandler exerciseMessageHandler = exerciseMessageHandlerFactory.getHandler(message, dataLayer);
-            List<BotApiMethod<?>> exerciseHandleMessageQuery = exerciseMessageHandler.handle(message);
-            return exerciseHandleMessageQuery;
-        } else {
+            queryResult = exerciseMessageHandler.handle(message);
+        } else if (dataLayer.isWateringSession(message.getChatId())){
+            //watering session
+            InputMessageHandler wateringSessionHandler = wateringSessionHandlerFactory.getHandler(message, dataLayer);
+            queryResult = wateringSessionHandler.handle(message);
+        } else{
             //other messages
             InputMessageHandler inputMessageHandler = messageHandlerFactory.getHandler(message.getText(), dataLayer);
-            List<BotApiMethod<?>> handleMessageQuery = inputMessageHandler.handle(message);
-            return handleMessageQuery;
+            queryResult = inputMessageHandler.handle(message);
         }
+
+        return queryResult;
     }
 
     private List<BotApiMethod<?>> handleCallbackQueryInput(CallbackQuery callbackQuery){

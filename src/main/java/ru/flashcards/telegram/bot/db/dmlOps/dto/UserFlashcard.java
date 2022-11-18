@@ -1,16 +1,26 @@
 package ru.flashcards.telegram.bot.db.dmlOps.dto;
 
 public class UserFlashcard {
+    private Long id;
     private String description;
     private String transcription;
     private String translation;
     private String word;
 
-    public UserFlashcard(String description, String transcription, String translation, String word) {
+    public UserFlashcard(Long id, String description, String transcription, String translation, String word) {
+        this.id = id;
         this.description = description;
         this.transcription = transcription;
         this.translation = translation;
         this.word = word;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {

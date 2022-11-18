@@ -78,6 +78,39 @@ public class DataLayerObject {
         }.getObject();
     }
 
+    public UserFlashcard getUserFlashcardForWateringSession(Long chatId) {
+        return new SelectWithParams<UserFlashcard>(
+                "select a.id, a.description, a.transcription, a.translation, a.word from main.user_flashcard a, main.user b " +
+                        "where a.user_id = b.id and b.chat_id = ? and a.learned_date is not null order by a.watering_session_date nulls first, a.id limit 1") {
+            @Override
+            protected UserFlashcard rowMapper(ResultSet rs) throws SQLException {
+                return new UserFlashcard(
+                        rs.getLong("id"),
+                        rs.getString("description"),
+                        rs.getString("transcription"),
+                        rs.getString("translation"),
+                        rs.getString("word")
+                );
+            }
+
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, chatId);
+                return preparedStatement;
+            }
+        }.getObject();
+    }
+
+    public int setWateringSessionDate(Long userFlashcardId) {
+        return new Update("update main.user_flashcard set watering_session_date = now() where id = ?"){
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, userFlashcardId);
+                return preparedStatement;
+            }
+        }.run();
+    }
+
     /**
      * Список случайных описаний
      */
@@ -212,6 +245,17 @@ public class DataLayerObject {
         }.run();
     }
 
+    public int setWateringSessionMode(Long chatId, Boolean value) {
+        return new Update("update main.user set watering_session = ? where chat_id = ?"){
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setBoolean(1, value);
+                preparedStatement.setLong(2, chatId);
+                return preparedStatement;
+            }
+        }.run();
+    }
+
     /**
      * Признак включенного режима обучения
      */
@@ -220,6 +264,21 @@ public class DataLayerObject {
             @Override
             protected Boolean rowMapper(ResultSet rs) throws SQLException {
                 return rs.getBoolean("learn_flashcard_state");
+            }
+
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, chatId);
+                return preparedStatement;
+            }
+        }.getObject();
+    }
+
+    public Boolean isWateringSession(Long chatId) {
+        return new SelectWithParams<Boolean>("select watering_session from main.user where chat_id = ?"){
+            @Override
+            protected Boolean rowMapper(ResultSet rs) throws SQLException {
+                return rs.getBoolean("watering_session");
             }
 
             @Override
@@ -252,6 +311,22 @@ public class DataLayerObject {
     public Boolean existsExercise(Long chatId) {
         return new SelectWithParams<Boolean>("select exists(select 1 from main.user_flashcard a, main.user b " +
                 "where a.user_id = b.id and a.learned_date is null and b.chat_id = ? limit 1) result"){
+            @Override
+            protected Boolean rowMapper(ResultSet rs) throws SQLException {
+                return rs.getBoolean("result");
+            }
+
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, chatId);
+                return preparedStatement;
+            }
+        }.getObject();
+    }
+
+    public Boolean existsLearnedFlashcards(Long chatId) {
+        return new SelectWithParams<Boolean>("select exists(select 1 from main.user_flashcard a, main.user b " +
+                "where a.user_id = b.id and b.chat_id = ? and a.learned_date is not null limit 1) result"){
             @Override
             protected Boolean rowMapper(ResultSet rs) throws SQLException {
                 return rs.getBoolean("result");
@@ -510,10 +585,11 @@ public class DataLayerObject {
      * Найти карточку пользователя по ид
      */
     public UserFlashcard findUserFlashcardById(Long flashcardId) {
-        return new SelectWithParams<UserFlashcard>("select description, transcription, translation, word from main.user_flashcard where id = ?"){
+        return new SelectWithParams<UserFlashcard>("select id, description, transcription, translation, word from main.user_flashcard where id = ?"){
             @Override
             protected UserFlashcard rowMapper(ResultSet rs) throws SQLException {
                 return  new UserFlashcard(
+                        rs.getLong("id"),
                         rs.getString("description"),
                         rs.getString("transcription"),
                         rs.getString("translation"),
