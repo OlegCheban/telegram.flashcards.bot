@@ -8,7 +8,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.utils.Lambda;
+import ru.flashcards.telegram.bot.utils.WateringSessionTimingSingleton;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -39,6 +41,7 @@ public class WateringSession {
 
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
 
+        WateringSessionTimingSingleton.setStartDateTime(chatId, LocalDateTime.now());
         return sendMessage;
     }
 

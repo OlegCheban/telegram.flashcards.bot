@@ -35,6 +35,7 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
         register(new FindFlashcardCommand("f", "", dataLayer));
         register(new NotificationIntervalSettingsCommand("ni", "", dataLayer));
         register(new TrainingFlashcardsQuantitySettingsCommand("fq", "", dataLayer));
+        register(new WateringSessionReplyTimeSettingsCommand("wt", "", dataLayer));
         register(new ChangeTranslationCommand("edit", "", dataLayer));
         register(new HelpCommand("h", ""));
     }

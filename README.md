@@ -47,19 +47,22 @@ Bot has several kinds of drills which help you learn flashcards
 /ee to enable exercises 
 /de to disable exercises 
 
-4. Others commands
+4. Watering session (repeat your learned flashcards and pick correct translation till time out)
+/ws to start watering session
+
+5. Others commands
 /ni <min> - changes notifications interval (default 60 min) 
 /fq <min> - changes flashcards quantity for training (default 5 flashcards)
+/wt <seconds> - changes watering session reply time (default 5 seconds)
 /h displays help
 
-5. Bot sends notifications:
+6. Bot sends notifications:
    - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can submit flashcard to learn again;
    - random flashcards notifications.
 ```
 
 #### User stories
-
-- I want to be able to get a feature like watering sessions in the Memrise.  
+  
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to get flashcards by percentile in swiper.
 - I want to be able to edit translation for my flashcards.

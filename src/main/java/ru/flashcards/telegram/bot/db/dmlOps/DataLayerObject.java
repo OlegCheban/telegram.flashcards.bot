@@ -733,6 +733,33 @@ public class DataLayerObject {
         }.run();
     }
 
+    public int setWateringSessionReplyTime (Integer seconds, Long chatId) {
+        return new Update("update main.user set watering_session_reply_time = ? where chat_id = ?"){
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setInt(1, seconds);
+                preparedStatement.setLong(2, chatId);
+                return preparedStatement;
+            }
+        }.run();
+    }
+
+    public int getWateringSessionReplyTime (Long chatId){
+        return new SelectWithParams<Integer>(
+                "select watering_session_reply_time from main.user where chat_id = ?"){
+            @Override
+            protected Integer rowMapper(ResultSet rs) throws SQLException {
+                return rs.getInt("watering_session_reply_time");
+            }
+
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, chatId);
+                return  preparedStatement;
+            }
+        }.getObject();
+    }
+
     /**
      * Регистрация факта отправки уведомления для интервальных уведомлений
      */

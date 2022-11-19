@@ -25,12 +25,16 @@ public class Help {
                         "/ee to enable exercises \n" +
                         "/de to disable exercises \n\n" +
 
-                        "4. Others commands\n" +
+                        "4. Watering session (repeat your learned flashcards and pick correct translation till time out)\n" +
+                        "/ws to start watering session\n\n" +
+
+                        "5. Others commands\n" +
                         "/ni <min> - changes notifications interval (default 60 min) \n" +
                         "/fq <min> - changes flashcards quantity for training (default 5 flashcards) \n" +
+                        "/wt <seconds> - changes watering session reply time (default 5 seconds) \n" +
                         "/h displays help\n\n"+
 
-                        "5. Bot sends notifications:\n" +
+                        "6. Bot sends notifications:\n" +
                         "   - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can submit flashcard to learn again;\n" +
                         "   - random flashcards notifications;\n"
         );

@@ -1,7 +1,7 @@
 package ru.flashcards.telegram.bot.botapi;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.handlers.wateringSession.CheckWateringSessionExcerciseMessageHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.wateringSession.CheckWateringSessionExerciseMessageHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.wateringSession.StopWateringSessionHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
@@ -14,7 +14,7 @@ public class WateringSessionHandlerFactory {
             return new StopWateringSessionHandler(dataLayer);
         } else {
             UserFlashcard userFlashcard = dataLayer.getUserFlashcardForWateringSession(message.getChatId());
-            return new CheckWateringSessionExcerciseMessageHandler(userFlashcard, dataLayer);
+            return new CheckWateringSessionExerciseMessageHandler(userFlashcard, dataLayer);
         }
     }
 }

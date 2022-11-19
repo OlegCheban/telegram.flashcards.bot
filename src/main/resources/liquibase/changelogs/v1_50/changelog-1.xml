@@ -29,5 +29,18 @@
         </addColumn>
     </changeSet>
 
+    <changeSet author="oleg.cheban" id="v1_50-3">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists schemaName="main"
+                              tableName="user"
+                              columnName="watering_session_reply_time"/>
+            </not>
+        </preConditions>
+        <addColumn schemaName="main" tableName="user">
+            <column name="watering_session_reply_time" type="integer" defaultValue="5"/>
+        </addColumn>
+    </changeSet>
+
 
 </databaseChangeLog>
