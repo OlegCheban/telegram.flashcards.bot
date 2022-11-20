@@ -29,7 +29,24 @@ public class DataLayerObject {
 
                 new Update(
                         "insert into main.user_exercise_settings (id, user_id, exercise_kind_id)\n" +
-                                "select nextval('main.common_seq'), (select id from main.user where chat_id = ?), id from main.learning_exercise_kind ") {
+                                "with\n" +
+                                "usr as\n" +
+                                "(\n" +
+                                "\tselect u.id\n" +
+                                "    from main.user u\n" +
+                                "    where u.chat_id = ?\n" +
+                                ")\n" +
+                                "select nextval('main.common_seq'),\n" +
+                                "       usr.id,\n" +
+                                "       a.id\n" +
+                                "from main.learning_exercise_kind a,\n" +
+                                "     usr\n" +
+                                "where not exists (\n" +
+                                "                   select 1\n" +
+                                "                   from main.user_exercise_settings s\n" +
+                                "                   where s.exercise_kind_id = a.id and\n" +
+                                "                         s.user_id = usr.id\n" +
+                                "      )") {
                     @Override
                     protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                         preparedStatement.setLong(1, chatId);
