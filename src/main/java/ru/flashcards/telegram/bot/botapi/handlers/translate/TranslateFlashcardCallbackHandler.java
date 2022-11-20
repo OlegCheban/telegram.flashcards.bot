@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
@@ -19,7 +19,7 @@ import java.util.List;
 import static java.lang.Math.toIntExact;
 import static ru.flashcards.telegram.bot.botapi.Literals.EXAMPLES;
 
-public class TranslateFlashcardCallbackHandler implements InputMessageCallbackHandler {
+public class TranslateFlashcardCallbackHandler implements MessageHandler<CallbackQuery> {
     private CallbackData callbackData;
     private ObjectMapper objectMapper = new ObjectMapper();
     private DataLayerObject dataLayer;

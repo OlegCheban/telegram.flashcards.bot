@@ -5,13 +5,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlashcardUsageExamplesCallbackHandler implements InputMessageCallbackHandler {
+public class FlashcardUsageExamplesCallbackHandler implements MessageHandler<CallbackQuery> {
     private CallbackData callbackData;
     private DataLayerObject dataLayer;
 

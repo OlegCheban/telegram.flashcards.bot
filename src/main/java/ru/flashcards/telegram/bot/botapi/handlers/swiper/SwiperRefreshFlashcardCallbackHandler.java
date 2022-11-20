@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.InputMessageCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.botapi.swiper.Swiper;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
-public class SwiperRefreshFlashcardCallbackHandler implements InputMessageCallbackHandler {
+public class SwiperRefreshFlashcardCallbackHandler implements MessageHandler<CallbackQuery> {
     private CallbackData callbackData;
     private DataLayerObject dataLayer;
 

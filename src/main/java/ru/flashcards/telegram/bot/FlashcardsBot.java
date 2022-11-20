@@ -14,14 +14,12 @@ import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.List;
 
+import static ru.flashcards.telegram.bot.botapi.Message.*;
+
 /**
  * @author Oleg Cheban
  */
 public class FlashcardsBot extends TelegramLongPollingCommandBot {
-    private ExerciseMessageHandlerFactory exerciseMessageHandlerFactory = new ExerciseMessageHandlerFactory();
-    private CallbackHandlerFactory callbackHandlerFactory = new CallbackHandlerFactory();
-    private MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
-    private WateringSessionHandlerFactory wateringSessionHandlerFactory = new WateringSessionHandlerFactory();
     private DataLayerObject dataLayer;
 
     public FlashcardsBot(DataLayerObject dataLayerObject) {
@@ -50,29 +48,37 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
     }
 
     private List<BotApiMethod<?>> handleMessageInput(Message message){
-        List<BotApiMethod<?>> queryResult = null;
+        MessageHandler<Message> handler = null;
+        MessageHandlerAbstractFactory factory = null;
 
         if (dataLayer.isLearnFlashcardState(message.getChatId())){
             //learning mode
-            InputMessageHandler exerciseMessageHandler = exerciseMessageHandlerFactory.getHandler(message, dataLayer);
-            queryResult = exerciseMessageHandler.handle(message);
+            factory = MessageFactoryProvider.getFactory(EXERCISE);
+
         } else if (dataLayer.isWateringSession(message.getChatId())){
             //watering session
-            InputMessageHandler wateringSessionHandler = wateringSessionHandlerFactory.getHandler(message, dataLayer);
-            queryResult = wateringSessionHandler.handle(message);
-        } else{
+            factory = MessageFactoryProvider.getFactory(WATERING_SESSION);
+
+        } else {
             //other messages
-            InputMessageHandler inputMessageHandler = messageHandlerFactory.getHandler(message.getText(), dataLayer);
-            queryResult = inputMessageHandler.handle(message);
+            factory = MessageFactoryProvider.getFactory(FLASHCARD);
+
         }
 
-        return queryResult;
+        assert factory != null;
+        handler = (MessageHandler<Message>) factory.getHandler(message, dataLayer);
+        assert handler != null;
+
+        return handler.handle(message);
     }
 
     private List<BotApiMethod<?>> handleCallbackQueryInput(CallbackQuery callbackQuery){
-        InputMessageCallbackHandler inputMessageCallbackHandler = callbackHandlerFactory.getHandler(callbackQuery.getData(), dataLayer);
-        List<BotApiMethod<?>> handleCallbackQuery = inputMessageCallbackHandler.handle(callbackQuery);
-        return handleCallbackQuery;
+        CallbackFactory factory = (CallbackFactory) CallbackFactoryProvider.getFactory(CALLBACK);
+        assert factory != null;
+        MessageHandler<CallbackQuery> handler = factory.getHandler(callbackQuery.getData(), dataLayer);
+        assert handler != null;
+
+        return handler.handle(callbackQuery);
     }
 
     private void execute(List<BotApiMethod<?>> list){

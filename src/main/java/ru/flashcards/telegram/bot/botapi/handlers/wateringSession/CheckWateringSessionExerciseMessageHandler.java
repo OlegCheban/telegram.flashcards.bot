@@ -3,7 +3,7 @@ package ru.flashcards.telegram.bot.botapi.handlers.wateringSession;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
+import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.botapi.wateringSession.WateringSession;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckWateringSessionExerciseMessageHandler implements InputMessageHandler {
+public class CheckWateringSessionExerciseMessageHandler implements MessageHandler<Message> {
     private UserFlashcard userFlashcard;
     private DataLayerObject dataLayer;
     private List<BotApiMethod<?>> list = new ArrayList<>();

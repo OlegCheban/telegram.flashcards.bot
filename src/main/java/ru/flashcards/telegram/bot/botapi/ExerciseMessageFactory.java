@@ -1,17 +1,17 @@
 package ru.flashcards.telegram.bot.botapi;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.StopLearningMessageHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.*;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
+
 import java.util.Collections;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
-public class ExerciseMessageHandlerFactory {
-    public InputMessageHandler getHandler(Message message, DataLayerObject dataLayer){
-
+public class ExerciseMessageFactory implements MessageHandlerAbstractFactory<MessageHandler<Message>> {
+    @Override
+    public MessageHandler<Message> getHandler(Message message, DataLayerObject dataLayer) {
         if (message.getText().equals(STOP_LEARNING)){
             return new StopLearningMessageHandler(dataLayer);
         } else {

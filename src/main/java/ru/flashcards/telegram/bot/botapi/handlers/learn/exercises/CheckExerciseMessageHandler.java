@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
-import ru.flashcards.telegram.bot.botapi.InputMessageHandler;
+import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.botapi.exercise.Exercise;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
@@ -13,7 +13,7 @@ import ru.flashcards.telegram.bot.utils.RandomMessageText;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class CheckExerciseMessageHandler implements InputMessageHandler {
+abstract class CheckExerciseMessageHandler implements MessageHandler<Message> {
     private ExerciseFlashcard currentExercise;
     private DataLayerObject dataLayer;
     private List<BotApiMethod<?>> list = new ArrayList<>();

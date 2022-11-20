@@ -2,6 +2,7 @@ package ru.flashcards.telegram.bot.botapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.flashcards.telegram.bot.botapi.handlers.examples.FlashcardUsageExamplesCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHandler;
@@ -14,8 +15,9 @@ import java.util.Collections;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
-public class CallbackHandlerFactory {
-    public InputMessageCallbackHandler getHandler(String callbackDataJson, DataLayerObject dataLayer){
+public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHandler<CallbackQuery>> {
+    @Override
+    public MessageHandler<CallbackQuery> getHandler(String callbackDataJson, DataLayerObject dataLayer) {
         ObjectMapper objectMapper = new ObjectMapper();
         CallbackData callback = null;
         try {
