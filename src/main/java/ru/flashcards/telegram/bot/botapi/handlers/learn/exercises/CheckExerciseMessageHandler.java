@@ -73,6 +73,9 @@ abstract class CheckExerciseMessageHandler implements MessageHandler<Message> {
 
         //update learned flashcards
         dataLayer.refreshLearnedFlashcards();
+        //disable learn mode
+        dataLayer.setLearnFlashcardState(chatId, false);
+
         //remove keyboard
         ReplyKeyboardRemove replyKeyboardRemove = new ReplyKeyboardRemove();
         replyKeyboardRemove.setRemoveKeyboard(true);

@@ -36,9 +36,9 @@ public class StopLearningMessageHandler implements MessageHandler<Message> {
 
         msg.append("Keep learning!");
 
-        //фиксация выученных карточек
+        //update learned flashcards
         dataLayer.refreshLearnedFlashcards();
-        //отключить режим обучения
+        //disable learn mode
         dataLayer.setLearnFlashcardState(message.getChatId(), false);
 
         SendMessage sendMessage = new SendMessage();
