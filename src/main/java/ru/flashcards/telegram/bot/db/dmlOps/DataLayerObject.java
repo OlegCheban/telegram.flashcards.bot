@@ -218,6 +218,7 @@ public class DataLayerObject {
                         "       order by uf.nearest_training desc, uf.id) rn\n" +
                         "       from main.user_flashcard uf\n" +
                         "          join main.user u on uf.user_id = u.id\n" +
+                        "          join main.flashcard f on f.word::text = uf.word::text\n" +
                         "       where u.chat_id = ? and\n" +
                         "             uf.learned_date is null\n" +
                         "     ) x\n" +
