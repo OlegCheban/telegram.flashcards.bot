@@ -6,15 +6,15 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.flashcards.telegram.bot.botapi.exercise.Exercise;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.ExerciseProvider;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 public class StartLearningCommand extends BotCommand {
     private DataLayerObject dataLayer;
 
-    public StartLearningCommand(String commandIdentifier, String description, DataLayerObject dataLayer) {
+    public StartLearningCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {
         super(commandIdentifier, description);
-        this.dataLayer = dataLayer;
+        this.dataLayer = dataLayerObject;
     }
 
     @Override
@@ -24,8 +24,8 @@ public class StartLearningCommand extends BotCommand {
                 //enable learn mode
                 dataLayer.setLearnFlashcardState(user.getId(), true);
                 //send an exercise
-                Exercise exercise = new Exercise(dataLayer);
-                absSender.execute(exercise.newExercise(chat.getId()));
+                ExerciseProvider exerciseProvider = new ExerciseProvider(dataLayer);
+                absSender.execute(exerciseProvider.newExercise(chat.getId()));
             } else {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setText("All flashcards have learned.");

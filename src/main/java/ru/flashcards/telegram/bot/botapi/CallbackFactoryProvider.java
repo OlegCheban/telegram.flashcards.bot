@@ -1,14 +1,20 @@
 package ru.flashcards.telegram.bot.botapi;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import java.util.Collections;
 
+@RequestScoped
 public class CallbackFactoryProvider {
-    public static CallbackHandlerAbstractFactory getFactory(Message message){
+    @Inject
+    private CallbackFactory callbackFactory;
+
+    public CallbackHandlerAbstractFactory getFactory(Message message){
         switch (message){
             case CALLBACK:
-                return new CallbackFactory();
+                return callbackFactory;
         }
 
-        return (CallbackHandlerAbstractFactory<MessageHandler>) (callbackDataJson, dataLayer) -> m -> Collections.emptyList();
+        return (CallbackHandlerAbstractFactory<MessageHandler>) (callbackDataJson) -> m -> Collections.emptyList();
     }
 }

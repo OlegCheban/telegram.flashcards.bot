@@ -1,4 +1,4 @@
-package ru.flashcards.telegram.bot.botapi.exercise;
+package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -9,6 +9,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.Lambda;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,15 +18,16 @@ import java.util.concurrent.ThreadLocalRandom;
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 import static ru.flashcards.telegram.bot.botapi.Literals.COMPLETE_THE_GAPS;
 
-public class Exercise {
+public class ExerciseProvider {
     private DataLayerObject dataLayer;
 
-    public Exercise(DataLayerObject dataLayer) {
+    @Inject
+    public ExerciseProvider(DataLayerObject dataLayer) {
         this.dataLayer = dataLayer;
     }
 
     public BotApiMethod<?> newExercise (Long chatId){
-        ExerciseFlashcard currentExercise = dataLayer.getExercise(chatId);
+        ExerciseFlashcard currentExercise = dataLayer.getCurrentExercise(chatId);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.enableMarkdown(true);

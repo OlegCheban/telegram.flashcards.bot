@@ -8,20 +8,17 @@ import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardUsageExamplesCallbackHandler implements MessageHandler<CallbackQuery> {
-    private CallbackData callbackData;
+    @Inject
     private DataLayerObject dataLayer;
-
-    public FlashcardUsageExamplesCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
-        this.callbackData = callbackData;
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
+        CallbackData callbackData = getCallbackData(callbackQuery.getData());
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         Long userFlashcardId = callbackData.getEntityId();

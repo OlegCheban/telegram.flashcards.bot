@@ -9,15 +9,45 @@ import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHa
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translate.TranslateFlashcardCallbackHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
+import javax.inject.Inject;
 import java.util.Collections;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHandler<CallbackQuery>> {
+    @Inject
+    TranslateFlashcardCallbackHandler translateFlashcardCallbackHandler;
+    @Inject
+    AddToLearnCallbackHandler addToLearnCallbackHandler;
+    @Inject
+    AddToLearnAndNextCallbackHandler addToLearnAndNextCallbackHandler;
+    @Inject
+    ProceedToRepetitionCallbackHandler proceedToRepetitionCallbackHandler;
+    @Inject
+    ReturnToLearnSwiperCallbackHandler returnToLearnSwiperCallbackHandler;
+    @Inject
+    ReturnToLearnCallbackHandler returnToLearnCallbackHandler;
+    @Inject
+    BoostPriorityCallbackHandler boostPriorityCallbackHandler;
+    @Inject
+    ExcludeCallbackHandler excludeCallbackHandler;
+    @Inject
+    ExcludeAndNextCallbackHandler excludeAndNextCallbackHandler;
+    @Inject
+    SwiperRefreshFlashcardCallbackHandler swiperRefreshFlashcardCallbackHandler;
+    @Inject
+    FlashcardUsageExamplesCallbackHandler flashcardUsageExamplesCallbackHandler;
+    @Inject
+    QuiteCallbackHandler quiteCallbackHandler;
+    @Inject
+    DisableExcerciseMessageHandler disableExcerciseMessageHandler;
+    @Inject
+    EnableExcerciseMessageHandler enableExcerciseMessageHandler;
+
     @Override
-    public MessageHandler<CallbackQuery> getHandler(String callbackDataJson, DataLayerObject dataLayer) {
+    public MessageHandler<CallbackQuery> getHandler(String callbackDataJson) {
+
         ObjectMapper objectMapper = new ObjectMapper();
         CallbackData callback = null;
         try {
@@ -28,34 +58,34 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
 
         switch (callback.getCommand()){
             case TRANSLATE:
-                return new TranslateFlashcardCallbackHandler(callback, dataLayer);
+                return translateFlashcardCallbackHandler;
             case ADD_TO_LEARN:
-                return new AddToLearnCallbackHandler(callback, dataLayer);
+                return addToLearnCallbackHandler;
             case ADD_TO_LEARN_AND_NEXT:
-                return new AddToLearnAndNextCallbackHandler(callback, dataLayer);
+                return addToLearnAndNextCallbackHandler;
             case PROCEED_LEARNING:
-                return new ProceedToRepetitionCallbackHandler(callback, dataLayer);
+                return proceedToRepetitionCallbackHandler;
             case SWIPER_RETURN_TO_LEARN:
-                return new ReturnToLearnSwiperCallbackHandler(callback, dataLayer);
+                return returnToLearnSwiperCallbackHandler;
             case RETURN_TO_LEARN:
-                return new ReturnToLearnCallbackHandler(callback, dataLayer);
+                return returnToLearnCallbackHandler;
             case BOOST_PRIORITY:
-                return new BoostPriorityCallbackHandler(callback, dataLayer);
+                return boostPriorityCallbackHandler;
             case EXCLUDE:
-                return new ExcludeCallbackHandler(callback, dataLayer);
+                return excludeCallbackHandler;
             case EXCLUDE_AND_NEXT:
-                return new ExcludeAndNextCallbackHandler(callback, dataLayer);
+                return excludeAndNextCallbackHandler;
             case SWIPER_PREV:
             case SWIPER_NEXT:
-                return new SwiperRefreshFlashcardCallbackHandler(callback, dataLayer);
+                return swiperRefreshFlashcardCallbackHandler;
             case EXAMPLES:
-                return new FlashcardUsageExamplesCallbackHandler(callback, dataLayer);
+                return flashcardUsageExamplesCallbackHandler;
             case QUITE:
-                return new QuiteCallbackHandler(callback, dataLayer);
+                return quiteCallbackHandler;
             case DISABLE_EXCERCISE:
-                return new DisableExcerciseMessageHandler(callback, dataLayer);
+                return disableExcerciseMessageHandler;
             case ENABLE_EXCERCISE:
-                return new EnableExcerciseMessageHandler(callback, dataLayer);
+                return enableExcerciseMessageHandler;
         }
 
         return m -> Collections.emptyList();

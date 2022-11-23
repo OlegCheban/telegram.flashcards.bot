@@ -1,40 +1,39 @@
-package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises;
+package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
-import ru.flashcards.telegram.bot.botapi.exercise.Exercise;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class CheckExerciseMessageHandler implements MessageHandler<Message> {
-    private ExerciseFlashcard currentExercise;
+public abstract class CheckExerciseMessageHandler implements MessageHandler<Message> {
+    @Inject
     private DataLayerObject dataLayer;
+    @Inject
+    private ExerciseProvider exerciseProvider;
+
+    private ExerciseFlashcard currentExercise;
     private List<BotApiMethod<?>> list = new ArrayList<>();
     private Long chatId;
 
-    public CheckExerciseMessageHandler(ExerciseFlashcard currentFlashcardExercise, DataLayerObject dataLayerObject){
-        currentExercise = currentFlashcardExercise;
-        dataLayer = dataLayerObject;
-    }
-
-    abstract String getCurrentExerciseFlashcardAttributeCheckValue();
+    protected abstract String getCurrentExerciseFlashcardAttributeCheckValue();
 
     @Override
     public List<BotApiMethod<?>> handle(Message message){
+        currentExercise = dataLayer.getCurrentExercise(message.getChatId());
         chatId = message.getChatId();
         Boolean result = checkExercise(message.getText().trim());
         sendResultMessage(result, chatId);
 
         if (dataLayer.getCurrentExercise(chatId) != null){
-            Exercise exercise = new Exercise(dataLayer);
-            list.add(exercise.newExercise(chatId));
+            list.add(exerciseProvider.newExercise(chatId));
         } else {
            stopLearning();
         }
@@ -95,7 +94,7 @@ abstract class CheckExerciseMessageHandler implements MessageHandler<Message> {
         list.add(sendMessage);
     }
 
-    protected ExerciseFlashcard getCurrentExercise(){
+    public ExerciseFlashcard getCurrentExercise() {
         return currentExercise;
     }
 }

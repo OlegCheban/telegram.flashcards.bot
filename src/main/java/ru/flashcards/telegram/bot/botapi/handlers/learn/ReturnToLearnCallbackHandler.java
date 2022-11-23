@@ -9,22 +9,19 @@ import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
 public class ReturnToLearnCallbackHandler implements MessageHandler<CallbackQuery> {
-    private CallbackData callbackData;
+    @Inject
     private DataLayerObject dataLayer;
-
-    public ReturnToLearnCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
-        this.callbackData = callbackData;
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
+        CallbackData callbackData = getCallbackData(callbackQuery.getData());
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();

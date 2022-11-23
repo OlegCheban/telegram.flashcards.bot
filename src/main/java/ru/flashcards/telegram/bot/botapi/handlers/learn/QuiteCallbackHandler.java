@@ -8,20 +8,13 @@ import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
 public class QuiteCallbackHandler implements MessageHandler<CallbackQuery> {
-    private CallbackData callbackData;
-    private DataLayerObject dataLayer;
-
-    public QuiteCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
-        this.callbackData = callbackData;
-        this.dataLayer = dataLayerObject;
-    }
-
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
         List<BotApiMethod<?>> list = new ArrayList<>();

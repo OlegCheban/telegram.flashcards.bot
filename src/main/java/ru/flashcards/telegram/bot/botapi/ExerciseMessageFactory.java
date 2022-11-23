@@ -5,30 +5,46 @@ import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.*;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 
+import javax.inject.Inject;
 import java.util.Collections;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 public class ExerciseMessageFactory implements MessageHandlerAbstractFactory<MessageHandler<Message>> {
+    @Inject
+    private MemorisedMessageHandler memorisedMessageHandler;
+    @Inject
+    private StopLearningMessageHandler stopLearningMessageHandler;
+    @Inject
+    private CheckDescriptionMessageHandler checkDescriptionMessageHandler;
+    @Inject
+    private CheckTranslationMessageHandler checkTranslationMessageHandler;
+    @Inject
+    private CheckSpellingMessageHandler checkSpellingMessageHandler;
+    @Inject
+    private CompleteTheGapsMessageHandler completeTheGapsMessageHandler;
+    @Inject
+    private DataLayerObject dataLayer;
+
     @Override
-    public MessageHandler<Message> getHandler(Message message, DataLayerObject dataLayer) {
+    public MessageHandler<Message> getHandler(Message message) {
         if (message.getText().equals(STOP_LEARNING)){
-            return new StopLearningMessageHandler(dataLayer);
+            return stopLearningMessageHandler;
         } else {
             ExerciseFlashcard currentExercise = dataLayer.getCurrentExercise(message.getChatId());
 
             switch (currentExercise.getExerciseCode()){
                 case MEMORISED:
-                    return new MemorisedMessageHandler(currentExercise, dataLayer);
+                    return memorisedMessageHandler;
                 case CHECK_DESCRIPTION:
-                    return new CheckDescriptionMessageHandler(currentExercise, dataLayer);
+                    return checkDescriptionMessageHandler;
                 case CHECK_TRANSLATION:
-                    return new CheckTranslationMessageHandler(currentExercise, dataLayer);
+                    return checkTranslationMessageHandler;
                 case CHECK_SPELLING:
                 case CHECK_SPELLING_WITH_HELPS:
-                    return new CheckSpellingMessageHandler(currentExercise, dataLayer);
+                    return checkSpellingMessageHandler;
                 case COMPLETE_THE_GAPS:
-                    return new CompleteTheGapsMessageHandler(currentExercise, dataLayer);
+                    return completeTheGapsMessageHandler;
             }
         }
 

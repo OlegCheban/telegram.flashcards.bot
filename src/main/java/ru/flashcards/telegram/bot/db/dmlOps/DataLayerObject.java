@@ -66,13 +66,10 @@ public class DataLayerObject {
         }
     }
 
-    /**
-     * Список упражнений
-     */
-    public ExerciseFlashcard getExercise(Long chatId) {
+    public ExerciseFlashcard getCurrentExercise(Long chatId) {
         return new SelectWithParams<ExerciseFlashcard>(
                 "select chat_id, word, code, description, transcription, user_flashcard_id, translation, example " +
-                        "from main.next_exercise_queue where chat_id = ?") {
+                        "from main.next_exercise_queue where chat_id = ?"){
             @Override
             protected ExerciseFlashcard rowMapper(ResultSet rs) throws SQLException {
                 return new ExerciseFlashcard(
@@ -177,31 +174,7 @@ public class DataLayerObject {
         }.run();
     }
 
-    public ExerciseFlashcard getCurrentExercise(Long chatId) {
-        return new SelectWithParams<ExerciseFlashcard>(
-                "select chat_id, word, code, description, transcription, user_flashcard_id, translation, example " +
-                        "from main.next_exercise_queue where chat_id = ?"){
-            @Override
-            protected ExerciseFlashcard rowMapper(ResultSet rs) throws SQLException {
-                return new ExerciseFlashcard(
-                        rs.getLong("chat_id"),
-                        rs.getString("word"),
-                        rs.getString("code"),
-                        rs.getString("description"),
-                        rs.getString("transcription"),
-                        rs.getLong("user_flashcard_id"),
-                        rs.getString("translation"),
-                        rs.getString("example")
-                );
-            }
 
-            @Override
-            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setLong(1, chatId);
-                return preparedStatement;
-            }
-        }.getObject();
-    }
 
     /**
      * Текущая порция слов для изучения

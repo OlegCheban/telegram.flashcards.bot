@@ -8,21 +8,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.FlashcardsBot;
-import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.lang.reflect.Method;
 
+@Deprecated
 @ExtendWith(MockitoExtension.class)
 public abstract class FlashcardsBotTestAbstract {
     @Mock
     protected Message message;
-    @Mock
-    protected DataLayerObject dataLayer;
     protected FlashcardsBot testBot;
 
     @BeforeEach
     void setUp() {
-        testBot = Mockito.spy(new FlashcardsBot(dataLayer));
+        testBot = Mockito.spy(new FlashcardsBot());
     }
 
     protected Method handleMessageInputMethod() throws NoSuchMethodException {

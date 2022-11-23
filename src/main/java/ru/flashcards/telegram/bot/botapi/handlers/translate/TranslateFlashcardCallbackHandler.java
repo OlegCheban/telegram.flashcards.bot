@@ -13,6 +13,7 @@ import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,23 +21,18 @@ import static java.lang.Math.toIntExact;
 import static ru.flashcards.telegram.bot.botapi.Literals.EXAMPLES;
 
 public class TranslateFlashcardCallbackHandler implements MessageHandler<CallbackQuery> {
-    private CallbackData callbackData;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Inject
     private DataLayerObject dataLayer;
-    private final String pushpinEmoji = "\uD83D\uDCCC";
-
-    public TranslateFlashcardCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
-        this.callbackData = callbackData;
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        CallbackData callbackData1 = getCallbackData(callbackQuery.getData());
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();
         long chatId = message.getChatId();
-        Long userFlashcardId = callbackData.getEntityId();
+        Long userFlashcardId = callbackData1.getEntityId();
         UserFlashcard flashcard = dataLayer.findUserFlashcardById(userFlashcardId);
 
         EditMessageText translationMessage = new EditMessageText();
@@ -44,6 +40,7 @@ public class TranslateFlashcardCallbackHandler implements MessageHandler<Callbac
         translationMessage.setMessageId(toIntExact(messageId));
         translationMessage.enableMarkdown(true);
 
+        String pushpinEmoji = "\uD83D\uDCCC";
         translationMessage.setText("*" + flashcard.getWord() + "* \\[" + flashcard.getTranscription() + "] " + pushpinEmoji + " \n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
 
         CallbackData callbackData = new CallbackData(EXAMPLES);

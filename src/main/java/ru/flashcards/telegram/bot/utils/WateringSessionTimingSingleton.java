@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class WateringSessionTimingSingleton extends HashMap<Long, LocalDateTime> {
-    private static Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
+    private static Logger logger = LoggerFactory.getLogger(WateringSessionTimingSingleton.class);
     private static final WateringSessionTimingSingleton instance;
 
     static {

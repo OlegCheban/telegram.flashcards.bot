@@ -1,15 +1,10 @@
 package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises;
 
-import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
-import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.CheckExerciseMessageHandler;
 
 public class CheckTranslationMessageHandler extends CheckExerciseMessageHandler {
-    public CheckTranslationMessageHandler(ExerciseFlashcard currentExercise, DataLayerObject dataLayerObject) {
-        super(currentExercise, dataLayerObject);
-    }
-
     @Override
-    String getCurrentExerciseFlashcardAttributeCheckValue() {
+    protected String getCurrentExerciseFlashcardAttributeCheckValue() {
         return getCurrentExercise().getTranslation();
     }
 }

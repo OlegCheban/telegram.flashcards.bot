@@ -7,15 +7,13 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRem
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StopLearningMessageHandler implements MessageHandler<Message> {
+    @Inject
     private DataLayerObject dataLayer;
-
-    public StopLearningMessageHandler(DataLayerObject dataLayerObject) {
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(Message message) {

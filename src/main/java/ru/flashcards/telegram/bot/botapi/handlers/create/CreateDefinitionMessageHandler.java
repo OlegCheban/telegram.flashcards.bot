@@ -6,16 +6,14 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CreateDefinitionMessageHandler implements MessageHandler<Message> {
+    @Inject
     private DataLayerObject dataLayer;
-
-    public CreateDefinitionMessageHandler(DataLayerObject dataLayerObject) {
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(Message message) {

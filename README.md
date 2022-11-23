@@ -29,7 +29,7 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 Help
 
 1. Basic find commands for finding flashcards
-/f - finds a new flashcard (by default bot suggests flashcards from top 3000 category)
+/f - finds a new flashcard (by default bot suggests flashcards from top 3000 categories)
 /f <value> - finds flashcards which start from an input value
 
 2. Swiper

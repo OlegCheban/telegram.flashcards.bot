@@ -10,24 +10,20 @@ import ru.flashcards.telegram.bot.command.addToLearn.SuggestFlashcard;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.Flashcard;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
 public class ExcludeAndNextCallbackHandler implements MessageHandler<CallbackQuery> {
-    private CallbackData callbackData;
-    private SuggestFlashcard suggestFlashcard;
+    @Inject
     private DataLayerObject dataLayer;
-
-    public ExcludeAndNextCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
-        this.callbackData = callbackData;
-        this.dataLayer = dataLayerObject;
-        this.suggestFlashcard = new SuggestFlashcard(dataLayerObject);
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
+        SuggestFlashcard suggestFlashcard = new SuggestFlashcard(dataLayer);
+        CallbackData callbackData = getCallbackData(callbackQuery.getData());
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();

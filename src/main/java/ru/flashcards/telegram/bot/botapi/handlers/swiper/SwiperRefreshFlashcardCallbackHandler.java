@@ -10,22 +10,19 @@ import ru.flashcards.telegram.bot.botapi.swiper.Swiper;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
 public class SwiperRefreshFlashcardCallbackHandler implements MessageHandler<CallbackQuery> {
-    private CallbackData callbackData;
+    @Inject
     private DataLayerObject dataLayer;
-
-    public SwiperRefreshFlashcardCallbackHandler(CallbackData callbackData, DataLayerObject dataLayerObject) {
-        this.callbackData = callbackData;
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
+        CallbackData callbackData = getCallbackData(callbackQuery.getData());
         String characterCondition = null;
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();

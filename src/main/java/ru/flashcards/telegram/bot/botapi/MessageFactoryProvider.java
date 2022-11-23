@@ -1,18 +1,29 @@
 package ru.flashcards.telegram.bot.botapi;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import java.util.Collections;
 
+@RequestScoped
 public class MessageFactoryProvider {
-    public static MessageHandlerAbstractFactory getFactory(Message message){
+    @Inject
+    private ExerciseMessageFactory exerciseMessageFactory;
+    @Inject
+    private WateringSessionMessageFactory wateringSessionMessageFactory;
+    @Inject
+    private CreateFlashcardMessageFactory createFlashcardMessageFactory;
+
+
+    public MessageHandlerAbstractFactory getFactory(Message message){
         switch (message){
             case EXERCISE:
-                return new ExerciseMessageFactory();
+                return exerciseMessageFactory;
             case WATERING_SESSION:
-                return new WateringSessionMessageFactory();
+                return wateringSessionMessageFactory;
             case FLASHCARD:
-                return new CreateFlashcardMessageFactory();
+                return createFlashcardMessageFactory;
         }
 
-        return (MessageHandlerAbstractFactory<MessageHandler>) (message1, dataLayer) -> m -> Collections.emptyList();
+        return (MessageHandlerAbstractFactory<MessageHandler>) (msg) -> m -> Collections.emptyList();
     }
 }

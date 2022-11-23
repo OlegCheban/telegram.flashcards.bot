@@ -10,23 +10,21 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
 import ru.flashcards.telegram.bot.utils.WateringSessionTimingSingleton;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CheckWateringSessionExerciseMessageHandler implements MessageHandler<Message> {
-    private UserFlashcard userFlashcard;
+    @Inject
     private DataLayerObject dataLayer;
+    private UserFlashcard userFlashcard;
     private List<BotApiMethod<?>> list = new ArrayList<>();
-
-    public CheckWateringSessionExerciseMessageHandler(UserFlashcard userFlashcard, DataLayerObject dataLayerObject){
-        this.userFlashcard = userFlashcard;
-        this.dataLayer = dataLayerObject;
-    }
 
     @Override
     public List<BotApiMethod<?>> handle(Message message){
+        userFlashcard = dataLayer.getUserFlashcardForWateringSession(message.getChatId());
         Boolean checkExerciseResult = checkExercise(message.getText().trim());
         Boolean checkTimingResult = checkTiming(message.getChatId());
         sendResultMessage(checkExerciseResult, checkTimingResult, message.getChatId());

@@ -1,25 +1,26 @@
 package ru.flashcards.telegram.bot.botapi;
 
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.*;
 import ru.flashcards.telegram.bot.botapi.handlers.wateringSession.CheckWateringSessionExerciseMessageHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.wateringSession.StopWateringSessionHandler;
-import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
-import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
-import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 
-import java.util.Collections;
+import javax.inject.Inject;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 public class WateringSessionMessageFactory implements MessageHandlerAbstractFactory<MessageHandler<Message>> {
+    @Inject
+    private StopWateringSessionHandler stopWateringSessionHandler;
+
+    @Inject
+    private CheckWateringSessionExerciseMessageHandler checkWateringSessionExerciseMessageHandler;
+
     @Override
-    public MessageHandler<Message> getHandler(Message message, DataLayerObject dataLayer) {
+    public MessageHandler<Message> getHandler(Message message) {
         if (message.getText().equals(STOP_LEARNING)){
-            return new StopWateringSessionHandler(dataLayer);
+            return stopWateringSessionHandler;
         } else {
-            UserFlashcard userFlashcard = dataLayer.getUserFlashcardForWateringSession(message.getChatId());
-            return new CheckWateringSessionExerciseMessageHandler(userFlashcard, dataLayer);
+            return checkWateringSessionExerciseMessageHandler;
         }
     }
 }
