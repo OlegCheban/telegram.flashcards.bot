@@ -39,6 +39,6 @@ public class BoostPriorityCallbackHandlerTest extends FlashcardsBotTestAbstract 
         when(dataLayer.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
 
         List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleCallbackQueryInputMethod().invoke(testBot, callbackQuery);
-        assertEquals("*word* added to nearest training", ((SendMessage) list.get(1)).getText());
+        assertEquals("*word* added to next learning session", ((SendMessage) list.get(1)).getText());
     }
 }

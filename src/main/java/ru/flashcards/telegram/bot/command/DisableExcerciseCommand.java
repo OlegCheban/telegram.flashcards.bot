@@ -56,7 +56,7 @@ public class DisableExcerciseCommand extends BotCommand {
                 rowsInline.add(rowInline);
             });
             markupInline.setKeyboard(rowsInline);
-            replyMessage.setText("Current exercises, tap to disable: ");
+            replyMessage.setText("Enabled exercises, tap to disable: ");
             replyMessage.setReplyMarkup(markupInline);
         } else
         {

@@ -56,7 +56,7 @@ public class EnableExcerciseCommand extends BotCommand {
                 rowsInline.add(rowInline);
             });
             markupInline.setKeyboard(rowsInline);
-            replyMessage.setText("Available exercises, tap to enable: ");
+            replyMessage.setText("Disabled exercises, tap to enable:");
             replyMessage.setReplyMarkup(markupInline);
         }
         else {

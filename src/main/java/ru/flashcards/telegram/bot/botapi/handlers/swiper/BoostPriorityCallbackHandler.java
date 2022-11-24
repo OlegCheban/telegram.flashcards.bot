@@ -53,7 +53,7 @@ public class BoostPriorityCallbackHandler implements MessageHandler<CallbackQuer
         SendMessage resultMessage = new SendMessage();
         resultMessage.setChatId(String.valueOf(message.getChatId()));
         resultMessage.enableMarkdown(true);
-        resultMessage.setText("*" + swiperFlashcard.getWord() + "* added to nearest training");
+        resultMessage.setText("*" + swiperFlashcard.getWord() + "* added to next learning session");
 
         list.add(resultMessage);
 
