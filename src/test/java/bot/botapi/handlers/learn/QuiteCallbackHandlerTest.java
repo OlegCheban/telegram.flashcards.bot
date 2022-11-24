@@ -1,6 +1,5 @@
 package bot.botapi.handlers.learn;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jboss.weld.junit5.WeldInitiator;
 import org.jboss.weld.junit5.WeldJunit5Extension;
 import org.jboss.weld.junit5.WeldSetup;
@@ -13,8 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.EnableExcerciseMessageHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.QuiteCallbackHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import javax.enterprise.inject.Produces;
@@ -22,36 +20,26 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.ENABLE_EXCERCISE;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)
-public class EnableExcerciseMessageHandlerTest {
+public class QuiteCallbackHandlerTest {
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
     private Message message;
-
     @WeldSetup
-    private WeldInitiator weld = WeldInitiator.from(EnableExcerciseMessageHandler.class, EnableExcerciseMessageHandlerTest.class).build();
-
-
+    private WeldInitiator weld = WeldInitiator.from(QuiteCallbackHandler.class, QuiteCallbackHandlerTest.class).build();
     @Produces
     DataLayerObject produceDataLayerObject() {
         return  Mockito.mock(DataLayerObject.class);
     }
 
     @Test
-    void test() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        CallbackData callbackData = new CallbackData(ENABLE_EXCERCISE);
-        callbackData.setEntityId(0L);
-
+    void test() {
         when(message.getMessageId()).thenReturn(0);
-        when(callbackQuery.getData()).thenReturn(objectMapper.writeValueAsString(callbackData));
         when(callbackQuery.getMessage()).thenReturn(message);
-
-        List<BotApiMethod<?>> list = weld.select(EnableExcerciseMessageHandler.class).get().handle(callbackQuery);
+        List<BotApiMethod<?>> list = weld.select(QuiteCallbackHandler.class).get().handle(callbackQuery);
 
         assertEquals("Done", ((EditMessageText) list.get(0)).getText());
     }

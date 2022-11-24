@@ -1,34 +1,61 @@
 package bot.botapi.handlers.learn.exercises;
 
-import bot.FlashcardsBotTestAbstract;
+import org.jboss.weld.junit5.WeldInitiator;
+import org.jboss.weld.junit5.WeldJunit5Extension;
+import org.jboss.weld.junit5.WeldSetup;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.CheckTranslationMessageHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.ExerciseProvider;
+import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
 
+import javax.enterprise.inject.Produces;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static ru.flashcards.telegram.bot.botapi.Literals.CHECK_TRANSLATION;
 
-public class CheckTranslationMessageHandlerTest extends FlashcardsBotTestAbstract {
+@ExtendWith(WeldJunit5Extension.class)
+@ExtendWith(MockitoExtension.class)
+public class CheckTranslationMessageHandlerTest {
     @Mock
-    private ExerciseFlashcard exerciseFlashcard;
+    private Message message;
+
+    @WeldSetup
+    private WeldInitiator weld = WeldInitiator.from(CheckTranslationMessageHandler.class, CheckTranslationMessageHandlerTest.class).build();
+
+    @Produces
+    DataLayerObject dataLayer() {
+        ExerciseFlashcard exerciseFlashcard = Mockito.mock(ExerciseFlashcard.class);
+        DataLayerObject dataLayerObject = Mockito.mock(DataLayerObject.class);
+
+        when(exerciseFlashcard.getTranslation()).thenReturn("translationValue");
+        when(dataLayerObject.getCurrentExercise(0L)).thenReturn(exerciseFlashcard);
+
+        return  dataLayerObject;
+    }
+
+    @Produces
+    ExerciseProvider exerciseProvider() {
+        ExerciseProvider exerciseProvider = Mockito.mock(ExerciseProvider.class);
+
+        return exerciseProvider;
+    }
 
     @Test
-    @Override
-    protected void test() throws Exception {
-        when(exerciseFlashcard.getExerciseCode()).thenReturn(CHECK_TRANSLATION);
-        when(exerciseFlashcard.getTranslation()).thenReturn("translationValue");
+    void test(){
         when(message.getChatId()).thenReturn(0L);
         when(message.getText()).thenReturn("translationValue");
-        when(dataLayer.isLearnFlashcardState(message.getChatId())).thenReturn(true);
-        when(dataLayer.getCurrentExercise(message.getChatId())).thenReturn(exerciseFlashcard);
-        when(dataLayer.getExercise(message.getChatId())).thenReturn(exerciseFlashcard);
-        List<BotApiMethod<?>> list = (List<BotApiMethod<?>>) handleMessageInputMethod().invoke(testBot, message);
+        List<BotApiMethod<?>> list = weld.select(CheckTranslationMessageHandler.class).get().handle(message);
 
         assertTrue(RandomMessageText.positiveMessages.contains(((SendMessage) list.get(0)).getText()));
     }

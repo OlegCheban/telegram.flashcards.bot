@@ -31,10 +31,10 @@ public class AddToLearnAndNextCallbackHandlerTest {
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
-    protected Message message;
+    private Message message;
 
     @WeldSetup
-    public WeldInitiator weld = WeldInitiator.from(AddToLearnAndNextCallbackHandler.class, AddToLearnAndNextCallbackHandlerTest.class).build();
+    private WeldInitiator weld = WeldInitiator.from(AddToLearnAndNextCallbackHandler.class, AddToLearnAndNextCallbackHandlerTest.class).build();
 
 
     @Produces
