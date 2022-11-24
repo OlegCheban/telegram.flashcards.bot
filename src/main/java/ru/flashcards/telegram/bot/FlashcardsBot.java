@@ -18,6 +18,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.List;
 
+import static ru.flashcards.telegram.bot.botapi.Literals.*;
 import static ru.flashcards.telegram.bot.botapi.Message.*;
 
 /**
@@ -35,18 +36,18 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
         messageFactoryProvider = container.select(MessageFactoryProvider.class).get();
         callbackFactoryProvider = container.select(CallbackFactoryProvider.class).get();
 
-        register(new StartCommand("start", "", dataLayer));
-        register(new StartLearningCommand("l", "", dataLayer));
-        register(new StartWateringSessionCommand("ws", "", dataLayer));
-        register(new EnableExcerciseCommand("ee", "", dataLayer));
-        register(new DisableExcerciseCommand("de", "", dataLayer));
-        register(new SwiperCommand("s", "", dataLayer));
-        register(new FindFlashcardCommand("f", "", dataLayer));
-        register(new NotificationIntervalSettingsCommand("ni", "", dataLayer));
-        register(new TrainingFlashcardsQuantitySettingsCommand("fq", "", dataLayer));
-        register(new WateringSessionReplyTimeSettingsCommand("wt", "", dataLayer));
-        register(new ChangeTranslationCommand("edit", "", dataLayer));
-        register(new HelpCommand("h", ""));
+        register(new StartCommand(START_COMMAND, "", dataLayer));
+        register(new StartLearningCommand(START_LEARNING_COMMAND, "", dataLayer));
+        register(new StartWateringSessionCommand(START_WATERING_SESSION_COMMAND, "", dataLayer));
+        register(new EnableExcerciseCommand(ENABLE_EXCERCISE_COMMAND, "", dataLayer));
+        register(new DisableExcerciseCommand(DISABLE_EXCERCISE_COMMAND, "", dataLayer));
+        register(new SwiperCommand(OPEN_SWIPER_COMMAND, "", dataLayer));
+        register(new FindFlashcardCommand(FIND_FLASHCARD_COMMAND, "", dataLayer));
+        register(new NotificationIntervalSettingsCommand(NOTIFICATION_INTERVAL_SETTINGS_COMMAND, "", dataLayer));
+        register(new TrainingFlashcardsQuantitySettingsCommand(TRAINING_FLASHCARDS_QUANTITY_SETTINGS_COMMAND, "", dataLayer));
+        register(new WateringSessionReplyTimeSettingsCommand(WATERING_SESSION_REPLY_TIME_SETTINGS_COMMAND, "", dataLayer));
+        register(new ChangeTranslationCommand(CHANGE_TRANSLATION_COMMAND, "", dataLayer));
+        register(new HelpCommand(HELP_COMMAND, ""));
     }
 
     @Override

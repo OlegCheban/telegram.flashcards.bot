@@ -9,6 +9,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SendToLearnFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
 
+import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,9 +17,9 @@ import static ru.flashcards.telegram.bot.botapi.Literals.*;
 import static ru.flashcards.telegram.bot.botapi.Literals.EXCLUDE;
 
 public class SuggestFlashcard {
-    private static ObjectMapper objectMapper = new ObjectMapper();
     private DataLayerObject dataLayer;
 
+    @Inject
     public SuggestFlashcard(DataLayerObject dataLayer) {
         this.dataLayer = dataLayer;
     }
@@ -59,8 +60,8 @@ public class SuggestFlashcard {
         });
     }
 
-    private static JSONObject prepareLearnButtonsInlineKeyboardJson(Long flashcardId, String addToLearnCommand, String excludeCommand) throws JsonProcessingException {
-
+    private JSONObject prepareLearnButtonsInlineKeyboardJson(Long flashcardId, String addToLearnCommand, String excludeCommand) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
         CallbackData addToLearn = new CallbackData(addToLearnCommand);
         addToLearn.setEntityId(flashcardId);
         CallbackData exclude = new CallbackData(excludeCommand);

@@ -19,20 +19,40 @@ import java.util.List;
 public class CheckWateringSessionExerciseMessageHandler implements MessageHandler<Message> {
     @Inject
     private DataLayerObject dataLayer;
+    @Inject
+    private WateringSession wateringSession;
     private UserFlashcard userFlashcard;
     private List<BotApiMethod<?>> list = new ArrayList<>();
+    private Long chatId;
 
     @Override
     public List<BotApiMethod<?>> handle(Message message){
-        userFlashcard = dataLayer.getUserFlashcardForWateringSession(message.getChatId());
-        Boolean checkExerciseResult = checkExercise(message.getText().trim());
-        Boolean checkTimingResult = checkTiming(message.getChatId());
-        sendResultMessage(checkExerciseResult, checkTimingResult, message.getChatId());
-        dataLayer.setWateringSessionDate(userFlashcard.getId());
-        WateringSession wateringSession = new WateringSession(dataLayer);
-        list.add(wateringSession.newFlashcard(message.getChatId()));
+        chatId = message.getChatId();
+        userFlashcard = dataLayer.getUserFlashcardForWateringSession(chatId);
+
+        createResultMessage(
+                checkExercise(message.getText().trim()),
+                checkTiming(chatId)
+        );
+        next();
 
         return list;
+    }
+
+    private void createResultMessage(Boolean checkExerciseResult, Boolean checkTimingResult){
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+
+        if (!checkTimingResult){
+            sendMessage.setText("Time has run out.");
+        } else {
+            sendMessage.setText(checkExerciseResult ?
+                    RandomMessageText.getPositiveMessage() :
+                    RandomMessageText.getNegativeMessage()
+            );
+        }
+
+        list.add(sendMessage);
     }
 
     private boolean checkExercise(String checkValue){
@@ -45,19 +65,8 @@ public class CheckWateringSessionExerciseMessageHandler implements MessageHandle
         return diff <= dataLayer.getWateringSessionReplyTime(chatId);
     }
 
-    private void sendResultMessage(Boolean checkExerciseResult, Boolean checkTimingResult, Long chatId){
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(chatId);
-
-        if (!checkTimingResult){
-            sendMessage.setText(RandomMessageText.getNegativeMessage() + ". It's time.");
-        } else {
-            sendMessage.setText(checkExerciseResult ?
-                    RandomMessageText.getPositiveMessage() :
-                    RandomMessageText.getNegativeMessage()
-            );
-        }
-
-        list.add(sendMessage);
+    private void next(){
+        dataLayer.finishedLastFlashcard(userFlashcard.getId());
+        list.add(wateringSession.newFlashcard(chatId));
     }
 }

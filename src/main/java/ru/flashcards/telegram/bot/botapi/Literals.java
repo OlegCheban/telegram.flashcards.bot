@@ -16,10 +16,8 @@ public final class Literals {
     public static final String QUITE = "QUITE";
     public static final String BOOST_PRIORITY = "BOOST_PRIORITY";
 
-
     public static final String SWIPER_PREV = "PREV";
     public static final String SWIPER_NEXT = "NEXT";
-
 
     public static final String MEMORISED = "Memorised";
     public static final String CHECK_DESCRIPTION = "CHECK_DESCRIPTION";
@@ -30,4 +28,18 @@ public final class Literals {
 
     public static final String ENABLE_EXCERCISE = "ENABLE";
     public static final String DISABLE_EXCERCISE = "DISABLE";
+
+    //Bot commands
+    public static final String START_COMMAND = "start";
+    public static final String START_LEARNING_COMMAND = "l";
+    public static final String START_WATERING_SESSION_COMMAND = "w";
+    public static final String ENABLE_EXCERCISE_COMMAND = "e";
+    public static final String DISABLE_EXCERCISE_COMMAND = "d";
+    public static final String OPEN_SWIPER_COMMAND = "s";
+    public static final String FIND_FLASHCARD_COMMAND = "f";
+    public static final String NOTIFICATION_INTERVAL_SETTINGS_COMMAND = "ni";
+    public static final String TRAINING_FLASHCARDS_QUANTITY_SETTINGS_COMMAND = "fq";
+    public static final String WATERING_SESSION_REPLY_TIME_SETTINGS_COMMAND = "wt";
+    public static final String CHANGE_TRANSLATION_COMMAND = "edit";
+    public static final String HELP_COMMAND = "h";
 }

@@ -10,6 +10,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.utils.Lambda;
 import ru.flashcards.telegram.bot.utils.WateringSessionTimingSingleton;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import static ru.flashcards.telegram.bot.botapi.Literals.*;
 public class WateringSession {
     private DataLayerObject dataLayer;
 
+    @Inject
     public WateringSession(DataLayerObject dataLayer) {
         this.dataLayer = dataLayer;
     }

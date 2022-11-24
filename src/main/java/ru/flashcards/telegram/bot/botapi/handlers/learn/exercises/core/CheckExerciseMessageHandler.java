@@ -18,27 +18,36 @@ public abstract class CheckExerciseMessageHandler implements MessageHandler<Mess
     private DataLayerObject dataLayer;
     @Inject
     private ExerciseProvider exerciseProvider;
-
     private ExerciseFlashcard currentExercise;
     private List<BotApiMethod<?>> list = new ArrayList<>();
     private Long chatId;
+
+    public ExerciseFlashcard getCurrentExercise() {
+        return currentExercise;
+    }
 
     protected abstract String getCurrentExerciseFlashcardAttributeCheckValue();
 
     @Override
     public List<BotApiMethod<?>> handle(Message message){
-        currentExercise = dataLayer.getCurrentExercise(message.getChatId());
         chatId = message.getChatId();
-        Boolean result = checkExercise(message.getText().trim());
-        sendResultMessage(result, chatId);
+        currentExercise = dataLayer.getCurrentExercise(chatId);
+        createResultMessage(checkExercise(message.getText().trim()));
 
-        if (dataLayer.getCurrentExercise(chatId) != null){
-            list.add(exerciseProvider.newExercise(chatId));
-        } else {
-           stopLearning();
-        }
+        nextExercise();
 
         return list;
+    }
+
+    private void createResultMessage(Boolean result){
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(result ?
+                RandomMessageText.getPositiveMessage() :
+                RandomMessageText.getNegativeMessage()
+        );
+
+        list.add(sendMessage);
     }
 
     private boolean checkExercise(String checkValue){
@@ -54,6 +63,14 @@ public abstract class CheckExerciseMessageHandler implements MessageHandler<Mess
         );
 
         return isCorrentAnswer;
+    }
+
+    private void nextExercise(){
+        if (dataLayer.getCurrentExercise(chatId) != null){
+            list.add(exerciseProvider.newExercise(chatId));
+        } else {
+            stopLearning();
+        }
     }
 
     private void stopLearning(){
@@ -81,20 +98,5 @@ public abstract class CheckExerciseMessageHandler implements MessageHandler<Mess
         sendMessage.setReplyMarkup(replyKeyboardRemove);
 
         list.add(sendMessage);
-    }
-
-    private void sendResultMessage(Boolean result, Long chatId){
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(result ?
-                RandomMessageText.getPositiveMessage() :
-                RandomMessageText.getNegativeMessage()
-        );
-
-        list.add(sendMessage);
-    }
-
-    public ExerciseFlashcard getCurrentExercise() {
-        return currentExercise;
     }
 }

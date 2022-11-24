@@ -22,11 +22,11 @@ public class Help {
                         "3. Exercises\n" +
                         "Bot has several kinds of exercises which help you learn flashcards\n" +
                         "/l to start learning\n" +
-                        "/ee to enable exercises \n" +
-                        "/de to disable exercises \n\n" +
+                        "/e to enable exercises \n" +
+                        "/d to disable exercises \n\n" +
 
                         "4. Watering session (repeat your learned flashcards and pick correct translation before time runs out)\n" +
-                        "/ws to start watering session\n\n" +
+                        "/w to start watering session\n\n" +
 
                         "5. Others commands\n" +
                         "/ni <min> - changes notifications interval (default 60 min) \n" +

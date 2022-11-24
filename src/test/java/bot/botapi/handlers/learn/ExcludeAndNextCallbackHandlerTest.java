@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.ExcludeAndNextCallbackHandler;
+import ru.flashcards.telegram.bot.command.addToLearn.SuggestFlashcard;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.Flashcard;
 
@@ -45,6 +46,11 @@ public class ExcludeAndNextCallbackHandlerTest {
         when(dataLayerObject.findFlashcardById(0L)).thenReturn(flashcard);
 
         return  dataLayerObject;
+    }
+
+    @Produces
+    SuggestFlashcard suggestFlashcard() {
+        return Mockito.mock(SuggestFlashcard.class);
     }
 
     @Test

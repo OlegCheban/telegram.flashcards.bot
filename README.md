@@ -44,11 +44,11 @@ Additional functionality:
 3. Exercises
 Bot has several kinds of exercises which help you learn flashcards
 /l to start learning
-/ee to enable exercises 
-/de to disable exercises
+/e to enable exercises 
+/d to disable exercises
 
 4. Watering session (repeat your learned flashcards and pick correct translation before time runs out)
-/ws to start watering session
+/w to start watering session
 
 5. Others commands
 /ni <min> - changes notifications interval (default 60 min) 

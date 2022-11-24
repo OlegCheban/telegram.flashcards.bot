@@ -115,7 +115,7 @@ public class DataLayerObject {
         }.getObject();
     }
 
-    public int setWateringSessionDate(Long userFlashcardId) {
+    public int finishedLastFlashcard(Long userFlashcardId) {
         return new Update("update main.user_flashcard set watering_session_date = now() where id = ?"){
             @Override
             protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {

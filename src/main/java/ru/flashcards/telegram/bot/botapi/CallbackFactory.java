@@ -47,7 +47,6 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
 
     @Override
     public MessageHandler<CallbackQuery> getHandler(String callbackDataJson) {
-
         ObjectMapper objectMapper = new ObjectMapper();
         CallbackData callback = null;
         try {

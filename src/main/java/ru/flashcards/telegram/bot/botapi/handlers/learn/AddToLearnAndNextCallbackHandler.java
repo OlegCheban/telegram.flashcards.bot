@@ -20,9 +20,11 @@ public class AddToLearnAndNextCallbackHandler implements MessageHandler<Callback
     @Inject
     private DataLayerObject dataLayer;
 
+    @Inject
+    private SuggestFlashcard suggestFlashcard;
+
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
-        SuggestFlashcard suggestFlashcard = new SuggestFlashcard(dataLayer);
         CallbackData callbackData = getCallbackData(callbackQuery.getData());
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
