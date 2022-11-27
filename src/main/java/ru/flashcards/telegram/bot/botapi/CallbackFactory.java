@@ -41,9 +41,9 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
     @Inject
     QuiteCallbackHandler quiteCallbackHandler;
     @Inject
-    DisableExcerciseMessageHandler disableExcerciseMessageHandler;
+    DisableExerciseMessageHandler disableExerciseMessageHandler;
     @Inject
-    EnableExcerciseMessageHandler enableExcerciseMessageHandler;
+    EnableExerciseMessageHandler enableExerciseMessageHandler;
 
     @Override
     public MessageHandler<CallbackQuery> getHandler(String callbackDataJson) {
@@ -82,9 +82,9 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
             case QUITE:
                 return quiteCallbackHandler;
             case DISABLE_EXCERCISE:
-                return disableExcerciseMessageHandler;
+                return disableExerciseMessageHandler;
             case ENABLE_EXCERCISE:
-                return enableExcerciseMessageHandler;
+                return enableExerciseMessageHandler;
         }
 
         return m -> Collections.emptyList();

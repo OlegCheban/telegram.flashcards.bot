@@ -38,7 +38,7 @@ Swiper allows you to easily navigate through all of your flashcards
 /s <value> - displays flashcards containing inputted value
 Additional functionality:
    - ability to reset learning statistics for flashcards which were already learned (100% progress). Use "reset progress" button;
-   - ability to add the most significant flashcards to the next learning session. Use "boost priority" button.
+   - ability to add the most significant flashcards to the next learning session. Use "boost priority" button;
    - ability to see examples of usage. Use "example of usage" button.
 
 3. Exercises
@@ -51,13 +51,13 @@ Bot has several kinds of exercises which help you learn flashcards
 /w to start watering session
 
 5. Others commands
-/ni <min> - changes notifications interval (default 60 min) 
+/ni <min> - changes random flashcards notifications interval (default 60 min) 
 /fq <min> - changes flashcards quantity for training (default 5 flashcards)
 /wt <seconds> - changes watering session reply time (default 5 seconds)
 /h displays help
 
 6. Bot sends notifications:
-   - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can reset flashcard to learn again;
+   - spaced repetition notifications. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can reset flashcard to learn again;
    - random flashcards notifications.
 ```
 

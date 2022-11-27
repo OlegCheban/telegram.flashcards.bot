@@ -14,7 +14,7 @@ import java.util.List;
 
 import static java.lang.Math.toIntExact;
 
-public class EnableExcerciseMessageHandler implements MessageHandler<CallbackQuery> {
+public class EnableExerciseMessageHandler implements MessageHandler<CallbackQuery> {
     @Inject
     private DataLayerObject dataLayer;
 
@@ -31,7 +31,7 @@ public class EnableExcerciseMessageHandler implements MessageHandler<CallbackQue
         EditMessageText editMessage = new EditMessageText();
         editMessage.setChatId(String.valueOf(chatId));
         editMessage.setMessageId(toIntExact(messageId));
-        editMessage.setText("Done");
+        editMessage.setText("Exercise is enabled successfully.");
 
         list.add(editMessage);
         return list;

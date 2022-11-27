@@ -23,8 +23,8 @@ public class NotificationIntervalSettingsCommand extends BotCommand {
         Long chatId = message.getChatId();
 
         if (Number.isInteger(arguments[0], 10)) {
-            SendService.sendMessage(message.getChatId(), "Done");
             dataLayer.setNotificationInterval(Integer.valueOf(arguments[0]), chatId);
+            SendService.sendMessage(message.getChatId(), "Value is modified. Current random flashcards notifications interval is " + arguments[0] + " min. ");
         } else {
             SendService.sendMessage(message.getChatId(), "Wrong parameter, should be a number");
         }

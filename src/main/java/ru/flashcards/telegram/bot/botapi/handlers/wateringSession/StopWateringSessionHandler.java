@@ -25,7 +25,7 @@ public class StopWateringSessionHandler implements MessageHandler<Message> {
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(String.valueOf(message.getChatId()));
-        sendMessage.setText("Done");
+        sendMessage.setText("Keep learning!");
         sendMessage.setReplyMarkup(replyKeyboardRemove);
 
         list.add(sendMessage);

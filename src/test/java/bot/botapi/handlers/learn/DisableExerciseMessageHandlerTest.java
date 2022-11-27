@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.CallbackData;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.DisableExcerciseMessageHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.DisableExerciseMessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import javax.enterprise.inject.Produces;
@@ -26,14 +26,14 @@ import static ru.flashcards.telegram.bot.botapi.Literals.DISABLE_EXCERCISE;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)
-public class DisableExcerciseMessageHandlerTest {
+public class DisableExerciseMessageHandlerTest {
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
     private Message message;
 
     @WeldSetup
-    private WeldInitiator weld = WeldInitiator.from(DisableExcerciseMessageHandler.class, DisableExcerciseMessageHandlerTest.class).build();
+    private WeldInitiator weld = WeldInitiator.from(DisableExerciseMessageHandler.class, DisableExerciseMessageHandlerTest.class).build();
 
 
     @Produces
@@ -52,8 +52,8 @@ public class DisableExcerciseMessageHandlerTest {
         when(callbackQuery.getData()).thenReturn(objectMapper.writeValueAsString(callbackData));
         when(callbackQuery.getMessage()).thenReturn(message);
 
-        List<BotApiMethod<?>> list = weld.select(DisableExcerciseMessageHandler.class).get().handle(callbackQuery);
+        List<BotApiMethod<?>> list = weld.select(DisableExerciseMessageHandler.class).get().handle(callbackQuery);
 
-        assertEquals("Done", ((EditMessageText) list.get(0)).getText());
+        assertEquals("Exercise is disabled successfully.", ((EditMessageText) list.get(0)).getText());
     }
 }

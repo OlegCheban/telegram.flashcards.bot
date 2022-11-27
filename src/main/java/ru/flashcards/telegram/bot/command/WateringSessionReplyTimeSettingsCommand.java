@@ -23,7 +23,8 @@ public class WateringSessionReplyTimeSettingsCommand extends BotCommand {
         Long chatId = message.getChatId();
 
         if (Number.isInteger(arguments[0], 10)) {
-            SendService.sendMessage(message.getChatId(), "Done");
+            SendService.sendMessage(message.getChatId(), "Value is modified. Current watering session reply time is " + arguments[0] + " sec. ");
+
             dataLayer.setWateringSessionReplyTime(Integer.valueOf(arguments[0]), chatId);
         } else {
             SendService.sendMessage(message.getChatId(), "Wrong parameter, should be a number");

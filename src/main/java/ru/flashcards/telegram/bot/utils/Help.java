@@ -15,8 +15,8 @@ public class Help {
                         "/s - displays flashcards added by the user to their profile\n" +
                         "/s <value> - displays flashcards containing inputted value\n" +
                         "Additional functionality:\n" +
-                        "   - ability to reset learning statistics for flashcards which were already learned (100% progress). Use \"reset progress\" button.\n" +
-                        "   - ability to add the most significant flashcards to the next learning session. Use \"boost priority\" button.\n" +
+                        "   - ability to reset learning statistics for flashcards which were already learned (100% progress). Use \"reset progress\" button;\n" +
+                        "   - ability to add the most significant flashcards to the next learning session. Use \"boost priority\" button;\n" +
                         "   - ability to see examples of usage. Use \"example of usage\" button.\n\n" +
 
                         "3. Exercises\n" +
@@ -29,14 +29,14 @@ public class Help {
                         "/w to start watering session\n\n" +
 
                         "5. Others commands\n" +
-                        "/ni <min> - changes notifications interval (default 60 min) \n" +
+                        "/ni <min> - changes random flashcards notifications interval (default 60 min) \n" +
                         "/fq <min> - changes flashcards quantity for training (default 5 flashcards) \n" +
                         "/wt <seconds> - changes watering session reply time (default 5 seconds) \n" +
                         "/h displays help\n\n"+
 
                         "6. Bot sends notifications:\n" +
-                        "   - for spaced repetition. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can reset flashcard to learn again;\n" +
-                        "   - random flashcards notifications;\n"
+                        "   - spaced repetition notifications. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can reset flashcard to learn again;\n" +
+                        "   - random flashcards notifications.\n"
         );
     }
 }

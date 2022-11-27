@@ -23,8 +23,8 @@ public class TrainingFlashcardsQuantitySettingsCommand extends BotCommand {
         Long chatId = message.getChatId();
 
         if (Number.isInteger(arguments[0], 10)) {
-            SendService.sendMessage(message.getChatId(), "Done");
             dataLayer.setTrainingFlashcardsQuantity(Integer.valueOf(arguments[0]), chatId);
+            SendService.sendMessage(message.getChatId(), "Value is modified. Current flashcards quantity for training is " + arguments[0]);
         } else {
             SendService.sendMessage(message.getChatId(), "Wrong parameter, should be a number");
         }

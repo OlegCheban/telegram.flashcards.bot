@@ -26,7 +26,7 @@ public class StartWateringSessionCommand extends BotCommand {
                 absSender.execute(wateringSession.newFlashcard(chat.getId()));
             } else {
                 SendMessage sendMessage = new SendMessage();
-                sendMessage.setText("You have not learned flashcards.");
+                sendMessage.setText("There aren't any learned flashcards in your profile.");
                 sendMessage.setChatId(String.valueOf(chat.getId()));
                 absSender.execute(sendMessage);
             }
