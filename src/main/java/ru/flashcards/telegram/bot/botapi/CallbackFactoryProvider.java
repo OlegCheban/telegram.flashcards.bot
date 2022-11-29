@@ -9,8 +9,8 @@ public class CallbackFactoryProvider {
     @Inject
     private CallbackFactory callbackFactory;
 
-    public CallbackHandlerAbstractFactory getFactory(Message message){
-        switch (message){
+    public CallbackHandlerAbstractFactory getFactory(MessageFactoryType messageFactoryType){
+        switch (messageFactoryType){
             case CALLBACK:
                 return callbackFactory;
         }

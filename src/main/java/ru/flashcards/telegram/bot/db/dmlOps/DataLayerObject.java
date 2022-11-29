@@ -525,13 +525,12 @@ public class DataLayerObject {
         }.getCollection();
     }
 
-    public int editTranslation (Long chatId, String word, String translation) {
-        return new Update("update main.user_flashcard uf set translation = ? from main.user u where uf.user_id = u.id and uf.word = ? and u.chat_id = ?"){
+    public int editTranslation (Long flashcardId, String translation) {
+        return new Update("update main.user_flashcard uf set translation = ? where uf.id = ? "){
             @Override
             protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setString(1, translation);
-                preparedStatement.setString(2, word);
-                preparedStatement.setLong(3, chatId);
+                preparedStatement.setLong(2, flashcardId);
                 return preparedStatement;
             }
         }.run();
@@ -591,6 +590,29 @@ public class DataLayerObject {
             @Override
             protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setLong(1, flashcardId);
+                return preparedStatement;
+            }
+        }.getObject();
+    }
+
+    public UserFlashcard findUserFlashcardByName(Long chatId, String name) {
+        return new SelectWithParams<UserFlashcard>("select a.id, a.description, a.transcription, a.translation, a.word " +
+                " from main.user_flashcard a, main.user b where a.user_id = b.id and b.chat_id = ? and a.word = ? "){
+            @Override
+            protected UserFlashcard rowMapper(ResultSet rs) throws SQLException {
+                return  new UserFlashcard(
+                        rs.getLong("id"),
+                        rs.getString("description"),
+                        rs.getString("transcription"),
+                        rs.getString("translation"),
+                        rs.getString("word")
+                );
+            }
+
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, chatId);
+                preparedStatement.setString(2, name);
                 return preparedStatement;
             }
         }.getObject();

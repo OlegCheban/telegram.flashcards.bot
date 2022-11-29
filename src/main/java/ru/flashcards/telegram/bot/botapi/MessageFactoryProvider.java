@@ -11,17 +11,17 @@ public class MessageFactoryProvider {
     @Inject
     private WateringSessionMessageFactory wateringSessionMessageFactory;
     @Inject
-    private CreateFlashcardMessageFactory createFlashcardMessageFactory;
+    private MessageFactory messageFactory;
 
 
-    public MessageHandlerAbstractFactory getFactory(Message message){
-        switch (message){
+    public MessageHandlerAbstractFactory getFactory(MessageFactoryType messageFactoryType){
+        switch (messageFactoryType){
             case EXERCISE:
                 return exerciseMessageFactory;
             case WATERING_SESSION:
                 return wateringSessionMessageFactory;
-            case FLASHCARD:
-                return createFlashcardMessageFactory;
+            case OTHER_MESSAGES:
+                return messageFactory;
         }
 
         return (MessageHandlerAbstractFactory<MessageHandler>) (msg) -> m -> Collections.emptyList();

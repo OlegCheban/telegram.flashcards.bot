@@ -26,14 +26,14 @@ import static ru.flashcards.telegram.bot.botapi.Literals.DISABLE_EXCERCISE;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)
-public class DisableExerciseMessageHandlerTest {
+public class DisableExerciseMessageFactoryTypeHandlerTest {
     @Mock
     private CallbackQuery callbackQuery;
     @Mock
     private Message message;
 
     @WeldSetup
-    private WeldInitiator weld = WeldInitiator.from(DisableExerciseMessageHandler.class, DisableExerciseMessageHandlerTest.class).build();
+    private WeldInitiator weld = WeldInitiator.from(DisableExerciseMessageHandler.class, DisableExerciseMessageFactoryTypeHandlerTest.class).build();
 
 
     @Produces

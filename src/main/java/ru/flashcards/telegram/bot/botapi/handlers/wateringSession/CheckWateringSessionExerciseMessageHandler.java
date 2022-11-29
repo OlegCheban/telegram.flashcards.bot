@@ -8,7 +8,7 @@ import ru.flashcards.telegram.bot.botapi.wateringSession.WateringSession;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
-import ru.flashcards.telegram.bot.utils.WateringSessionTimingSingleton;
+import ru.flashcards.telegram.bot.botapi.WateringSessionTimingSingleton;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package ru.flashcards.telegram.bot.command.modifyFlashcard;
+package ru.flashcards.telegram.bot.command;
 
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -6,7 +6,11 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
+import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
+import ru.flashcards.telegram.bot.botapi.UserFlashcardModificationBuffer;
+
+import static ru.flashcards.telegram.bot.botapi.MessageType.CHANGE_TRANSLATION;
 
 public class ChangeTranslationCommand extends BotCommand {
     private final String badParameters = "Bad parameters";
@@ -30,8 +34,13 @@ public class ChangeTranslationCommand extends BotCommand {
             text = arguments[0];
         }
 
-        dataLayer.editTranslation(message.getChatId(), text.split("#")[0], text.split("#")[1]);
-        SendService.sendMessage(message.getChatId(), "Done");
+        UserFlashcard userFlashcard = dataLayer.findUserFlashcardByName(message.getChatId(), text);
+        if (userFlashcard == null){
+            SendService.sendMessage(message.getChatId(), "Flashcard wasn't put to your profile.");
+        } else {
+            SendService.sendMessage(message.getChatId(), "OK. Send me a new translation.");
+            UserFlashcardModificationBuffer.putRequest(message.getChatId(), userFlashcard.getId(), CHANGE_TRANSLATION);
+        }
     }
 
     @Override

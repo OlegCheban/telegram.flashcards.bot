@@ -8,7 +8,7 @@ import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.translate.TranslateFlashcardCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.translation.TranslateFlashcardCallbackHandler;
 
 import javax.inject.Inject;
 import java.util.Collections;

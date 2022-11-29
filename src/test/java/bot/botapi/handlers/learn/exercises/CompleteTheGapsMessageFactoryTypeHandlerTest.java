@@ -22,16 +22,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)
-public class CompleteTheGapsMessageHandlerTest {
+public class CompleteTheGapsMessageFactoryTypeHandlerTest {
     @Mock
     private Message message;
 
     @WeldSetup
-    private WeldInitiator weld = WeldInitiator.from(CompleteTheGapsMessageHandler.class, CompleteTheGapsMessageHandlerTest.class).build();
+    private WeldInitiator weld = WeldInitiator.from(CompleteTheGapsMessageHandler.class, CompleteTheGapsMessageFactoryTypeHandlerTest.class).build();
 
     @Produces
     DataLayerObject dataLayer() {

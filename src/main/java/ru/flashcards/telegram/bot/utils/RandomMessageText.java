@@ -44,4 +44,14 @@ public class RandomMessageText {
         int randomNum = ThreadLocalRandom.current().nextInt(0, negativeMessages.size());
         return negativeMessages.get(randomNum);
     }
+
+    public static String getAnotherMessage(){
+        List<String> negativeMessages = Arrays.asList(
+                "What are you doing?",
+                "Keep Learning! "
+        );
+
+        int randomNum = ThreadLocalRandom.current().nextInt(0, negativeMessages.size());
+        return negativeMessages.get(randomNum);
+    }
 }

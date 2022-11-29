@@ -54,6 +54,7 @@ Bot has several kinds of exercises which help you learn flashcards
 /ni <min> - changes random flashcards notifications interval (default 60 min) 
 /fq <min> - changes flashcards quantity for training (default 5 flashcards)
 /wt <seconds> - changes watering session reply time (default 5 seconds)
+/ed <value> - finds flashcard from your profile by inputted value (english word) and suggests to change translation
 /h displays help
 
 6. Bot sends notifications:
@@ -65,7 +66,6 @@ Bot has several kinds of exercises which help you learn flashcards
   
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to get flashcards by percentile in swiper.
-- I want to be able to edit translation for my flashcards.
 - I want to be able to get similar flashcards when one of mine have not been found by misspell reason.  
 
  

@@ -1,8 +1,8 @@
 package ru.flashcards.telegram.bot.botapi;
 
-public enum Message {
+public enum MessageFactoryType {
     EXERCISE,
     WATERING_SESSION,
-    FLASHCARD,
+    OTHER_MESSAGES,
     CALLBACK
 }

@@ -40,6 +40,6 @@ public final class Literals {
     public static final String NOTIFICATION_INTERVAL_SETTINGS_COMMAND = "ni";
     public static final String TRAINING_FLASHCARDS_QUANTITY_SETTINGS_COMMAND = "fq";
     public static final String WATERING_SESSION_REPLY_TIME_SETTINGS_COMMAND = "wt";
-    public static final String CHANGE_TRANSLATION_COMMAND = "edit";
+    public static final String CHANGE_TRANSLATION_COMMAND = "ed";
     public static final String HELP_COMMAND = "h";
 }

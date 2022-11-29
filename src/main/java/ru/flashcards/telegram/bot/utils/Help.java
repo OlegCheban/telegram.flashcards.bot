@@ -32,6 +32,7 @@ public class Help {
                         "/ni <min> - changes random flashcards notifications interval (default 60 min) \n" +
                         "/fq <min> - changes flashcards quantity for training (default 5 flashcards) \n" +
                         "/wt <seconds> - changes watering session reply time (default 5 seconds) \n" +
+                        "/ed <value> - finds flashcard from your profile by inputted value (english word) and suggests to change translation \n" +
                         "/h displays help\n\n"+
 
                         "6. Bot sends notifications:\n" +

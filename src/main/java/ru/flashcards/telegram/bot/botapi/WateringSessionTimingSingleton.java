@@ -1,8 +1,7 @@
-package ru.flashcards.telegram.bot.utils;
+package ru.flashcards.telegram.bot.botapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.flashcards.telegram.bot.sheduler.ScheduledTasks;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

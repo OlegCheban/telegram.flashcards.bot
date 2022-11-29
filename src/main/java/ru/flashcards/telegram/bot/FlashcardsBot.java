@@ -13,13 +13,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.flashcards.telegram.bot.botapi.*;
 import ru.flashcards.telegram.bot.command.*;
 import ru.flashcards.telegram.bot.command.addToLearn.FindFlashcardCommand;
-import ru.flashcards.telegram.bot.command.modifyFlashcard.ChangeTranslationCommand;
+import ru.flashcards.telegram.bot.command.ChangeTranslationCommand;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import java.util.List;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.*;
-import static ru.flashcards.telegram.bot.botapi.Message.*;
+import static ru.flashcards.telegram.bot.botapi.MessageFactoryType.*;
 
 /**
  * @author Oleg Cheban
@@ -52,7 +52,7 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
-        RequestContext requestContext= container.select(RequestContext.class, UnboundLiteral.INSTANCE).get();
+        RequestContext requestContext = container.select(RequestContext.class, UnboundLiteral.INSTANCE).get();
         requestContext.activate();
 
         if (update.hasMessage()){
@@ -76,7 +76,7 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
 
         } else {
             //other messages
-            factory = messageFactoryProvider.getFactory(FLASHCARD);
+            factory = messageFactoryProvider.getFactory(OTHER_MESSAGES);
 
         }
 
