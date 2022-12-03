@@ -36,4 +36,5 @@ public abstract class FlashcardsBotTestAbstract {
     }
 
     protected abstract void test() throws Exception;
+
 }
