@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.ExerciseProvider;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.common.ExerciseProvider;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 public class StartLearningCommand extends BotCommand {

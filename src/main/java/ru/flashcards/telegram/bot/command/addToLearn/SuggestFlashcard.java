@@ -40,7 +40,7 @@ public class SuggestFlashcard {
         });
 
         if (sendToLearnFlashcards.isEmpty()){
-            SendService.sendMessage(chatId, "*" +param + "* not found");
+            SendService.sendMessage(chatId, "Flashcard *" +param + "* hasn't been found");
         }
     }
 

@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.CheckDescriptionMessageHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.ExerciseProvider;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.common.ExerciseProvider;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;

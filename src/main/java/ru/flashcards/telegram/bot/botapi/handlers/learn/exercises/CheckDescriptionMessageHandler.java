@@ -1,6 +1,6 @@
 package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises;
 
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.CheckExerciseMessageHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.common.CheckExerciseMessageHandler;
 
 public class CheckDescriptionMessageHandler extends CheckExerciseMessageHandler {
     @Override

@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.MemorisedMessageHandler;
-import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core.ExerciseProvider;
+import ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.common.ExerciseProvider;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.utils.RandomMessageText;
@@ -22,7 +22,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)

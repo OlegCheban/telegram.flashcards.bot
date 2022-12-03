@@ -26,7 +26,7 @@ public class ChangeTranslationMessageHandler implements MessageHandler<Message> 
         UserFlashcardModificationBuffer.removeRequest(message.getChatId());
 
         SendMessage replyMessage = new SendMessage();
-        replyMessage.setText("Translation successfully changed");
+        replyMessage.setText("Translation is changed successfully");
         replyMessage.setChatId(String.valueOf(message.getChatId()));
         list.add(replyMessage);
 

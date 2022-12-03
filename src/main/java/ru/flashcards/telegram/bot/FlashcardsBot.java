@@ -71,7 +71,7 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
             factory = messageFactoryProvider.getFactory(EXERCISE);
 
         } else if (dataLayer.isWateringSession(message.getChatId())){
-            //watering session
+            //watering session mode
             factory = messageFactoryProvider.getFactory(WATERING_SESSION);
 
         } else {

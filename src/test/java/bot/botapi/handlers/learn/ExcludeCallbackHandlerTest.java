@@ -60,6 +60,6 @@ public class ExcludeCallbackHandlerTest {
 
         List<BotApiMethod<?>> list = weld.select(ExcludeCallbackHandler.class).get().handle(callbackQuery);
 
-        assertEquals("Flashcard *word* excluded", ((EditMessageText) list.get(0)).getText());
+        assertEquals("The flashcard *word* was excluded from the bot. Bot isn't going to suggest learning this.", ((EditMessageText) list.get(0)).getText());
     }
 }

@@ -1,7 +1,7 @@
 # Flashcards Telegram bot
 Bot helps to learn vocabulary words fast and effectively. It uses spaced repetition learning technique and has a lot of flashcards.
 
-Deployed bot (https://t.me/proFlashcardsBot) has around 100000 flashcards.
+Deployed bot (https://t.me/proFlashcardsBot) has around 100k flashcards.
 
 
 #### Fast launch with Docker 
@@ -26,8 +26,6 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 
 #### Help
 ```
-Help
-
 1. Basic find commands for finding flashcards
 /f - suggests the most popular flashcards
 /f <value> - finds specific flashcard by inputted value

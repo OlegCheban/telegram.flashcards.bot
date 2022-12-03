@@ -441,9 +441,7 @@ public class DataLayerObject {
                 "select u.chat_id, fc.flashcard_id, fc.word, fc.description, fc.translation, fc.transcription from main.user u \n" +
                         " join lateral (\n" +
                         "     select f.id flashcard_id, f.word, f.description, f.translation, f.transcription from main.flashcard f\n" +
-                        "        where not exists(select 1 from main.excepted_user_flashcard euf where euf.flashcard_id = f.id and euf.user_id = u.id) and\n" +
-                        "              not exists(select 1 from main.user_flashcard uf where uf.word = f.word and uf.user_id = u.id) and \n" +
-                        "              f.word = coalesce(?, f.word) \n" +
+                        "        where f.word = coalesce(?, f.word) \n" +
                         "              limit 1 \n" +
                         "    ) fc on true\n" +
                         "where u.chat_id = ? "
@@ -531,41 +529,6 @@ public class DataLayerObject {
             protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setString(1, translation);
                 preparedStatement.setLong(2, flashcardId);
-                return preparedStatement;
-            }
-        }.run();
-    }
-
-    /**
-     * Создание новой карточки
-     */
-    public int createFlashcard(Long chatId, String word, String description, String translation, String transcription) {
-        return new Update(
-                "insert into main.user_flashcard (id, word, description, translation, transcription, user_id) " +
-                        "select nextval('main.common_seq'), ?, ?, ?, ?, (select id from main.user where chat_id = ?)  "
-        ){
-            @Override
-            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setString(1, word);
-                preparedStatement.setString(2, description);
-                preparedStatement.setString(3, translation);
-                preparedStatement.setString(4, transcription);
-                preparedStatement.setLong(5, chatId);
-                return preparedStatement;
-            }
-        }.run();
-    }
-
-    public int createDefinition(Long chatId, String word, String description) {
-        return new Update(
-                "insert into main.user_flashcard (id, word, description, user_id, learned_date) " +
-                        "select nextval('main.common_seq'), ?, ?, (select id from main.user where chat_id = ?), now() "
-        ){
-            @Override
-            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setString(1, word);
-                preparedStatement.setString(2, description);
-                preparedStatement.setLong(3, chatId);
                 return preparedStatement;
             }
         }.run();

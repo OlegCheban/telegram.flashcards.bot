@@ -1,4 +1,4 @@
-package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.core;
+package ru.flashcards.telegram.bot.botapi.handlers.learn.exercises.common;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

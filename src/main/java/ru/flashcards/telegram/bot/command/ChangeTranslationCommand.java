@@ -34,7 +34,7 @@ public class ChangeTranslationCommand extends BotCommand {
             text = arguments[0];
         }
 
-        UserFlashcard userFlashcard = dataLayer.findUserFlashcardByName(message.getChatId(), text);
+        UserFlashcard userFlashcard = dataLayer.findUserFlashcardByName(message.getChatId(), text.trim());
         if (userFlashcard == null){
             SendService.sendMessage(message.getChatId(), "Flashcard wasn't put to your profile.");
         } else {

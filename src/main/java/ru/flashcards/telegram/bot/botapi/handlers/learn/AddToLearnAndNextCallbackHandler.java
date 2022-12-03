@@ -32,14 +32,18 @@ public class AddToLearnAndNextCallbackHandler implements MessageHandler<Callback
         long chatId = message.getChatId();
         Long flashcardId = callbackData.getEntityId();
         Flashcard flashcard = dataLayer.findFlashcardById(flashcardId);
-
-        dataLayer.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(), flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
-
         EditMessageText resultMessage = new EditMessageText();
         resultMessage.setChatId(String.valueOf(chatId));
         resultMessage.setMessageId(toIntExact(messageId));
         resultMessage.enableMarkdown(true);
-        resultMessage.setText("Flashcard *" + flashcard.getWord() + "* added for learning");
+
+        if (dataLayer.findUserFlashcardByName(chatId, flashcard.getWord()) == null){
+            dataLayer.addUserFlashcard(flashcard.getWord(), flashcard.getDescription(), flashcard.getTranscription(),
+                    flashcard.getTranslation(), flashcard.getCategoryId(), chatId);
+            resultMessage.setText("Flashcard *" + flashcard.getWord() + "* added for learning");
+        } else {
+            resultMessage.setText("Flashcard *" + flashcard.getWord() + "* has been already added to your profile");
+        }
 
         list.add(resultMessage);
         suggestFlashcard.byTop3000Category(chatId);

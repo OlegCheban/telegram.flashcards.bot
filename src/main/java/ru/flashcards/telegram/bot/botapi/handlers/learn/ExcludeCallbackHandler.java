@@ -35,7 +35,7 @@ public class ExcludeCallbackHandler implements MessageHandler<CallbackQuery> {
         translationMessage.setChatId(String.valueOf(chatId));
         translationMessage.setMessageId(toIntExact(messageId));
         translationMessage.enableMarkdown(true);
-        translationMessage.setText("Flashcard *" + flashcard.getWord() + "* excluded");
+        translationMessage.setText("The flashcard *" + flashcard.getWord() + "* was excluded from the bot. Bot isn't going to suggest learning this.");
 
         list.add(translationMessage);
         return list;

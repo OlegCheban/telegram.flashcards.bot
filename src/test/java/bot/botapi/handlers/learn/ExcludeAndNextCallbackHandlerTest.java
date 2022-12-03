@@ -65,6 +65,6 @@ public class ExcludeAndNextCallbackHandlerTest {
 
         List<BotApiMethod<?>> list = weld.select(ExcludeAndNextCallbackHandler.class).get().handle(callbackQuery);
 
-        assertEquals("Flashcard *word* excluded", ((EditMessageText) list.get(0)).getText());
+        assertEquals("The flashcard *word* was excluded from the bot. Bot isn't going to suggest learning this.", ((EditMessageText) list.get(0)).getText());
     }
 }
