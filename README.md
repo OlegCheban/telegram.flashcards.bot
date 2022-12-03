@@ -13,6 +13,8 @@ docker compose up -d
 ```
 
 #### Launch in local environment  
+- Set environment variables FLASHCARDS_BOT_NAME and FLASHCARDS_BOT_TOKEN
+- Use command
 ```
 mvn clean install
 mvn liquibase:update
