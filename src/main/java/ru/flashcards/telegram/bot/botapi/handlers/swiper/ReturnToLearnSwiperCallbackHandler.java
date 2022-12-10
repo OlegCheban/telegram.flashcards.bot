@@ -25,6 +25,7 @@ public class ReturnToLearnSwiperCallbackHandler implements MessageHandler<Callba
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
         CallbackData callbackData = getCallbackData(callbackQuery.getData());
         String characterCondition = null;
+        String percentile = null;
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();
@@ -37,18 +38,21 @@ public class ReturnToLearnSwiperCallbackHandler implements MessageHandler<Callba
 
         if (callbackData.getSwiper() != null){
             characterCondition = callbackData.getSwiper().getCharCond();
+            percentile = callbackData.getSwiper().getPrc();
         }
-        SwiperFlashcard swiperFlashcard = dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition);
+        SwiperFlashcard swiperFlashcard =
+                dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition, percentile);
 
         EditMessageText formerMessage = new EditMessageText();
         formerMessage.setChatId(String.valueOf(chatId));
         formerMessage.setMessageId(toIntExact(messageId));
         formerMessage.enableMarkdown(true);
-        formerMessage.setText("*" + swiperFlashcard.getWord() + "* \\[" + swiperFlashcard.getTranscription() + "] ("+swiperFlashcard.getLearnPrc()+"% learned)\n" +
-                swiperFlashcard.getDescription() + "\n\n" + "*Translation:* " + swiperFlashcard.getTranslation()
+        formerMessage.setText("*" + swiperFlashcard.getWord() + "* \\[" + swiperFlashcard.getTranscription() + "] (" +
+                swiperFlashcard.getLearnPrc()+"% learned)\n" + swiperFlashcard.getDescription() + "\n\n" +
+                "*Translation:* " + swiperFlashcard.getTranslation()
         );
 
-        Swiper swiper = new Swiper(characterCondition, swiperFlashcard);
+        Swiper swiper = new Swiper(characterCondition, swiperFlashcard, percentile);
         formerMessage.setReplyMarkup(swiper.getSwiperKeyboardMarkup());
         list.add(formerMessage);
 

@@ -6,14 +6,19 @@ public class Help {
     public static void sendBotManual(Long chatId){
         SendService.sendMessage(chatId,
                 "*Help*\n\n" +
-                        "1. Basic find commands for finding flashcards\n" +
+                        "1. Basic commands for finding flashcards\n" +
                         "/f - suggests the most popular flashcards\n" +
-                        "/f <value> - finds specific flashcard by inputted value\n\n" +
+                        "/f <value> - finds specific flashcard by inputted value\n" +
+                        "Additional functionality:\n" +
+                        "   - ability to add flashcard to your profile for learning. Use \"add to learn\" button.\n" +
+                        "   - ability to exclude already known flashcards from learning. Use \"exclude\" button.\n\n" +
 
                         "2. Swiper\n" +
                         "Swiper allows you to easily navigate through all of your flashcards\n" +
                         "/s - displays flashcards added by the user to their profile\n" +
                         "/s <value> - displays flashcards containing inputted value\n" +
+                        "/s <percentile> - displays flashcards by inputted percentile of learning (possible values: 0, 14, 28, 42, 57, 71, 85, 100)\n" +
+                        "You can specify both parameters (search by value and percentile). Order doesn't matter.\n" +
                         "Additional functionality:\n" +
                         "   - ability to reset learning statistics for flashcards which were already learned (100% progress). Use \"reset progress\" button;\n" +
                         "   - ability to add the most significant flashcards to the next learning session. Use \"boost priority\" button;\n" +

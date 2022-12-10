@@ -24,6 +24,7 @@ public class SwiperRefreshFlashcardCallbackHandler implements MessageHandler<Cal
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
         CallbackData callbackData = getCallbackData(callbackQuery.getData());
         String characterCondition = null;
+        String percentile = null;
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();
@@ -31,8 +32,9 @@ public class SwiperRefreshFlashcardCallbackHandler implements MessageHandler<Cal
 
         if (callbackData.getSwiper() != null){
             characterCondition = callbackData.getSwiper().getCharCond();
+            percentile = callbackData.getSwiper().getPrc();
         }
-        SwiperFlashcard swiperFlashcard = dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition);
+        SwiperFlashcard swiperFlashcard = dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition, percentile);
 
         EditMessageText nextMessage = new EditMessageText();
         nextMessage.setChatId(String.valueOf(chatId));
@@ -42,7 +44,7 @@ public class SwiperRefreshFlashcardCallbackHandler implements MessageHandler<Cal
                 swiperFlashcard.getDescription() + "\n\n" + "*Translation:* " + swiperFlashcard.getTranslation()
         );
 
-        Swiper swiper = new Swiper(characterCondition, swiperFlashcard);
+        Swiper swiper = new Swiper(characterCondition, swiperFlashcard, percentile);
 
         nextMessage.setReplyMarkup(swiper.getSwiperKeyboardMarkup());
         list.add(nextMessage);

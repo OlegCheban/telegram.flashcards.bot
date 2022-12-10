@@ -10,10 +10,11 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
 import ru.flashcards.telegram.bot.botapi.UserFlashcardModificationBuffer;
 
+import static ru.flashcards.telegram.bot.botapi.Literals.UNRECOGNIZED_OPTION_MSG;
 import static ru.flashcards.telegram.bot.botapi.MessageType.CHANGE_TRANSLATION;
 
 public class ChangeTranslationCommand extends BotCommand {
-    private final String badParameters = "Bad parameters";
+    private final String badParameters = UNRECOGNIZED_OPTION_MSG;
     private DataLayerObject dataLayer;
 
     public ChangeTranslationCommand(String commandIdentifier, String description, DataLayerObject dataLayerObject) {

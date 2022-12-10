@@ -29,6 +29,9 @@ public final class Literals {
     public static final String ENABLE_EXCERCISE = "ENABLE";
     public static final String DISABLE_EXCERCISE = "DISABLE";
 
+    public static final String UNRECOGNIZED_OPTION_MSG = "Unrecognized option";
+    public static final String FLASHCARDS_NOT_FOUND_MSG = "Flashcards weren't found";
+
     //Bot commands
     public static final String START_COMMAND = "start";
     public static final String START_LEARNING_COMMAND = "l";

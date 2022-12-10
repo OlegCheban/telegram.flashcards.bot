@@ -8,6 +8,8 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.service.SendService;
 
+import static ru.flashcards.telegram.bot.botapi.Literals.UNRECOGNIZED_OPTION_MSG;
+
 public class FindFlashcardCommand extends BotCommand {
     private DataLayerObject dataLayer;
 
@@ -22,7 +24,7 @@ public class FindFlashcardCommand extends BotCommand {
         Long chatId = message.getChatId();
 
         if (arguments.length > 1) {
-            SendService.sendMessage(message.getChatId(), "Unrecognize parameter");
+            SendService.sendMessage(message.getChatId(), UNRECOGNIZED_OPTION_MSG);
             return;
         }
         SuggestFlashcard suggestFlashcard = new SuggestFlashcard(dataLayer);

@@ -6,18 +6,18 @@ public class DBExceptionHandler {
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                if (ignoreSQLException(
-                        ((SQLException)e).
-                                getSQLState()) == false) {
+                if (!ignoreSQLException(
+                        ((SQLException) e).
+                                getSQLState())) {
 
-                    e.printStackTrace(System.err);
-                    System.err.println("SQLState: " +
+                    e.printStackTrace(System.out);
+                    System.out.println("SQLState: " +
                             ((SQLException)e).getSQLState());
 
-                    System.err.println("Error Code: " +
+                    System.out.println("Error Code: " +
                             ((SQLException)e).getErrorCode());
 
-                    System.err.println("Message: " + e.getMessage());
+                    System.out.println("Message: " + e.getMessage());
 
                     Throwable t = ex.getCause();
                     while(t != null) {

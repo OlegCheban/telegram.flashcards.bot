@@ -19,7 +19,6 @@ public class WateringSessionReplyTimeSettingsCommand extends BotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        super.processMessage(absSender, message, arguments);
         Long chatId = message.getChatId();
 
         if (Number.isInteger(arguments[0], 10)) {

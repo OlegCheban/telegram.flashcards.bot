@@ -41,7 +41,7 @@ public class BoostPriorityCallbackHandlerTest {
         DataLayerObject dataLayerObject = Mockito.mock(DataLayerObject.class);
 
         when(swiperFlashcard.getWord()).thenReturn("word");
-        when(dataLayerObject.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
+        when(dataLayerObject.getSwiperFlashcard(0L,0L,null, null)).thenReturn(swiperFlashcard);
 
         return  dataLayerObject;
     }

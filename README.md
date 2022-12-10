@@ -28,15 +28,20 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 
 #### Help
 ```
-1. Basic find commands for finding flashcards
+1. Basic commands for finding flashcards
 /f - suggests the most popular flashcards
 /f <value> - finds specific flashcard by inputted value
+Additional functionality (optional):
+   - ability to add flashcard to your profile for learning. Use "add to learn" button. 
+   - ability to exclude already known flashcards from learning. Use "exclude" button. 
 
 2. Swiper
 Swiper allows you to easily navigate through all of your flashcards
 /s - displays flashcards added by the user to their profile
-/s <value> - displays flashcards containing inputted value
-Additional functionality:
+/s <value> - displays flashcards containing inputted value (english word)
+/s <percentile> - displays flashcards by inputted percentile (possible values: 0, 14, 28, 42, 57, 71, 85, 100)
+You can specify both parameters (search by value and percentile). Order doesn't matter.  
+Additional functionality (optional):
    - ability to reset learning statistics for flashcards which were already learned (100% progress). Use "reset progress" button;
    - ability to add the most significant flashcards to the next learning session. Use "boost priority" button;
    - ability to see examples of usage. Use "example of usage" button.
@@ -66,7 +71,6 @@ Bot has several kinds of exercises which help you learn flashcards
   
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to pass exercise to check a correct preposition.
-- I want to be able to get flashcards by percentile in swiper.
 - I want to be able to get similar flashcards when one of mine have not been found due to misspelling.  
 
  

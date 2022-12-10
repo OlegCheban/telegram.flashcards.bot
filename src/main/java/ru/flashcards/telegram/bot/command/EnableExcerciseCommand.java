@@ -31,7 +31,6 @@ public class EnableExcerciseCommand extends BotCommand {
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        super.processMessage(absSender, message, arguments);
         Long chatId = message.getChatId();
         SendMessage replyMessage = new SendMessage();
         replyMessage.setChatId(String.valueOf(message.getChatId()));

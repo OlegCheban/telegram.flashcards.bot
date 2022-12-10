@@ -47,7 +47,7 @@ public class ReturnToLearnSwiperCallbackHandlerTest {
         when(swiperFlashcard.getTranslation()).thenReturn("translation");
         when(swiperFlashcard.getLearnPrc()).thenReturn(100);
 
-        when(dataLayerObject.getSwiperFlashcard(0L,0L,null)).thenReturn(swiperFlashcard);
+        when(dataLayerObject.getSwiperFlashcard(0L,0L,null, null)).thenReturn(swiperFlashcard);
 
         return  dataLayerObject;
     }

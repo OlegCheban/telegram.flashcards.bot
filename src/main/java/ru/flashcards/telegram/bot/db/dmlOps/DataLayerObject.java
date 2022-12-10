@@ -831,8 +831,11 @@ public class DataLayerObject {
         }.run();
     }
 
-    public Long getFirstSwiperFlashcard(Long chatId, String characterCondition) {
-        return new SelectWithParams<Long>("select min(id) id from main.swiper_flashcards where chat_id = ? and (? is null or lower(word) like lower(?) || '%') "){
+    public Long getFirstSwiperFlashcard(Long chatId, String characterCondition, String percentile) {
+        return new SelectWithParams<Long>("select min(id) id from main.swiper_flashcards " +
+                "where chat_id = ? and " +
+                "(length(?) = 0 or lower(word) like lower(?) || '%') and " +
+                "(length(?) = 0 or prc::text = ?)"){
             @Override
             protected Long rowMapper(ResultSet rs) throws SQLException {
                 return rs.getLong("id");
@@ -843,6 +846,8 @@ public class DataLayerObject {
                 preparedStatement.setLong(1, chatId);
                 preparedStatement.setString(2, characterCondition);
                 preparedStatement.setString(3, characterCondition);
+                preparedStatement.setString(4, percentile);
+                preparedStatement.setString(5, percentile);
                 return preparedStatement;
             }
         }.getObject();
@@ -851,7 +856,7 @@ public class DataLayerObject {
     /**
      * Карточки для свайпера
      */
-    public SwiperFlashcard getSwiperFlashcard(Long chatId, Long currentFlashcardId, String characterCondition) {
+    public SwiperFlashcard getSwiperFlashcard(Long chatId, Long currentFlashcardId, String characterCondition, String percentile) {
         return new SelectWithParams<SwiperFlashcard>(
                 "select * from (" +
                         "                  select lag(id) over (order by id)  prev_id, " +
@@ -864,7 +869,9 @@ public class DataLayerObject {
                         "                         prc, " +
                         "                         nearest_training " +
                         "                      from main.swiper_flashcards " +
-                        "                      where chat_id = ? and (? is null or lower(word) like lower(?) || '%') " +
+                        "                      where chat_id = ? and " +
+                        "                       (length(?)=0 or lower(word) like lower(?) || '%') and " +
+                        "                       (length(?)=0 or prc::text = ?) " +
                         "                      order by id " +
                         "              ) x where x.current_id = ? "
         ){
@@ -888,7 +895,10 @@ public class DataLayerObject {
                 preparedStatement.setLong(1, chatId);
                 preparedStatement.setString(2, characterCondition);
                 preparedStatement.setString(3, characterCondition);
-                preparedStatement.setLong(4, currentFlashcardId);
+                preparedStatement.setString(4, percentile);
+                preparedStatement.setString(5, percentile);
+                preparedStatement.setLong(6, currentFlashcardId);
+
                 return preparedStatement;
             }
         }.getObject();
