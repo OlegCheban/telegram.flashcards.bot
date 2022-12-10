@@ -32,16 +32,20 @@ public class ReturnToLearnSwiperCallbackHandler implements MessageHandler<Callba
         long chatId = message.getChatId();
         Long userFlashcardId = callbackData.getEntityId();
 
-        dataLayer.deleteSpacedRepetitionHistory(userFlashcardId);
-        dataLayer.deleteExerciseStat(userFlashcardId);
-        dataLayer.returnToLearn(userFlashcardId);
-
         if (callbackData.getSwiper() != null){
             characterCondition = callbackData.getSwiper().getCharCond();
             percentile = callbackData.getSwiper().getPrc();
         }
+
         SwiperFlashcard swiperFlashcard =
                 dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition, percentile);
+
+        dataLayer.deleteSpacedRepetitionHistory(userFlashcardId);
+        dataLayer.deleteExerciseStat(userFlashcardId);
+        dataLayer.returnToLearn(userFlashcardId);
+
+        swiperFlashcard.setLearnPrc(0);
+        swiperFlashcard.setNearestTraining(0);
 
         EditMessageText formerMessage = new EditMessageText();
         formerMessage.setChatId(String.valueOf(chatId));
