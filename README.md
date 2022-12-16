@@ -30,20 +30,23 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 ```
 1. Basic commands for finding flashcards
 /f - suggests the most popular flashcards
-/f <value> - finds specific flashcard by inputted value
-Additional functionality (optional):
+/f <value> - finds specific flashcard by input value
+Additional flashcard functional options:
    - ability to add flashcard to your profile for learning. Use "add to learn" button. 
    - ability to exclude already known flashcards from learning. Use "exclude" button. 
 
 2. Swiper
 Swiper allows you to easily navigate through all of your flashcards
 /s - displays flashcards added by the user to their profile
-/s <value> - displays flashcards containing inputted value (english word)
-/s <percentile> - displays flashcards by inputted percentile (possible values: 0, 14, 28, 42, 57, 71, 85, 100)
-You can specify both parameters (search by value and percentile). Order doesn't matter.  
-Additional functionality (optional):
-   - ability to reset learning statistics for flashcards which were already learned (100% progress). Use "reset progress" button;
-   - ability to add the most significant flashcards to the next learning session. Use "boost priority" button;
+/s <value> - displays flashcards containing input value (english word)
+/s <percentile> - displays flashcards by percentile of learning 
+    (possible values: 0, 14, 28, 42, 57, 71, 85, 100) 
+    You can specify both parameters (value and percentile). Order doesn't matter.
+Additional options:
+   - ability to reset learning statistics for flashcards which were already learned (100% progress). 
+     Use "reset progress" button;
+   - ability to add the most significant flashcards to the next learning session. 
+     Use "boost priority" button;
    - ability to see examples of usage. Use "example of usage" button.
 
 3. Exercises
@@ -59,11 +62,13 @@ Bot has several kinds of exercises which help you learn flashcards
 /ni <min> - changes random flashcards notifications interval (default 60 min) 
 /fq <min> - changes flashcards quantity for training (default 5 flashcards)
 /wt <seconds> - changes watering session reply time (default 5 seconds)
-/ed <value> - finds flashcard from your profile by inputted value (english word) and suggests to change translation
+/ed <value> - finds flashcard from your profile by input value (english word) and suggests to change translation
 /h displays help
 
 6. Bot sends notifications:
-   - spaced repetition notifications. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can reset flashcard to learn again;
+   - spaced repetition notifications. 
+     Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. 
+     At each stage, you can reset flashcard to learn again;
    - random flashcards notifications.
 ```
 

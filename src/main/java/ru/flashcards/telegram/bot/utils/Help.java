@@ -8,18 +8,18 @@ public class Help {
                 "*Help*\n\n" +
                         "1. Basic commands for finding flashcards\n" +
                         "/f - suggests the most popular flashcards\n" +
-                        "/f <value> - finds specific flashcard by inputted value\n" +
-                        "Additional functionality:\n" +
+                        "/f <value> - finds specific flashcard by input value\n" +
+                        "Additional flashcard functional options:\n" +
                         "   - ability to add flashcard to your profile for learning. Use \"add to learn\" button.\n" +
                         "   - ability to exclude already known flashcards from learning. Use \"exclude\" button.\n\n" +
 
                         "2. Swiper\n" +
                         "Swiper allows you to easily navigate through all of your flashcards\n" +
                         "/s - displays flashcards added by the user to their profile\n" +
-                        "/s <value> - displays flashcards containing inputted value\n" +
-                        "/s <percentile> - displays flashcards by inputted percentile of learning (possible values: 0, 14, 28, 42, 57, 71, 85, 100)\n" +
-                        "You can specify both parameters (search by value and percentile). Order doesn't matter.\n" +
-                        "Additional functionality:\n" +
+                        "/s <value> - displays flashcards containing input value\n" +
+                        "/s <percentile> - displays flashcards by percentile of learning (possible values: 0, 14, 28, 42, 57, 71, 85, 100)\n" +
+                        "You can specify both parameters (value and percentile). Order doesn't matter.\n" +
+                        "Additional options:\n" +
                         "   - ability to reset learning statistics for flashcards which were already learned (100% progress). Use \"reset progress\" button;\n" +
                         "   - ability to add the most significant flashcards to the next learning session. Use \"boost priority\" button;\n" +
                         "   - ability to see examples of usage. Use \"example of usage\" button.\n\n" +
@@ -37,7 +37,7 @@ public class Help {
                         "/ni <min> - changes random flashcards notifications interval (default 60 min) \n" +
                         "/fq <min> - changes flashcards quantity for training (default 5 flashcards) \n" +
                         "/wt <seconds> - changes watering session reply time (default 5 seconds) \n" +
-                        "/ed <value> - finds flashcard from your profile by inputted value (english word) and suggests to change translation \n" +
+                        "/ed <value> - finds flashcard from your profile by input value (english word) and suggests to change translation \n" +
                         "/h displays help\n\n"+
 
                         "6. Bot sends notifications:\n" +
