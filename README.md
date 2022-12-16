@@ -40,7 +40,7 @@ Swiper allows you to easily navigate through all of your flashcards
 /s - displays flashcards added by the user to their profile
 /s <value> - displays flashcards containing input value (english word)
 /s <percentile> - displays flashcards by percentile of learning 
-    (possible values: 0, 14, 28, 42, 57, 71, 85, 100) 
+    Possible values: 0, 14, 28, 42, 57, 71, 85, 100 
     You can specify both parameters (value and percentile). Order doesn't matter.
 Additional options:
    - ability to reset learning statistics for flashcards which were already learned (100% progress). 

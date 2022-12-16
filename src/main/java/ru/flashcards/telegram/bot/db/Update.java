@@ -1,5 +1,7 @@
 package ru.flashcards.telegram.bot.db;
 
+import ru.flashcards.telegram.bot.exception.SQLRuntimeException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,8 +18,8 @@ public abstract class Update {
             return exec(connection);
         } catch (SQLException e) {
             DBExceptionHandler.printSQLException(e);
+            throw new SQLRuntimeException(e);
         }
-        return -1;
     }
 
     public int run (Connection connection){
@@ -25,8 +27,8 @@ public abstract class Update {
             return exec(connection);
         } catch (SQLException e) {
             DBExceptionHandler.printSQLException(e);
+            throw new SQLRuntimeException(e);
         }
-        return -1;
     }
 
     private int exec (Connection connection) throws SQLException {

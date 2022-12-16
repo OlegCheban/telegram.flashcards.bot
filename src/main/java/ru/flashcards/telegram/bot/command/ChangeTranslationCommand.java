@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
-import ru.flashcards.telegram.bot.botapi.UserFlashcardModificationBuffer;
+import ru.flashcards.telegram.bot.botapi.UserMessageTypeBuffer;
 
 import static ru.flashcards.telegram.bot.botapi.Literals.UNRECOGNIZED_OPTION_MSG;
 import static ru.flashcards.telegram.bot.botapi.MessageType.CHANGE_TRANSLATION;
@@ -40,7 +40,7 @@ public class ChangeTranslationCommand extends BotCommand {
             SendService.sendMessage(message.getChatId(), "Flashcard wasn't put to your profile.");
         } else {
             SendService.sendMessage(message.getChatId(), "OK. Send me a new translation.");
-            UserFlashcardModificationBuffer.putRequest(message.getChatId(), userFlashcard.getId(), CHANGE_TRANSLATION);
+            UserMessageTypeBuffer.putRequest(message.getChatId(), userFlashcard.getId(), CHANGE_TRANSLATION);
         }
     }
 

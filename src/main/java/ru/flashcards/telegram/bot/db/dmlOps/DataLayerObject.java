@@ -2,6 +2,7 @@ package ru.flashcards.telegram.bot.db.dmlOps;
 
 import ru.flashcards.telegram.bot.db.*;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.*;
+import ru.flashcards.telegram.bot.exception.SQLRuntimeException;
 
 import java.sql.*;
 import java.util.List;
@@ -58,11 +59,11 @@ public class DataLayerObject {
 
             } catch (SQLException e) {
                 connection.rollback();
-                e.printStackTrace();
+                throw new SQLRuntimeException(e);
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -216,7 +217,7 @@ public class DataLayerObject {
     public int refreshLearnedFlashcards() {
         return new Update("update main.user_flashcard a set learned_date = now() from main.learned_flashcards_stat b where a.id = b.user_flashcard_id"){
             @Override
-            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) {
                 return preparedStatement;
             }
         }.run();
@@ -860,7 +861,7 @@ public class DataLayerObject {
         return new SelectWithParams<SwiperFlashcard>(
                 "select * from (" +
                         "                  select lag(id) over (order by id)  prev_id, " +
-                        "                         id                          current_id, " +
+                        "                         id current_id, " +
                         "                         lead(id) over (order by id) next_id, " +
                         "                         word, " +
                         "                         description, " +

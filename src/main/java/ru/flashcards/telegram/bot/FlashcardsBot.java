@@ -15,6 +15,7 @@ import ru.flashcards.telegram.bot.command.*;
 import ru.flashcards.telegram.bot.command.addToLearn.FindFlashcardCommand;
 import ru.flashcards.telegram.bot.command.ChangeTranslationCommand;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
+import ru.flashcards.telegram.bot.exception.TelegramApiRuntimeException;
 
 import java.util.List;
 
@@ -63,8 +64,8 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
     }
 
     private List<BotApiMethod<?>> handleMessageInput(Message message){
-        MessageHandler<Message> handler = null;
-        MessageHandlerAbstractFactory factory = null;
+        MessageHandler<Message> handler;
+        MessageHandlerAbstractFactory factory;
 
         if (dataLayer.isLearnFlashcardState(message.getChatId())){
             //learning mode
@@ -101,7 +102,7 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
             try {
                 execute(messageAnswer);
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                throw new TelegramApiRuntimeException(e);
             }
         });
     }

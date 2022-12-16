@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.CallbackData;
+import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.botapi.swiper.Swiper;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
@@ -23,7 +23,7 @@ public class BoostPriorityCallbackHandler implements MessageHandler<CallbackQuer
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
-        CallbackData callbackData = getCallbackData(callbackQuery.getData());
+        CallbackData callbackData = jsonToCallbackData(callbackQuery.getData());
         String characterCondition = null;
         String percentile = null;
         List<BotApiMethod<?>> list = new ArrayList<>();

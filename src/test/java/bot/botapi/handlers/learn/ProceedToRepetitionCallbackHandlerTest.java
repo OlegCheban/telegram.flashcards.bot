@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.flashcards.telegram.bot.botapi.CallbackData;
+import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 
 import ru.flashcards.telegram.bot.botapi.handlers.learn.ProceedToRepetitionCallbackHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;

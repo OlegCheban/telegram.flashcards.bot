@@ -1,14 +1,12 @@
 package ru.flashcards.telegram.bot.botapi.handlers.translation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ru.flashcards.telegram.bot.botapi.CallbackData;
+import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
@@ -26,8 +24,7 @@ public class TranslateFlashcardCallbackHandler implements MessageHandler<Callbac
 
     @Override
     public List<BotApiMethod<?>> handle(CallbackQuery callbackQuery) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        CallbackData callbackData1 = getCallbackData(callbackQuery.getData());
+        CallbackData callbackData1 = jsonToCallbackData(callbackQuery.getData());
         List<BotApiMethod<?>> list = new ArrayList<>();
         Message message = callbackQuery.getMessage();
         long messageId = message.getMessageId();
@@ -50,11 +47,7 @@ public class TranslateFlashcardCallbackHandler implements MessageHandler<Callbac
         List<InlineKeyboardButton> rowInline = new ArrayList<>();
         InlineKeyboardButton button = new InlineKeyboardButton();
         button.setText("example of usage");
-        try {
-            button.setCallbackData(objectMapper.writeValueAsString(callbackData));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        button.setCallbackData(callbackDataToJson(callbackData));
         rowInline.add(button);
         rowsInline.add(rowInline);
         markupInline.setKeyboard(rowsInline);

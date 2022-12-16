@@ -4,21 +4,29 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
+import ru.flashcards.telegram.bot.exception.JsonProcessingRuntimeException;
 
 import java.util.List;
 
 public interface MessageHandler<T extends BotApiObject> {
     List<BotApiMethod<?>> handle(T message);
 
-    default CallbackData getCallbackData(String callbackDataJson){
+    default CallbackData jsonToCallbackData(String callbackDataJson){
         ObjectMapper objectMapper = new ObjectMapper();
-        CallbackData callback = null;
         try {
-            callback = objectMapper.readValue(callbackDataJson, CallbackData.class);
+            return objectMapper.readValue(callbackDataJson, CallbackData.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            throw new JsonProcessingRuntimeException(e);
         }
-        return callback;
+    }
+
+    default String callbackDataToJson(CallbackData callbackData){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(callbackData);
+        } catch (JsonProcessingException e) {
+            throw new JsonProcessingRuntimeException(e);
+        }
     }
 }

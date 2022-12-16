@@ -9,6 +9,8 @@ import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHa
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translation.TranslateFlashcardCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
+import ru.flashcards.telegram.bot.exception.JsonProcessingRuntimeException;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -48,11 +50,12 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
     @Override
     public MessageHandler<CallbackQuery> getHandler(String callbackDataJson) {
         ObjectMapper objectMapper = new ObjectMapper();
-        CallbackData callback = null;
+        CallbackData callback;
+
         try {
             callback = objectMapper.readValue(callbackDataJson, CallbackData.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            throw new JsonProcessingRuntimeException(e);
         }
 
         switch (callback.getCommand()){

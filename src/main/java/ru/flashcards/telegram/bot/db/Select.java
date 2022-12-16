@@ -1,5 +1,7 @@
 package ru.flashcards.telegram.bot.db;
 
+import ru.flashcards.telegram.bot.exception.SQLRuntimeException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +30,7 @@ public abstract class Select<T> {
            }
         } catch (SQLException e) {
             DBExceptionHandler.printSQLException(e);
+            throw new SQLRuntimeException(e);
         }
 
         return list;
@@ -44,6 +47,7 @@ public abstract class Select<T> {
             }
         } catch (SQLException e) {
             DBExceptionHandler.printSQLException(e);
+            throw new SQLRuntimeException(e);
         }
 
         return object;

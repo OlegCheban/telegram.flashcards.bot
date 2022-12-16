@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ru.flashcards.telegram.bot.botapi.CallbackData;
+import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SendToLearnFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;

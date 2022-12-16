@@ -8,7 +8,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.utils.Lambda;
-import ru.flashcards.telegram.bot.botapi.WateringSessionTimingSingleton;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;

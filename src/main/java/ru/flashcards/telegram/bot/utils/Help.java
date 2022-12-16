@@ -17,7 +17,8 @@ public class Help {
                         "Swiper allows you to easily navigate through all of your flashcards\n" +
                         "/s - displays flashcards added by the user to their profile\n" +
                         "/s <value> - displays flashcards containing input value\n" +
-                        "/s <percentile> - displays flashcards by percentile of learning (possible values: 0, 14, 28, 42, 57, 71, 85, 100)\n" +
+                        "/s <percentile> - displays flashcards by percentile of learning\n" +
+                        "Possible values: 0, 14, 28, 42, 57, 71, 85, 100\n" +
                         "You can specify both parameters (value and percentile). Order doesn't matter.\n" +
                         "Additional options:\n" +
                         "   - ability to reset learning statistics for flashcards which were already learned (100% progress). Use \"reset progress\" button;\n" +

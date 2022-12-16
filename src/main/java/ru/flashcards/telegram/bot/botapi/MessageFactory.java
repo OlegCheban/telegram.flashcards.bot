@@ -17,7 +17,7 @@ public class MessageFactory implements MessageHandlerAbstractFactory<MessageHand
 
     @Override
     public MessageHandler<Message> getHandler(Message message) {
-        var messageType = UserFlashcardModificationBuffer.getMessageType(message.getChatId());
+        var messageType = UserMessageTypeBuffer.getMessageType(message.getChatId());
 
         switch (messageType){
             case CHANGE_TRANSLATION:

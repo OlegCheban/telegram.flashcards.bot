@@ -1,4 +1,4 @@
-package ru.flashcards.telegram.bot.botapi;
+package ru.flashcards.telegram.bot.botapi.wateringSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

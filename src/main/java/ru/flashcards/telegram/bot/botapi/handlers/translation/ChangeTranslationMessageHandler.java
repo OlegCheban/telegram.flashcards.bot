@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.flashcards.telegram.bot.botapi.MessageHandler;
-import ru.flashcards.telegram.bot.botapi.UserFlashcardModificationBuffer;
+import ru.flashcards.telegram.bot.botapi.UserMessageTypeBuffer;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 
 import javax.inject.Inject;
@@ -20,10 +20,10 @@ public class ChangeTranslationMessageHandler implements MessageHandler<Message> 
         List<BotApiMethod<?>> list = new ArrayList<>();
 
         dataLayer.editTranslation(
-                UserFlashcardModificationBuffer.getUserFlashcardId(message.getChatId()),
+                UserMessageTypeBuffer.getEntityId(message.getChatId()),
                 message.getText()
         );
-        UserFlashcardModificationBuffer.removeRequest(message.getChatId());
+        UserMessageTypeBuffer.removeRequest(message.getChatId());
 
         SendMessage replyMessage = new SendMessage();
         replyMessage.setText("Translation is changed successfully");

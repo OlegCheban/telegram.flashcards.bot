@@ -1,4 +1,4 @@
-package ru.flashcards.telegram.bot.botapi.swiper;
+package ru.flashcards.telegram.bot.botapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,8 +1,7 @@
-package ru.flashcards.telegram.bot.botapi;
+package ru.flashcards.telegram.bot.botapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.flashcards.telegram.bot.botapi.swiper.SwiperParams;
 
 public class CallbackData {
     @JsonProperty("c")

@@ -2,6 +2,7 @@ package ru.flashcards.telegram.bot.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import ru.flashcards.telegram.bot.exception.SQLRuntimeException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,8 +24,7 @@ public class DataSource {
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            throw new SQLRuntimeException(e);
         }
     }
 }
