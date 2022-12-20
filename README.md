@@ -29,45 +29,44 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 #### Help
 ```
 1. Basic commands for finding flashcards
-/f - suggests the most popular flashcards
-/f <value> - finds specific flashcard by input value
+'/f' - suggests the most popular flashcards
+'/f <value>' - finds a specific flashcard by input value
 Additional flashcard functional options:
-   - ability to add flashcard to your profile for learning. Use "add to learn" button. 
-   - ability to exclude already known flashcards from learning. Use "exclude" button. 
+   - The ability to add flashcard to your profile for learning. Use the "add to learn" button. 
+   - The ability to exclude already known flashcards from learning. Use the "exclude" button. 
 
 2. Swiper
 Swiper allows you to easily navigate through all of your flashcards
-/s - displays flashcards added by the user to their profile
-/s <value> - displays flashcards containing input value (english word)
-/s <percentile> - displays flashcards by percentile of learning 
-    Possible values: 0, 14, 28, 42, 57, 71, 85, 100 
-    You can specify both parameters (value and percentile). Order doesn't matter.
+'/s' - displays flashcards added by the user to their profile
+'/s <value>' - displays flashcards containing the input value (English word)
+'/s <percentile>' - displays flashcards by percentile of learning. Possible values: 0, 14, 28, 
+    42, 57, 71, 85, 100. You can specify both parameters (value and percentile). Order doesn't matter.
 Additional options:
-   - ability to reset learning statistics for flashcards which were already learned (100% progress). 
-     Use "reset progress" button;
-   - ability to add the most significant flashcards to the next learning session. 
-     Use "boost priority" button;
-   - ability to see examples of usage. Use "example of usage" button.
+   - The ability to reset learning statistics for flashcards which were already learned (100% progress). 
+     Use the "reset progress" button;
+   - The ability to add the most significant flashcards to the next learning session. 
+     Use the "boost priority" button;
+   - The ability to see examples of usage. Use the "example of usage" button.
 
 3. Exercises
 Bot has several kinds of exercises which help you learn flashcards
-/l to start learning
-/e to enable exercises 
-/d to disable exercises
+'/l' to start learning
+'/e' to enable exercises 
+'/d' to disable exercises
 
 4. Watering session (repeat your learned flashcards and pick correct translation before time runs out)
-/w to start watering session
+'/w' to start the watering session
 
 5. Others commands
-/ni <min> - changes random flashcards notifications interval (default 60 min) 
-/fq <min> - changes flashcards quantity for training (default 5 flashcards)
-/wt <seconds> - changes watering session reply time (default 5 seconds)
-/ed <value> - finds flashcard from your profile by input value (english word) and suggests to change translation
-/h displays help
+'/ni <min>' - changes the random flashcards notifications interval (default 60 min) 
+'/fq <min>' -  changes the number of flashcards for training (default 5 flashcards)
+'/wt <seconds>' - changes the watering session reply time (default 5 seconds)
+'/ed <value>' - finds a flashcard from your profile by input value (English word) and suggests changing the translation
+'/h' - displays a list of available commands and options, along with brief descriptions of what each command does
 
 6. Bot sends notifications:
    - spaced repetition notifications. 
-     Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. 
+     The bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. 
      At each stage, you can reset flashcard to learn again;
    - random flashcards notifications.
 ```
