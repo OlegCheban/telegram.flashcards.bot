@@ -30,10 +30,6 @@ public class QuiteCallbackHandlerTest {
     private Message message;
     @WeldSetup
     private WeldInitiator weld = WeldInitiator.from(QuiteCallbackHandler.class, QuiteCallbackHandlerTest.class).build();
-    @Produces
-    DataLayerObject produceDataLayerObject() {
-        return  Mockito.mock(DataLayerObject.class);
-    }
 
     @Test
     void test() {

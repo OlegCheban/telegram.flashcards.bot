@@ -1,7 +1,5 @@
 package ru.flashcards.telegram.bot.botapi;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.flashcards.telegram.bot.botapi.handlers.examples.FlashcardUsageExamplesCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
@@ -10,7 +8,6 @@ import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCall
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translation.TranslateFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
-import ru.flashcards.telegram.bot.exception.JsonProcessingRuntimeException;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -48,17 +45,8 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
     EnableExerciseMessageHandler enableExerciseMessageHandler;
 
     @Override
-    public MessageHandler<CallbackQuery> getHandler(String callbackDataJson) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        CallbackData callback;
-
-        try {
-            callback = objectMapper.readValue(callbackDataJson, CallbackData.class);
-        } catch (JsonProcessingException e) {
-            throw new JsonProcessingRuntimeException(e);
-        }
-
-        switch (callback.getCommand()){
+    public MessageHandler<CallbackQuery> getHandler(CallbackData callbackData) {
+        switch (callbackData.getCommand()){
             case TRANSLATE:
                 return translateFlashcardCallbackHandler;
             case ADD_TO_LEARN:
