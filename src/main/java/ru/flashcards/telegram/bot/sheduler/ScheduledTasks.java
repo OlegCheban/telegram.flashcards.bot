@@ -74,7 +74,7 @@ public class ScheduledTasks {
             if (queue.getNotificationDate().isBefore(LocalDateTime.now())){
                 SendService.sendMessage(queue.getUserId(),
                         "*Spaced repetition* " + alarmEmoji +
-                                "\n*" + queue.getWord()+ "* \\[" + queue.getTranscription() + "] ("+queue.getPrc()+"% learned)" +
+                                "\n*" + queue.getWord()+ "* /" + queue.getTranscription() + "/ ("+queue.getPrc()+"% learned)" +
                                 "\n\n Do you remember this word?",
                         String.valueOf(createButtonMenu(listButtons)));
                 dataLayerObject.addFlashcardPushHistory(queue.getUserFlashcardId());
@@ -91,7 +91,7 @@ public class ScheduledTasks {
             listButtons.add(prepareButton(queue.getUserFlashcardId(), "example of usage", EXAMPLES));
 
             if (queue.getLastPushTimestamp() == null || queue.getLastPushTimestamp().plusMinutes(queue.getNotificationInterval()).isBefore(LocalDateTime.now())) {
-                SendService.sendMessage(queue.getUserId(), "*"+queue.getWord()+"* \\[" + queue.getTranscription() + "] " + pushpinEmoji + "\n\n"+queue.getDescription(),
+                SendService.sendMessage(queue.getUserId(), "*"+queue.getWord()+"* /" + queue.getTranscription() + "/ " + pushpinEmoji + "\n\n"+queue.getDescription(),
                         String.valueOf(createButtonMenu(listButtons)));
 
                 dataLayerObject.updatePushTimestampById(queue.getUserFlashcardId());

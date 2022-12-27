@@ -38,7 +38,7 @@ public class TranslateFlashcardCallbackHandler implements MessageHandler<Callbac
         translationMessage.enableMarkdown(true);
 
         String pushpinEmoji = "\uD83D\uDCCC";
-        translationMessage.setText("*" + flashcard.getWord() + "* \\[" + flashcard.getTranscription() + "] " + pushpinEmoji + " \n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
+        translationMessage.setText("*" + flashcard.getWord() + "* /" + flashcard.getTranscription() + "/ " + pushpinEmoji + " \n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
 
         CallbackData callbackData = new CallbackData(EXAMPLES);
         callbackData.setEntityId(userFlashcardId);

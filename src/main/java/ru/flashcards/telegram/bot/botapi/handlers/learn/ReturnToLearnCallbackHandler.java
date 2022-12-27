@@ -37,7 +37,7 @@ public class ReturnToLearnCallbackHandler implements MessageHandler<CallbackQuer
         resultMessage.setChatId(String.valueOf(chatId));
         resultMessage.setMessageId(toIntExact(messageId));
         resultMessage.enableMarkdown(true);
-        resultMessage.setText("*Flashcard returned to learn*\n*"+flashcard.getWord()+"* \\[" + flashcard.getTranscription() + "]\n\n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
+        resultMessage.setText("*Flashcard returned to learn*\n*"+flashcard.getWord()+"* /" + flashcard.getTranscription() + "/\n\n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
 
         list.add(resultMessage);
         return list;

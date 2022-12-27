@@ -63,7 +63,7 @@ public class ReturnToLearnSwiperCallbackHandlerTest {
         when(callbackQuery.getMessage()).thenReturn(message);
 
         List<BotApiMethod<?>> list = weld.select(ReturnToLearnSwiperCallbackHandler.class).get().handle(callbackQuery);
-        assertEquals("*word* \\[transcription] (100% learned)\ndescription\n\n*Translation:* translation", ((EditMessageText) list.get(0)).getText());
+        assertEquals("*word* /transcription/ (100% learned)\ndescription\n\n*Translation:* translation", ((EditMessageText) list.get(0)).getText());
         assertEquals("*word* returned to learn", ((SendMessage) list.get(1)).getText());
 
     }

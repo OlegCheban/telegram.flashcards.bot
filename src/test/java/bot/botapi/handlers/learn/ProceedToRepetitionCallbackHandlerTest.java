@@ -64,6 +64,6 @@ public class ProceedToRepetitionCallbackHandlerTest {
 
         List<BotApiMethod<?>> list = weld.select(ProceedToRepetitionCallbackHandler.class).get().handle(callbackQuery);
 
-        assertEquals("*Spaced repetition*\n*word* \\[transcription]\n\ndescription\n\ntranslation", ((EditMessageText) list.get(0)).getText());
+        assertEquals("*Spaced repetition*\n*word* /transcription/\n\ndescription\n\ntranslation", ((EditMessageText) list.get(0)).getText());
     }
 }

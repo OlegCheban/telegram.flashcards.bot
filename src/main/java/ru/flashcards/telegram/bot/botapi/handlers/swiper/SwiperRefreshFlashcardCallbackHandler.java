@@ -40,7 +40,7 @@ public class SwiperRefreshFlashcardCallbackHandler implements MessageHandler<Cal
         nextMessage.setChatId(String.valueOf(chatId));
         nextMessage.setMessageId(toIntExact(messageId));
         nextMessage.enableMarkdown(true);
-        nextMessage.setText("*" + swiperFlashcard.getWord() + "* \\[" + swiperFlashcard.getTranscription() + "] ("+swiperFlashcard.getLearnPrc()+"% learned)\n" +
+        nextMessage.setText("*" + swiperFlashcard.getWord() + "* /" + swiperFlashcard.getTranscription() + "/ ("+swiperFlashcard.getLearnPrc()+"% learned)\n" +
                 swiperFlashcard.getDescription() + "\n\n" + "*Translation:* " + swiperFlashcard.getTranslation()
         );
 

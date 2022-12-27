@@ -1,4 +1,4 @@
-# Flashcards Telegram bot
+# Flashcards Telegram Bot
 Bot helps to learn vocabulary words fast and effectively. It uses spaced repetition learning technique and has a lot of flashcards.
 
 Deployed bot (https://t.me/proFlashcardsBot) has around 100k flashcards.
@@ -76,7 +76,7 @@ Bot has several kinds of exercises which help you learn flashcards
 - I want to be able to pass exercise to check a correct pronounciation.
 - I want to be able to pass exercise to check a correct preposition.
 - I want to be able to get similar flashcards when one of mine have not been found due to misspelling.  
-
+- I want to be able to delete flashcards from my profile.
  
   
    

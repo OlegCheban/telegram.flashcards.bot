@@ -34,7 +34,7 @@ public class ProceedToRepetitionCallbackHandler implements MessageHandler<Callba
         translationMessage.setChatId(String.valueOf(chatId));
         translationMessage.setMessageId(toIntExact(messageId));
         translationMessage.enableMarkdown(true);
-        translationMessage.setText("*Spaced repetition*\n*"+flashcard.getWord()+"* \\[" + flashcard.getTranscription() + "]\n\n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
+        translationMessage.setText("*Spaced repetition*\n*"+flashcard.getWord()+"* /" + flashcard.getTranscription() + "/\n\n"+flashcard.getDescription() + "\n\n"+flashcard.getTranslation());
 
         list.add(translationMessage);
         return list;

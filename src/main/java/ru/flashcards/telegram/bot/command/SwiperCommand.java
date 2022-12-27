@@ -63,8 +63,8 @@ public class SwiperCommand extends BotCommand {
 
                 SendMessage replyMessage = new SendMessage();
                 replyMessage.setChatId(String.valueOf(message.getChatId()));
-                replyMessage.setText("*" + swiperFlashcard.getWord() + "* \\[" + swiperFlashcard.getTranscription() +
-                        "] ("+swiperFlashcard.getLearnPrc()+"% learned)\n" + swiperFlashcard.getDescription() +
+                replyMessage.setText("*" + swiperFlashcard.getWord() + "* /" + swiperFlashcard.getTranscription() +
+                        "/ ("+swiperFlashcard.getLearnPrc()+"% learned)\n" + swiperFlashcard.getDescription() +
                         "\n\n" + "*Translation:* " + swiperFlashcard.getTranslation());
                 replyMessage.enableMarkdown(true);
                 replyMessage.setReplyMarkup(swiper.getSwiperKeyboardMarkup());

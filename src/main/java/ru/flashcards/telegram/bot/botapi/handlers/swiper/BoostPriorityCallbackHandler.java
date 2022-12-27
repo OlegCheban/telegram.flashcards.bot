@@ -46,7 +46,7 @@ public class BoostPriorityCallbackHandler implements MessageHandler<CallbackQuer
         formerMessage.setChatId(String.valueOf(chatId));
         formerMessage.setMessageId(toIntExact(messageId));
         formerMessage.enableMarkdown(true);
-        formerMessage.setText("*" + swiperFlashcard.getWord() + "* \\[" + swiperFlashcard.getTranscription() + "] (" +
+        formerMessage.setText("*" + swiperFlashcard.getWord() + "* /" + swiperFlashcard.getTranscription() + "/ (" +
                 swiperFlashcard.getLearnPrc()+"% learned)\n" +
                 swiperFlashcard.getDescription() + "\n\n" + "*Translation:* " + swiperFlashcard.getTranslation()
         );

@@ -37,17 +37,17 @@ public class ExerciseProvider {
         List<String> wrongAnswers = null;
 
         if (currentExercise.getExerciseCode().equals(MEMORISED)) {
-            sendMessage.setText("*" + currentExercise.getWord() + "* \\[" + currentExercise.getTranscription() + "]\n" + currentExercise.getDescription() + "\n\n*Translation:* " + currentExercise.getTranslation());
+            sendMessage.setText("*" + currentExercise.getWord() + "* /" + currentExercise.getTranscription() + "/\n" + currentExercise.getDescription() + "\n\n*Translation:* " + currentExercise.getTranslation());
             replyKeyboardMarkup.setKeyboard(memorisedKeyboard());
 
         } else if (currentExercise.getExerciseCode().equals(CHECK_DESCRIPTION)){
             wrongAnswers = dataLayer.getRandomDescriptions();
-            sendMessage.setText("Choose correct description for flashcard *" + currentExercise.getWord() + "* \\[" + currentExercise.getTranscription() + "]\n\n");
+            sendMessage.setText("Choose correct description for flashcard *" + currentExercise.getWord() + "* /" + currentExercise.getTranscription() + "/\n\n");
             replyKeyboardMarkup.setKeyboard(answersKeyboard(wrongAnswers, currentExercise.getDescription()));
 
         } else if (currentExercise.getExerciseCode().equals(CHECK_TRANSLATION)){
             wrongAnswers = dataLayer.getRandomTranslations();
-            sendMessage.setText("Choose correct translation for flashcard *" + currentExercise.getWord() + "* \\[" + currentExercise.getTranscription() + "]\n\n");
+            sendMessage.setText("Choose correct translation for flashcard *" + currentExercise.getWord() + "* /" + currentExercise.getTranscription() + "/\n\n");
             replyKeyboardMarkup.setKeyboard(answersKeyboard(wrongAnswers, currentExercise.getTranslation()));
 
         } else if (currentExercise.getExerciseCode().equals(CHECK_SPELLING) || currentExercise.getExerciseCode().equals(CHECK_SPELLING_WITH_HELPS)){

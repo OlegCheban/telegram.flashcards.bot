@@ -29,7 +29,7 @@ public class SuggestFlashcard {
         sendToLearnFlashcards.forEach((queue) -> {
             try {
                 SendService.sendMessage(queue.getUserId(),
-                        "*" + queue.getWord() + "* \\[" + queue.getTranscription() + "]\n" + queue.getDescription() + "\n\n*Translation:* " + queue.getTranslation() + "\n" +
+                        "*" + queue.getWord() + "* /" + queue.getTranscription() + "/\n" + queue.getDescription() + "\n\n*Translation:* " + queue.getTranslation() + "\n" +
                                 dataLayer.getExamplesByFlashcardId(queue.getFlashcardId()).stream().map(Objects::toString).collect(Collectors.joining("\n", "*Examples:*\n", "")),
                         String.valueOf(prepareLearnButtonsInlineKeyboardJson(queue.getFlashcardId(), ADD_TO_LEARN, EXCLUDE))
                 );
@@ -49,7 +49,7 @@ public class SuggestFlashcard {
         sendToLearnFlashcards.forEach((queue) -> {
             try {
                 SendService.sendMessage(queue.getUserId(),
-                        "*" + queue.getWord() + "* \\[" + queue.getTranscription() + "]\n" + queue.getDescription() + "\n\n*Translation:* " + queue.getTranslation() + "\n" +
+                        "*" + queue.getWord() + "* /" + queue.getTranscription() + "/\n" + queue.getDescription() + "\n\n*Translation:* " + queue.getTranslation() + "\n" +
                                 dataLayer.getExamplesByFlashcardId(queue.getFlashcardId()).stream().map(Objects::toString).collect(Collectors.joining("\n","*Examples:*\n", "")),
                         String.valueOf(prepareLearnButtonsInlineKeyboardJson(queue.getFlashcardId(), ADD_TO_LEARN_AND_NEXT, EXCLUDE_AND_NEXT))
                 );
