@@ -8,7 +8,6 @@ Deployed bot (https://t.me/proFlashcardsBot) has around 100k flashcards.
 - Set environment variables FLASHCARDS_BOT_NAME and FLASHCARDS_BOT_TOKEN in docker-compose.yml file.
 - Use command
 ```
-mvn clean install
 docker compose up -d
 ```
 
