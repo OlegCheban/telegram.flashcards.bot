@@ -38,26 +38,41 @@ public class RemoveFlashcardCallbackHandler implements MessageHandler<CallbackQu
         }
 
         SwiperFlashcard swiperFlashcard =
-                dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition, percentile);
+                dataLayer.getSwiperFlashcard(
+                        chatId,
+                        callbackData.getEntityId(),
+                        characterCondition,
+                        percentile
+                );
 
         dataLayer.deleteSpacedRepetitionHistory(userFlashcardId);
         dataLayer.deleteExerciseStat(userFlashcardId);
         dataLayer.removeFlashcard(userFlashcardId);
 
-        swiperFlashcard =
-                dataLayer.getSwiperFlashcard(chatId, swiperFlashcard.getNextId(), characterCondition, percentile);
-
         EditMessageText formerMessage = new EditMessageText();
         formerMessage.setChatId(String.valueOf(chatId));
         formerMessage.setMessageId(toIntExact(messageId));
         formerMessage.enableMarkdown(true);
-        formerMessage.setText("*" + swiperFlashcard.getWord() + "* /" + swiperFlashcard.getTranscription() + "/ (" +
-                swiperFlashcard.getLearnPrc()+"% learned)\n" + swiperFlashcard.getDescription() + "\n\n" +
-                "*Translation:* " + swiperFlashcard.getTranslation()
-        );
 
-        Swiper swiper = new Swiper(characterCondition, swiperFlashcard, percentile);
-        formerMessage.setReplyMarkup(swiper.getSwiperKeyboardMarkup());
+        if (swiperFlashcard.getPrevId() != 0 || swiperFlashcard.getNextId() != 0){
+            swiperFlashcard =
+                    dataLayer.getSwiperFlashcard(
+                            chatId,
+                            (swiperFlashcard.getNextId() == 0) ? swiperFlashcard.getPrevId() : swiperFlashcard.getNextId(),
+                            characterCondition,
+                            percentile
+                    );
+
+            formerMessage.setText("*" + swiperFlashcard.getWord() + "* /" + swiperFlashcard.getTranscription() + "/ (" +
+                    swiperFlashcard.getLearnPrc()+"% learned)\n" + swiperFlashcard.getDescription() + "\n\n" +
+                    "*Translation:* " + swiperFlashcard.getTranslation()
+            );
+
+            Swiper swiper = new Swiper(characterCondition, swiperFlashcard, percentile);
+            formerMessage.setReplyMarkup(swiper.getSwiperKeyboardMarkup());
+        } else {
+            formerMessage.setText("The flashcard was removed");
+        }
         list.add(formerMessage);
 
         return list;
