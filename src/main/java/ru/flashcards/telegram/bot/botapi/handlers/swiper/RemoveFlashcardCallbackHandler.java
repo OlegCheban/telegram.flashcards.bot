@@ -40,12 +40,12 @@ public class RemoveFlashcardCallbackHandler implements MessageHandler<CallbackQu
         SwiperFlashcard swiperFlashcard =
                 dataLayer.getSwiperFlashcard(chatId, callbackData.getEntityId(), characterCondition, percentile);
 
-        swiperFlashcard =
-                dataLayer.getSwiperFlashcard(chatId, swiperFlashcard.getNextId(), characterCondition, percentile);
-
         dataLayer.deleteSpacedRepetitionHistory(userFlashcardId);
         dataLayer.deleteExerciseStat(userFlashcardId);
         dataLayer.removeFlashcard(userFlashcardId);
+
+        swiperFlashcard =
+                dataLayer.getSwiperFlashcard(chatId, swiperFlashcard.getNextId(), characterCondition, percentile);
 
         EditMessageText formerMessage = new EditMessageText();
         formerMessage.setChatId(String.valueOf(chatId));
