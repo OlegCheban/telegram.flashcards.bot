@@ -120,7 +120,7 @@ public class Swiper {
         InlineKeyboardButton boostPriorityButton = new InlineKeyboardButton();
         boostPriorityButton.setText("remove");
         CallbackData removeFlashcardCallbackData = new CallbackData(REMOVE);
-        removeFlashcardCallbackData.setEntityId(swiperFlashcard.getNextId());
+        removeFlashcardCallbackData.setEntityId(swiperFlashcard.getCurrentId());
         setSwiperParams(removeFlashcardCallbackData);
         boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(removeFlashcardCallbackData));
 
