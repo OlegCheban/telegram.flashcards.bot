@@ -22,7 +22,8 @@ public class Help {
                         "Additional options:\n" +
                         "   - The ability to reset learning statistics for flashcards which were already learned (100% progress). Use the \"reset progress\" button;\n" +
                         "   - The ability to add the most significant flashcards to the next learning session. Use the \"boost priority\" button;\n" +
-                        "   - The ability to see examples of usage. Use the \"example of usage\" button.\n\n" +
+                        "   - The ability to see examples of usage. Use the \"example of usage\" button.\n" +
+                        "   - The ability to remove flashcards from profile. Use the \"remove\" button.\n\n" +
 
                         "3. Exercises\n" +
                         "Bot has several kinds of exercises which help you learn flashcards\n" +

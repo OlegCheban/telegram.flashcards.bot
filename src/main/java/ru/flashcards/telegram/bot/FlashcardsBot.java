@@ -18,7 +18,6 @@ import ru.flashcards.telegram.bot.command.*;
 import ru.flashcards.telegram.bot.command.addToLearn.FindFlashcardCommand;
 import ru.flashcards.telegram.bot.command.ChangeTranslationCommand;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
-import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import ru.flashcards.telegram.bot.exception.JsonProcessingRuntimeException;
 import ru.flashcards.telegram.bot.exception.TelegramApiRuntimeException;
 

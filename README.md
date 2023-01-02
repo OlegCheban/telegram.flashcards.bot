@@ -46,6 +46,7 @@ Additional options:
    - The ability to add the most significant flashcards to the next learning session. 
      Use the "boost priority" button;
    - The ability to see examples of usage. Use the "example of usage" button.
+   - The ability to remove flashcards from profile. Use the "remove" button.
 
 3. Exercises
 Bot has several kinds of exercises which help you learn flashcards
