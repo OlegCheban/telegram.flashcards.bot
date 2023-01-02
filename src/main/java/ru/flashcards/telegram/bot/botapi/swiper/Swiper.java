@@ -30,8 +30,11 @@ public class Swiper {
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         List<InlineKeyboardButton> swiperRowInline = new ArrayList<>();
         List<InlineKeyboardButton> optionsRowInline = new ArrayList<>();
+        List<InlineKeyboardButton> removeRowInline = new ArrayList<>();
 
         try {
+            removeRowInline.add(removeButton());
+
             if (swiperFlashcard.getPrevId() != 0) {
                 swiperRowInline.add(prevButton());
             }
@@ -44,13 +47,15 @@ public class Swiper {
             if (swiperFlashcard.getLearnPrc() == 0 && swiperFlashcard.getNearestTraining() == 0){
                 optionsRowInline.add(boostPriorityButton());
             }
-                optionsRowInline.add(exampleOfUsageButton());
-                optionsRowInline.add(removeButton());
+
+            optionsRowInline.add(exampleOfUsageButton());
+
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
+        rowsInline.add(removeRowInline);
         rowsInline.add(optionsRowInline);
         rowsInline.add(swiperRowInline);
         markupInline.setKeyboard(rowsInline);
@@ -114,9 +119,10 @@ public class Swiper {
     private InlineKeyboardButton removeButton() throws JsonProcessingException {
         InlineKeyboardButton boostPriorityButton = new InlineKeyboardButton();
         boostPriorityButton.setText("remove");
-        CallbackData removeFlashcardsCallbackData = new CallbackData(REMOVE);
-        removeFlashcardsCallbackData.setEntityId(swiperFlashcard.getNextId());
-        boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(removeFlashcardsCallbackData));
+        CallbackData removeFlashcardCallbackData = new CallbackData(REMOVE);
+        removeFlashcardCallbackData.setEntityId(swiperFlashcard.getNextId());
+        setSwiperParams(removeFlashcardCallbackData);
+        boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(removeFlashcardCallbackData));
 
         return boostPriorityButton;
     }
