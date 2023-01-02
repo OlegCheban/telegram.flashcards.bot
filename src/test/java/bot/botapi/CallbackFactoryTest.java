@@ -14,6 +14,7 @@ import ru.flashcards.telegram.bot.botapi.MessageHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.examples.FlashcardUsageExamplesCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.RemoveFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translation.TranslateFlashcardCallbackHandler;
@@ -92,6 +93,10 @@ public class CallbackFactoryTest {
     @Produces
     EnableExerciseMessageHandler produceEnableExerciseMessageHandler(){
         return Mockito.mock(EnableExerciseMessageHandler.class);
+    }
+    @Produces
+    RemoveFlashcardCallbackHandler produceRemoveFlashcardCallbackHandler(){
+        return Mockito.mock(RemoveFlashcardCallbackHandler.class);
     }
 
     @Mock
@@ -190,5 +195,11 @@ public class CallbackFactoryTest {
         when(callbackData.getCommand()).thenReturn(ENABLE_EXCERCISE);
         MessageHandler<CallbackQuery> handler = weld.select(CallbackFactory.class).get().getHandler(callbackData);
         assertThat(handler, instanceOf(EnableExerciseMessageHandler.class));
+    }
+    @Test
+    void testRemoveFlashcardCallbackHandler(){
+        when(callbackData.getCommand()).thenReturn(REMOVE);
+        MessageHandler<CallbackQuery> handler = weld.select(CallbackFactory.class).get().getHandler(callbackData);
+        assertThat(handler, instanceOf(RemoveFlashcardCallbackHandler.class));
     }
 }

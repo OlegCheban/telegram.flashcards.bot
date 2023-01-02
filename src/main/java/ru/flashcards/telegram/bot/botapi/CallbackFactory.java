@@ -4,6 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.flashcards.telegram.bot.botapi.handlers.examples.FlashcardUsageExamplesCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.learn.*;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.BoostPriorityCallbackHandler;
+import ru.flashcards.telegram.bot.botapi.handlers.swiper.RemoveFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.ReturnToLearnSwiperCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.swiper.SwiperRefreshFlashcardCallbackHandler;
 import ru.flashcards.telegram.bot.botapi.handlers.translation.TranslateFlashcardCallbackHandler;
@@ -43,6 +44,8 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
     DisableExerciseMessageHandler disableExerciseMessageHandler;
     @Inject
     EnableExerciseMessageHandler enableExerciseMessageHandler;
+    @Inject
+    RemoveFlashcardCallbackHandler removeFlashcardCallbackHandler;
 
     @Override
     public MessageHandler<CallbackQuery> getHandler(CallbackData callbackData) {
@@ -76,6 +79,8 @@ public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHa
                 return disableExerciseMessageHandler;
             case ENABLE_EXCERCISE:
                 return enableExerciseMessageHandler;
+            case REMOVE:
+                return removeFlashcardCallbackHandler;
         }
 
         return m -> Collections.emptyList();

@@ -397,6 +397,16 @@ public class DataLayerObject {
         }.run();
     }
 
+    public int removeFlashcard (Long flashcardId) {
+        return new Update("delete from main.user_flashcard where id = ?") {
+            @Override
+            protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setLong(1, flashcardId);
+                return preparedStatement;
+            }
+        }.run();
+    }
+
     public int disableExcercise(Long chatId, String excerciseCode) {
         return new Update("delete from main.user_exercise_settings where user_id = (select id from main.user where chat_id = ?) and " +
                 "exercise_kind_id = (select id from main.learning_exercise_kind where code = ?)") {

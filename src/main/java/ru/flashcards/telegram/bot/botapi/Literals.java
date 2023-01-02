@@ -3,6 +3,7 @@ package ru.flashcards.telegram.bot.botapi;
 public final class Literals {
     public static final String TRANSLATE = "TRANSLATE";
     public static final String EXAMPLES = "EXAMPLES";
+    public static final String REMOVE = "REMOVE";
 
     public static final String ADD_TO_LEARN = "ADD_TO_LEARN";
     public static final String ADD_TO_LEARN_AND_NEXT = "ADD_TO_LEARN_AND_NEXT";

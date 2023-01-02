@@ -32,6 +32,14 @@ public class FlashcardUsageExamplesCallbackHandler implements MessageHandler<Cal
             list.add(sendMessage);
         });
 
+        if (list.isEmpty()){
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(String.valueOf(message.getChatId()));
+            sendMessage.setText("We haven't got any examples for this flashcard.");
+
+            list.add(sendMessage);
+        }
+
         return list;
     }
 }

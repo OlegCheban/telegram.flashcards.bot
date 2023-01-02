@@ -45,6 +45,7 @@ public class Swiper {
                 optionsRowInline.add(boostPriorityButton());
             }
                 optionsRowInline.add(exampleOfUsageButton());
+                optionsRowInline.add(removeButton());
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -106,6 +107,16 @@ public class Swiper {
         CallbackData boostPriorityCallbackData = new CallbackData(EXAMPLES);
         boostPriorityCallbackData.setEntityId(swiperFlashcard.getCurrentId());
         boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(boostPriorityCallbackData));
+
+        return boostPriorityButton;
+    }
+
+    private InlineKeyboardButton removeButton() throws JsonProcessingException {
+        InlineKeyboardButton boostPriorityButton = new InlineKeyboardButton();
+        boostPriorityButton.setText("remove");
+        CallbackData removeFlashcardsCallbackData = new CallbackData(REMOVE);
+        removeFlashcardsCallbackData.setEntityId(swiperFlashcard.getNextId());
+        boostPriorityButton.setCallbackData(objectMapper.writeValueAsString(removeFlashcardsCallbackData));
 
         return boostPriorityButton;
     }
