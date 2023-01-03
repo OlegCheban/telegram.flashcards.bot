@@ -38,7 +38,7 @@ Additional flashcard functional options:
 Swiper allows you to easily navigate through all of your flashcards.
 '/s' - displays all flashcards added by the user to their profile
 '/s <value> <prc>' - displays flashcards containing the input value (English word or substring) 
-and/or by percentile of learning
+    and/or by percentile of learning
 Additional options:
    - The ability to reset learning statistics for flashcards which were already learned (100% progress);
      Use the "reset progress" button;
@@ -61,9 +61,9 @@ Bot has several kinds of exercises which help you learn flashcards
 '/fq <min>' -  changes the number of flashcards for training (default 5 flashcards)
 '/wt <seconds>' - changes the watering session reply time (default 5 seconds)
 '/ed <value>' - finds a flashcard from your profile by input value (English word) and suggests 
-changing the translation
+    changing the translation
 '/h' - displays a list of available commands and options, along with brief descriptions 
-of what each command does
+    of what each command does
 
 6. Bot sends notifications:
    - spaced repetition notifications. 
