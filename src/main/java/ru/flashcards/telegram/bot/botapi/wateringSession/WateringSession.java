@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
+import static ru.flashcards.telegram.bot.botapi.BotCommand.STOP_LEARNING;
 
 public class WateringSession {
     private DataLayerObject dataLayer;
@@ -61,7 +61,7 @@ public class WateringSession {
                 keyboard.add(createButton(correctAnswer));
             }
         }));
-        keyboard.add(createButton(STOP_LEARNING));
+        keyboard.add(createButton(STOP_LEARNING.command));
 
         return keyboard;
     }

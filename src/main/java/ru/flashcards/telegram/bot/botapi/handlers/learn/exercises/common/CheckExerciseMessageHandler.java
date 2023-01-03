@@ -58,7 +58,7 @@ public abstract class CheckExerciseMessageHandler implements MessageHandler<Mess
 
         dataLayer.insertExerciseResult(
                 currentExercise.getUserFlashcardId(),
-                currentExercise.getExerciseCode(),
+                currentExercise.getExerciseKindCode(),
                 isCorrentAnswer
         );
 

@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
-import static ru.flashcards.telegram.bot.botapi.Literals.COMPLETE_THE_GAPS;
+import static ru.flashcards.telegram.bot.botapi.BotCommand.STOP_LEARNING;
+import static ru.flashcards.telegram.bot.botapi.ExerciseKind.*;
 
 public class ExerciseProvider {
     private DataLayerObject dataLayer;
@@ -36,32 +36,32 @@ public class ExerciseProvider {
 
         List<String> wrongAnswers = null;
 
-        if (currentExercise.getExerciseCode().equals(MEMORISED)) {
+        if (currentExercise.getExerciseKindCode().equals(MEMORISED)) {
             sendMessage.setText("*" + currentExercise.getWord() + "* /" + currentExercise.getTranscription() + "/\n" + currentExercise.getDescription() + "\n\n*Translation:* " + currentExercise.getTranslation());
             replyKeyboardMarkup.setKeyboard(memorisedKeyboard());
 
-        } else if (currentExercise.getExerciseCode().equals(CHECK_DESCRIPTION)){
+        } else if (currentExercise.getExerciseKindCode().equals(CHECK_DESCRIPTION)){
             wrongAnswers = dataLayer.getRandomDescriptions();
             sendMessage.setText("Choose correct description for flashcard *" + currentExercise.getWord() + "* /" + currentExercise.getTranscription() + "/\n\n");
             replyKeyboardMarkup.setKeyboard(answersKeyboard(wrongAnswers, currentExercise.getDescription()));
 
-        } else if (currentExercise.getExerciseCode().equals(CHECK_TRANSLATION)){
+        } else if (currentExercise.getExerciseKindCode().equals(CHECK_TRANSLATION)){
             wrongAnswers = dataLayer.getRandomTranslations();
             sendMessage.setText("Choose correct translation for flashcard *" + currentExercise.getWord() + "* /" + currentExercise.getTranscription() + "/\n\n");
             replyKeyboardMarkup.setKeyboard(answersKeyboard(wrongAnswers, currentExercise.getTranslation()));
 
-        } else if (currentExercise.getExerciseCode().equals(CHECK_SPELLING) || currentExercise.getExerciseCode().equals(CHECK_SPELLING_WITH_HELPS)){
+        } else if (currentExercise.getExerciseKindCode().equals(CHECK_SPELLING) || currentExercise.getExerciseKindCode().equals(CHECK_SPELLING_WITH_HELPS)){
             List<KeyboardRow> keyboard = new ArrayList<>();
-            keyboard.add(createButton(STOP_LEARNING));
+            keyboard.add(createButton(STOP_LEARNING.command));
             String messageText = String.format("Write the correct spelling for flashcard *%s*", currentExercise.getTranslation());
 
-            if (currentExercise.getExerciseCode().equals(CHECK_SPELLING_WITH_HELPS)) {
+            if (currentExercise.getExerciseKindCode().equals(CHECK_SPELLING_WITH_HELPS)) {
                 messageText = messageText + "\n\nHint: " + hideLetters(currentExercise.getWord()).replaceAll ("\\*","\\\\*");
             }
             sendMessage.setText(messageText);
             replyKeyboardMarkup.setKeyboard(keyboard);
 
-        } else if (currentExercise.getExerciseCode().equals(COMPLETE_THE_GAPS)){
+        } else if (currentExercise.getExerciseKindCode().equals(COMPLETE_THE_GAPS)){
             wrongAnswers = dataLayer.getRandomWords();
             sendMessage.setText("Complete the gaps in sentence below. \n\n" + currentExercise.getExample().replaceAll("\\*([a-zA-Z]+)\\*", "\\\\_\\\\_\\\\_\\\\_"));
             replyKeyboardMarkup.setKeyboard(answersKeyboard(wrongAnswers, currentExercise.getWord()));
@@ -85,8 +85,8 @@ public class ExerciseProvider {
 
     private List<KeyboardRow> memorisedKeyboard(){
         List<KeyboardRow> keyboard = new ArrayList<>();
-        keyboard.add(createButton(MEMORISED));
-        keyboard.add(createButton(STOP_LEARNING));
+        keyboard.add(createButton("Memorised"));
+        keyboard.add(createButton("Stop learning"));
 
         return keyboard;
     }
@@ -106,7 +106,7 @@ public class ExerciseProvider {
                 keyboard.add(createButton(correctAnswer));
             }
         }));
-        keyboard.add(createButton(STOP_LEARNING));
+        keyboard.add(createButton(STOP_LEARNING.command));
 
         return keyboard;
     }

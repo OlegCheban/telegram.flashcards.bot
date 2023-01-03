@@ -1,18 +1,20 @@
 package ru.flashcards.telegram.bot.db.dmlOps.dto;
 
+import ru.flashcards.telegram.bot.botapi.ExerciseKind;
+
 public class ExerciseFlashcard {
     Long chatId;
     String word;
-    String exerciseCode;
+    ExerciseKind exerciseKindCode;
     String description;
     String transcription;
     Long userFlashcardId;
     String translation;
     String example;
-    public ExerciseFlashcard(Long chatId, String word, String exerciseCode, String description, String transcription, Long userFlashcardId, String translation, String example) {
+    public ExerciseFlashcard(Long chatId, String word, ExerciseKind exerciseKindCode, String description, String transcription, Long userFlashcardId, String translation, String example) {
         this.chatId = chatId;
         this.word = word;
-        this.exerciseCode = exerciseCode;
+        this.exerciseKindCode = exerciseKindCode;
         this.description = description;
         this.transcription = transcription;
         this.userFlashcardId = userFlashcardId;
@@ -36,12 +38,12 @@ public class ExerciseFlashcard {
         this.word = word;
     }
 
-    public String getExerciseCode() {
-        return exerciseCode;
+    public ExerciseKind getExerciseKindCode() {
+        return exerciseKindCode;
     }
 
-    public void setExerciseCode(String exerciseCode) {
-        this.exerciseCode = exerciseCode;
+    public void setExerciseKindCode(ExerciseKind exerciseKindCode) {
+        this.exerciseKindCode = exerciseKindCode;
     }
 
     public String getDescription() {

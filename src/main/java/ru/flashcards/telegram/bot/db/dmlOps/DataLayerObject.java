@@ -1,5 +1,6 @@
 package ru.flashcards.telegram.bot.db.dmlOps;
 
+import ru.flashcards.telegram.bot.botapi.ExerciseKind;
 import ru.flashcards.telegram.bot.db.*;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.*;
 import ru.flashcards.telegram.bot.exception.SQLRuntimeException;
@@ -7,10 +8,9 @@ import ru.flashcards.telegram.bot.exception.SQLRuntimeException;
 import java.sql.*;
 import java.util.List;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.RANDOM_NOTIFICATION_INTERVAL;
-
 public class DataLayerObject {
     public void registerUser(Long chatId, String username) {
+        final int  randomNotificationInterval = 60;
         try(Connection connection = DataSource.getConnection()) {
             try {
                 connection.setAutoCommit(false);
@@ -21,7 +21,7 @@ public class DataLayerObject {
                     @Override
                     protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                         preparedStatement.setString(1, username);
-                        preparedStatement.setLong(2, RANDOM_NOTIFICATION_INTERVAL);
+                        preparedStatement.setLong(2, randomNotificationInterval);
                         preparedStatement.setLong(3, chatId);
                         preparedStatement.setLong(4, chatId);
                         return preparedStatement;
@@ -76,7 +76,7 @@ public class DataLayerObject {
                 return new ExerciseFlashcard(
                         rs.getLong("chat_id"),
                         rs.getString("word"),
-                        rs.getString("code"),
+                        ExerciseKind.valueOf(rs.getString("code")),
                         rs.getString("description"),
                         rs.getString("transcription"),
                         rs.getLong("user_flashcard_id"),
@@ -162,13 +162,13 @@ public class DataLayerObject {
         }.getCollection();
     }
 
-    public int insertExerciseResult (Long userFlashcardId, String exerciseKind, Boolean result) {
+    public int insertExerciseResult (Long userFlashcardId, ExerciseKind exerciseKind, Boolean result) {
         return new Update("insert into main.done_learn_exercise_stat (id, user_flashcard_id, exercise_kind_id, is_correct_answer) values " +
                 "(nextval('main.common_seq'), ?, (select id from main.learning_exercise_kind where code = ?), ?)"){
             @Override
             protected PreparedStatement parameterMapper(PreparedStatement preparedStatement) throws SQLException {
                 preparedStatement.setLong(1, userFlashcardId);
-                preparedStatement.setString(2, exerciseKind);
+                preparedStatement.setString(2, String.valueOf(exerciseKind));
                 preparedStatement.setBoolean(3, result);
                 return preparedStatement;
             }
@@ -332,14 +332,14 @@ public class DataLayerObject {
         }.getObject();
     }
 
-    public List<ExerciseKind> getExerciseKindToEnable(Long chatId) {
-        return new SelectWithParams<ExerciseKind>(
+    public List<ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind> getExerciseKindToEnable(Long chatId) {
+        return new SelectWithParams<ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind>(
                 "select code, name From main.learning_exercise_kind a where " +
                         "not exists (select 1 from main.user_exercise_settings b where a.id = b.exercise_kind_id and b.user_id = (select id from main.user where chat_id = ?)) order by a.order"
         ){
             @Override
-            protected ExerciseKind rowMapper(ResultSet rs) throws SQLException {
-                return new ExerciseKind(
+            protected ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind rowMapper(ResultSet rs) throws SQLException {
+                return new ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind(
                         rs.getString("code"),
                         rs.getString("name")
                 );
@@ -353,14 +353,14 @@ public class DataLayerObject {
         }.getCollection();
     }
 
-    public List<ExerciseKind> getExerciseKindToDisable(Long chatId) {
-        return new SelectWithParams<ExerciseKind>(
+    public List<ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind> getExerciseKindToDisable(Long chatId) {
+        return new SelectWithParams<ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind>(
                 "select code, name From main.learning_exercise_kind a where " +
                         "exists (select 1 from main.user_exercise_settings b where a.id = b.exercise_kind_id and b.user_id = (select id from main.user where chat_id = ?)) order by a.order"
         ){
             @Override
-            protected ExerciseKind rowMapper(ResultSet rs) throws SQLException {
-                return new ExerciseKind(
+            protected ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind rowMapper(ResultSet rs) throws SQLException {
+                return new ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind(
                         rs.getString("code"),
                         rs.getString("name")
                 );

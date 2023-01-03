@@ -8,8 +8,6 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseFlashcard;
 import javax.inject.Inject;
 import java.util.Collections;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
-
 public class ExerciseMessageFactory implements MessageHandlerAbstractFactory<MessageHandler<Message>> {
     @Inject
     private MemorisedMessageHandler memorisedMessageHandler;
@@ -28,12 +26,12 @@ public class ExerciseMessageFactory implements MessageHandlerAbstractFactory<Mes
 
     @Override
     public MessageHandler<Message> getHandler(Message message) {
-        if (message.getText().equals(STOP_LEARNING)){
+        if (message.getText().equals(BotCommand.STOP_LEARNING.command)){
             return stopLearningMessageHandler;
         } else {
             ExerciseFlashcard currentExercise = dataLayer.getCurrentExercise(message.getChatId());
 
-            switch (currentExercise.getExerciseCode()){
+            switch (currentExercise.getExerciseKindCode()){
                 case MEMORISED:
                     return memorisedMessageHandler;
                 case CHECK_DESCRIPTION:

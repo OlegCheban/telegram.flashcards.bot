@@ -26,7 +26,7 @@ import javax.enterprise.inject.Produces;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.*;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)

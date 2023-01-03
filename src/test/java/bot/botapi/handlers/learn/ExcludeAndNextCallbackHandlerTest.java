@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.EXCLUDE_AND_NEXT;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.EXCLUDE_AND_NEXT;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)

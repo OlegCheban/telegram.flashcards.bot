@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.flashcards.telegram.bot.botapi.BotKeyboardButton;
 import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcardPushMono;
@@ -19,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.*;
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.*;
 
 public class ScheduledTasks {
     private Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
@@ -99,7 +100,7 @@ public class ScheduledTasks {
         });
     }
 
-    private JSONObject prepareButton(Long userFlashcardId, String label, String command){
+    private JSONObject prepareButton(Long userFlashcardId, String label, BotKeyboardButton command){
         CallbackData callbackData = new CallbackData(command);
         callbackData.setEntityId(userFlashcardId);
 

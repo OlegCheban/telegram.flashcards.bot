@@ -11,7 +11,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.*;
 
 public class Swiper {
     private String charCond;

@@ -18,7 +18,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.DISABLE_EXCERCISE;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.DISABLE_EXCERCISE;
 
 public class DisableExcerciseCommand extends BotCommand {
     private DataLayerObject dataLayer;

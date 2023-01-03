@@ -23,7 +23,7 @@ import ru.flashcards.telegram.bot.exception.TelegramApiRuntimeException;
 
 import java.util.List;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
+import static ru.flashcards.telegram.bot.botapi.BotCommand.*;
 import static ru.flashcards.telegram.bot.botapi.MessageFactoryType.*;
 
 /**
@@ -41,18 +41,18 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
         messageFactoryProvider = container.select(MessageFactoryProvider.class).get();
         callbackFactoryProvider = container.select(CallbackFactoryProvider.class).get();
 
-        register(new StartCommand(START_COMMAND, "", dataLayer));
-        register(new StartLearningCommand(START_LEARNING_COMMAND, "", dataLayer));
-        register(new StartWateringSessionCommand(START_WATERING_SESSION_COMMAND, "", dataLayer));
-        register(new EnableExcerciseCommand(ENABLE_EXCERCISE_COMMAND, "", dataLayer));
-        register(new DisableExcerciseCommand(DISABLE_EXCERCISE_COMMAND, "", dataLayer));
-        register(new SwiperCommand(OPEN_SWIPER_COMMAND, "", dataLayer));
-        register(new FindFlashcardCommand(FIND_FLASHCARD_COMMAND, "", dataLayer));
-        register(new NotificationIntervalSettingsCommand(NOTIFICATION_INTERVAL_SETTINGS_COMMAND, "", dataLayer));
-        register(new TrainingFlashcardsQuantitySettingsCommand(TRAINING_FLASHCARDS_QUANTITY_SETTINGS_COMMAND, "", dataLayer));
-        register(new WateringSessionReplyTimeSettingsCommand(WATERING_SESSION_REPLY_TIME_SETTINGS_COMMAND, "", dataLayer));
-        register(new ChangeTranslationCommand(CHANGE_TRANSLATION_COMMAND, "", dataLayer));
-        register(new HelpCommand(HELP_COMMAND, ""));
+        register(new StartCommand(START.command, "", dataLayer));
+        register(new StartLearningCommand(START_LEARNING.command, "", dataLayer));
+        register(new StartWateringSessionCommand(START_WATERING_SESSION.command, "", dataLayer));
+        register(new EnableExcerciseCommand(BotCommand.ENABLE_EXCERCISE.command, "", dataLayer));
+        register(new DisableExcerciseCommand(BotCommand.DISABLE_EXCERCISE.command, "", dataLayer));
+        register(new SwiperCommand(OPEN_SWIPER.command, "", dataLayer));
+        register(new FindFlashcardCommand(FIND_FLASHCARD.command, "", dataLayer));
+        register(new NotificationIntervalSettingsCommand(NOTIFICATION_INTERVAL_SETTINGS.command, "", dataLayer));
+        register(new TrainingFlashcardsQuantitySettingsCommand(TRAINING_FLASHCARDS_QUANTITY_SETTINGS.command, "", dataLayer));
+        register(new WateringSessionReplyTimeSettingsCommand(WATERING_SESSION_REPLY_TIME_SETTINGS.command, "", dataLayer));
+        register(new ChangeTranslationCommand(CHANGE_TRANSLATION.command, "", dataLayer));
+        register(new HelpCommand(HELP.command, ""));
     }
 
     @Override

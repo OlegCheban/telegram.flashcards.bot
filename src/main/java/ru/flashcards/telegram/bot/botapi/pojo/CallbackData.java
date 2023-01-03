@@ -2,10 +2,11 @@ package ru.flashcards.telegram.bot.botapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.flashcards.telegram.bot.botapi.BotKeyboardButton;
 
 public class CallbackData {
     @JsonProperty("c")
-    private String command;
+    private BotKeyboardButton command;
     @JsonProperty("id")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long entityId;
@@ -19,11 +20,11 @@ public class CallbackData {
     public CallbackData() {
     }
 
-    public CallbackData(String command) {
+    public CallbackData(BotKeyboardButton command) {
         this.command = command;
     }
 
-    public String getCommand() {
+    public BotKeyboardButton getCommand() {
         return command;
     }
 
@@ -43,7 +44,7 @@ public class CallbackData {
         this.swiper = swiper;
     }
 
-    public void setCommand(String command) {
+    public void setCommand(BotKeyboardButton command) {
         this.command = command;
     }
 

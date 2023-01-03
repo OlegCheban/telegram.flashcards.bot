@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.service.SendService;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.UNRECOGNIZED_OPTION_MSG;
+import static ru.flashcards.telegram.bot.botapi.BotReplyMsg.UNRECOGNIZED_OPTION_MSG;
 
 public class FindFlashcardCommand extends BotCommand {
     private DataLayerObject dataLayer;

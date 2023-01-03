@@ -20,15 +20,15 @@ import javax.enterprise.inject.Produces;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.MEMORISED;
+import static ru.flashcards.telegram.bot.botapi.ExerciseKind.MEMORISED;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)
-public class ExerciseMessageFactoryTest {
+public class ExerciseKindMessageFactoryTest {
     @WeldSetup
     private WeldInitiator weld =
             WeldInitiator
-                    .from(ExerciseMessageFactory.class, ExerciseMessageFactoryTest.class)
+                    .from(ExerciseMessageFactory.class, ExerciseKindMessageFactoryTest.class)
                     .activate(RequestScoped.class)
                     .build();
 
@@ -64,7 +64,7 @@ public class ExerciseMessageFactoryTest {
     DataLayerObject produceDataLayerObject(){
         DataLayerObject dataLayerObject = Mockito.mock(DataLayerObject.class);
         ExerciseFlashcard exerciseFlashcard = Mockito.mock(ExerciseFlashcard.class);
-        when(exerciseFlashcard.getExerciseCode()).thenReturn(MEMORISED);
+        when(exerciseFlashcard.getExerciseKindCode()).thenReturn(MEMORISED);
         when(dataLayerObject.getCurrentExercise(0L)).thenReturn(exerciseFlashcard);
         return dataLayerObject;
     }

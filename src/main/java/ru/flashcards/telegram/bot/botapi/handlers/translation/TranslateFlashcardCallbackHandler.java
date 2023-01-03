@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.toIntExact;
-import static ru.flashcards.telegram.bot.botapi.Literals.EXAMPLES;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.EXAMPLES;
 
 public class TranslateFlashcardCallbackHandler implements MessageHandler<CallbackQuery> {
     @Inject

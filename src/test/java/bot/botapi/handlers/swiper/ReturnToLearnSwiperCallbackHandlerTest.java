@@ -25,7 +25,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static ru.flashcards.telegram.bot.botapi.Literals.SWIPER_RETURN_TO_LEARN;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.SWIPER_RETURN_TO_LEARN;
 
 @ExtendWith(WeldJunit5Extension.class)
 @ExtendWith(MockitoExtension.class)

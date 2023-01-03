@@ -6,7 +6,7 @@ import ru.flashcards.telegram.bot.botapi.handlers.wateringSession.StopWateringSe
 
 import javax.inject.Inject;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
+import static ru.flashcards.telegram.bot.botapi.BotCommand.STOP_LEARNING;
 
 public class WateringSessionMessageFactory implements MessageHandlerAbstractFactory<MessageHandler<Message>> {
     @Inject
@@ -17,7 +17,7 @@ public class WateringSessionMessageFactory implements MessageHandlerAbstractFact
 
     @Override
     public MessageHandler<Message> getHandler(Message message) {
-        if (message.getText().equals(STOP_LEARNING)){
+        if (message.getText().equals(STOP_LEARNING.command)){
             return stopWateringSessionHandler;
         } else {
             return checkWateringSessionExerciseMessageHandler;

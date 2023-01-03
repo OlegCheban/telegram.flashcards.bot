@@ -18,7 +18,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.ExerciseKind;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.ENABLE_EXCERCISE;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.ENABLE_EXCERCISE;
 
 public class EnableExcerciseCommand extends BotCommand {
     private DataLayerObject dataLayer;

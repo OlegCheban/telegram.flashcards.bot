@@ -10,7 +10,7 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.UserFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
 import ru.flashcards.telegram.bot.botapi.UserMessageTypeBuffer;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.UNRECOGNIZED_OPTION_MSG;
+import static ru.flashcards.telegram.bot.botapi.BotReplyMsg.UNRECOGNIZED_OPTION_MSG;
 import static ru.flashcards.telegram.bot.botapi.MessageType.CHANGE_TRANSLATION;
 
 public class ChangeTranslationCommand extends BotCommand {

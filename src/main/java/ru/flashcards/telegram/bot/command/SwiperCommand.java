@@ -13,8 +13,8 @@ import ru.flashcards.telegram.bot.db.dmlOps.dto.SwiperFlashcard;
 import ru.flashcards.telegram.bot.service.SendService;
 import ru.flashcards.telegram.bot.utils.Number;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.FLASHCARDS_NOT_FOUND_MSG;
-import static ru.flashcards.telegram.bot.botapi.Literals.UNRECOGNIZED_OPTION_MSG;
+import static ru.flashcards.telegram.bot.botapi.BotReplyMsg.FLASHCARDS_NOT_FOUND_MSG;
+import static ru.flashcards.telegram.bot.botapi.BotReplyMsg.UNRECOGNIZED_OPTION_MSG;
 
 public class SwiperCommand extends BotCommand {
     private DataLayerObject dataLayer;

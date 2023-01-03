@@ -13,8 +13,6 @@ import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 import javax.inject.Inject;
 import java.util.Collections;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
-
 public class CallbackFactory implements CallbackHandlerAbstractFactory<MessageHandler<CallbackQuery>> {
     @Inject
     TranslateFlashcardCallbackHandler translateFlashcardCallbackHandler;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import ru.flashcards.telegram.bot.botapi.BotKeyboardButton;
 import ru.flashcards.telegram.bot.botapi.pojo.CallbackData;
 import ru.flashcards.telegram.bot.db.dmlOps.DataLayerObject;
 import ru.flashcards.telegram.bot.db.dmlOps.dto.SendToLearnFlashcard;
@@ -13,8 +14,7 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ru.flashcards.telegram.bot.botapi.Literals.*;
-import static ru.flashcards.telegram.bot.botapi.Literals.EXCLUDE;
+import static ru.flashcards.telegram.bot.botapi.BotKeyboardButton.*;
 
 public class SuggestFlashcard {
     private DataLayerObject dataLayer;
@@ -60,7 +60,7 @@ public class SuggestFlashcard {
         });
     }
 
-    private JSONObject prepareLearnButtonsInlineKeyboardJson(Long flashcardId, String addToLearnCommand, String excludeCommand) throws JsonProcessingException {
+    private JSONObject prepareLearnButtonsInlineKeyboardJson(Long flashcardId, BotKeyboardButton addToLearnCommand, BotKeyboardButton excludeCommand) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         CallbackData addToLearn = new CallbackData(addToLearnCommand);
         addToLearn.setEntityId(flashcardId);
