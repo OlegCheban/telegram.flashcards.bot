@@ -16,8 +16,7 @@ public class Help {
                         "2. Swiper\n" +
                         "Swiper allows you to easily navigate through all of your flashcards\n" +
                         "'/s' - displays flashcards added by the user to their profile\n" +
-                        "'/s <value> <prc>' - displays flashcards containing the input value (English word or substring)\n" +
-                        "and/or by percentile of learning.\n" +
+                        "'/s <value> <prc>' - displays flashcards containing the input value (English word or substring) and/or by percentile of learning.\n" +
                         "Additional options:\n" +
                         "   - The ability to reset learning statistics for flashcards which were already learned (100% progress). Use the \"reset progress\" button;\n" +
                         "   - The ability to add the most significant flashcards to the next learning session. Use the \"boost priority\" button;\n" +
@@ -37,10 +36,8 @@ public class Help {
                         "'/ni' <min> - changes random flashcards notifications interval (default 60 min) \n" +
                         "'/fq' <min> - changes flashcards quantity for training (default 5 flashcards) \n" +
                         "'/wt' <seconds> - changes watering session reply time (default 5 seconds) \n" +
-                        "'/ed' <value> - finds a flashcard from your profile by input value (english word) and suggests\n" +
-                        "changing the translation \n" +
-                        "'/h' displays a list of available commands and options, along with brief descriptions of what\n"+
-                        "each command does\n\n"+
+                        "'/ed' <value> - finds a flashcard from your profile by input value (english word) and suggests changing the translation \n" +
+                        "'/h' displays a list of available commands and options, along with brief descriptions of what each command does\n\n"+
 
                         "6. Bot sends notifications:\n" +
                         "   - spaced repetition notifications. Bot sends only learned flashcards on the 2nd, 3rd, 7th, 14th, 30th and 90th day. At each stage, you can reset flashcard to learn again;\n" +
