@@ -8,21 +8,19 @@ public class Help {
                 "*Help*\n\n" +
                         "1. Basic commands for finding flashcards\n" +
                         "'/f' - suggests the most popular flashcards\n" +
-                        "'/f <value>' - finds a specific flashcard by input value\n" +
+                        "'/f <value>' - finds a specific flashcard by input value (English word)\n" +
                         "Additional flashcard functional options:\n" +
-                        "   - The ability to add flashcard to your profile for learning. Use the \"add to learn\" button.\n" +
+                        "   - The ability to add flashcard to your profile for learning. Use the \"add to learn\" button;\n" +
                         "   - The ability to exclude already known flashcards from learning. Use the \"exclude\" button.\n\n" +
 
                         "2. Swiper\n" +
                         "Swiper allows you to easily navigate through all of your flashcards\n" +
                         "'/s' - displays flashcards added by the user to their profile\n" +
-                        "'/s <value>' - displays flashcards containing the input value\n" +
-                        "'/s <percentile>' - displays flashcards by percentile of learning. Possible values: 0, 14, 28, 42, 57, 71, 85, 100.\n" +
-                        "You can specify both parameters (value and percentile). Order doesn't matter.\n" +
+                        "'/s <value> <prc>' - displays flashcards containing the input value (English word or substring) and/or by percentile of learning.\n" +
                         "Additional options:\n" +
                         "   - The ability to reset learning statistics for flashcards which were already learned (100% progress). Use the \"reset progress\" button;\n" +
                         "   - The ability to add the most significant flashcards to the next learning session. Use the \"boost priority\" button;\n" +
-                        "   - The ability to see examples of usage. Use the \"example of usage\" button.\n" +
+                        "   - The ability to see examples of usage. Use the \"example of usage\" button;\n" +
                         "   - The ability to remove flashcards from profile. Use the \"remove\" button.\n\n" +
 
                         "3. Exercises\n" +
