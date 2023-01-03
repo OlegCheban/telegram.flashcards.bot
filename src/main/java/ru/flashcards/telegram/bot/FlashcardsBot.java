@@ -44,8 +44,8 @@ public class FlashcardsBot extends TelegramLongPollingCommandBot {
         register(new StartCommand(START.command, "", dataLayer));
         register(new StartLearningCommand(START_LEARNING.command, "", dataLayer));
         register(new StartWateringSessionCommand(START_WATERING_SESSION.command, "", dataLayer));
-        register(new EnableExcerciseCommand(BotCommand.ENABLE_EXCERCISE.command, "", dataLayer));
-        register(new DisableExcerciseCommand(BotCommand.DISABLE_EXCERCISE.command, "", dataLayer));
+        register(new EnableExcerciseCommand(BotCommand.ENABLE_EXERCISE.command, "", dataLayer));
+        register(new DisableExcerciseCommand(BotCommand.DISABLE_EXERCISE.command, "", dataLayer));
         register(new SwiperCommand(OPEN_SWIPER.command, "", dataLayer));
         register(new FindFlashcardCommand(FIND_FLASHCARD.command, "", dataLayer));
         register(new NotificationIntervalSettingsCommand(NOTIFICATION_INTERVAL_SETTINGS.command, "", dataLayer));
