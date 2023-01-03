@@ -9,7 +9,7 @@ public class Help {
                         "1. Basic commands for finding flashcards\n" +
                         "'/f' - suggests the most popular flashcards\n" +
                         "'/f <value>' - finds a specific flashcard by input value (English word)\n" +
-                        "Additional flashcard functional options:\n" +
+                        "Additional flashcard options:\n" +
                         "   - The ability to add flashcard to your profile for learning. Use the \"add to learn\" button;\n" +
                         "   - The ability to exclude already known flashcards from learning. Use the \"exclude\" button.\n\n" +
 

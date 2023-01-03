@@ -30,7 +30,7 @@ java -Xmx300m -Xss512k -Dfile.encoding=UTF-8 -cp ./target/classes:./target/depen
 1. Basic commands for finding flashcards.
 '/f' - suggests the most popular flashcards
 '/f <value>' - finds a specific flashcard by input value (English word)
-Additional flashcard functional options:
+Additional flashcard options:
    - The ability to add flashcard to your profile for learning. Use the "add to learn" button;
    - The ability to exclude already known flashcards from learning. Use the "exclude" button.
 
